@@ -1,0 +1,500 @@
+/* ===== Card Component CSS ===== */
+/* Visual container component extending Container functionality with styling */
+
+.card,
+.themed-card {
+    /* Base visual styling */
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--card-radius, var(--border-radius));
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+
+    /* Default padding (can be overridden with p-* utilities) */
+    padding: var(--spacing-lg);
+
+    /* Layout foundation - inherits from Container */
+    position: relative;
+    overflow: visible;
+    box-sizing: border-box;
+    width: auto;
+
+    /* Default layout */
+    display: block;
+
+    /* Transitions */
+    transition: all var(--transition-normal);
+
+    /* Prevent unwanted stacking contexts for Genie */
+    isolation: auto;
+    transform: none;
+}
+
+/* ===== Layout Types (inherited from Container) ===== */
+.card.layout-block,
+.themed-card.layout-block {
+    display: block;
+}
+
+.card.layout-flex,
+.themed-card.layout-flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.card.layout-flex-column,
+.themed-card.layout-flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.card.layout-grid,
+.themed-card.layout-grid {
+    display: grid;
+    align-items: stretch;
+    min-height: 0;
+}
+
+.card.layout-multicolumn,
+.themed-card.layout-multicolumn {
+    column-count: 2;
+}
+
+.card.layout-positioned,
+.themed-card.layout-positioned {
+    position: relative;
+    min-height: 200px;
+}
+
+/* ===== Grid System (inherited from Container) ===== */
+.card.grid-1, .themed-card.grid-1 {
+    grid-template-columns: 1fr;
+}
+
+.card.grid-2, .themed-card.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.card.grid-3, .themed-card.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card.grid-4, .themed-card.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.card.grid-5, .themed-card.grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.card.grid-6, .themed-card.grid-6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.card.grid-auto, .themed-card.grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card.grid-auto-sm, .themed-card.grid-auto-sm {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.card.grid-auto-lg, .themed-card.grid-auto-lg {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* ===== Multi-column System (inherited from Container) ===== */
+.card.columns-2, .themed-card.columns-2 {
+    column-count: 2;
+}
+
+.card.columns-3, .themed-card.columns-3 {
+    column-count: 3;
+}
+
+.card.columns-4, .themed-card.columns-4 {
+    column-count: 4;
+}
+
+.card.columns-auto, .themed-card.columns-auto {
+    column-count: auto;
+    column-width: 250px;
+}
+
+/* ===== Flex Utilities (inherited from Container) ===== */
+.card.flex-row, .themed-card.flex-row {
+    flex-direction: row;
+}
+
+.card.flex-column, .themed-card.flex-column {
+    flex-direction: column;
+}
+
+.card.flex-wrap, .themed-card.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.card.flex-nowrap, .themed-card.flex-nowrap {
+    flex-wrap: nowrap;
+}
+
+/* ===== Alignment System (inherited from Container) ===== */
+/* Align items (cross-axis) */
+.card.align-start, .themed-card.align-start {
+    align-items: flex-start;
+}
+
+.card.align-center, .themed-card.align-center {
+    align-items: center;
+}
+
+.card.align-end, .themed-card.align-end {
+    align-items: flex-end;
+}
+
+.card.align-stretch, .themed-card.align-stretch {
+    align-items: stretch;
+}
+
+.card.align-baseline, .themed-card.align-baseline {
+    align-items: baseline;
+}
+
+/* Justify content (main-axis) */
+.card.justify-start, .themed-card.justify-start {
+    justify-content: flex-start;
+}
+
+.card.justify-center, .themed-card.justify-center {
+    justify-content: center;
+}
+
+.card.justify-end, .themed-card.justify-end {
+    justify-content: flex-end;
+}
+
+.card.justify-between, .themed-card.justify-between {
+    justify-content: space-between;
+}
+
+.card.justify-around, .themed-card.justify-around {
+    justify-content: space-around;
+}
+
+.card.justify-evenly, .themed-card.justify-evenly {
+    justify-content: space-evenly;
+}
+
+/* Special text-wrapping behavior */
+.card.justify-wrap,
+.themed-card.justify-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+/* Block layout text alignment */
+.card.layout-block.justify-center, .themed-card.layout-block.justify-center {
+    text-align: center;
+}
+
+.card.layout-block.justify-end, .themed-card.layout-block.justify-end {
+    text-align: right;
+}
+
+.card.layout-block.justify-start, .themed-card.layout-block.justify-start {
+    text-align: left;
+}
+
+/* Block layout child centering - center block-level children with explicit widths */
+.card.layout-block.justify-center > *,
+.themed-card.layout-block.justify-center > * {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card.layout-block.justify-end > *,
+.themed-card.layout-block.justify-end > * {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.card.layout-block.justify-start > *,
+.themed-card.layout-block.justify-start > * {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* ===== Spacing System (inherited from Container) ===== */
+/* Gap utilities */
+.card.gap-none, .themed-card.gap-none {
+    gap: 0;
+    column-gap: 0;
+}
+
+.card.gap-xs, .themed-card.gap-xs {
+    gap: var(--spacing-xs);
+    column-gap: var(--spacing-xs);
+}
+
+.card.gap-sm, .themed-card.gap-sm {
+    gap: var(--spacing-sm);
+    column-gap: var(--spacing-sm);
+}
+
+.card.gap-md, .themed-card.gap-md {
+    gap: var(--spacing-md);
+    column-gap: var(--spacing-md);
+}
+
+.card.gap-lg, .themed-card.gap-lg {
+    gap: var(--spacing-lg);
+    column-gap: var(--spacing-lg);
+}
+
+.card.gap-xl, .themed-card.gap-xl {
+    gap: var(--spacing-xl);
+    column-gap: var(--spacing-xl);
+}
+
+/* Padding utilities (override default card padding) */
+.card.p-none, .themed-card.p-none {
+    padding: 0;
+}
+
+.card.p-xs, .themed-card.p-xs {
+    padding: var(--spacing-xs);
+}
+
+.card.p-sm, .themed-card.p-sm {
+    padding: var(--spacing-sm);
+}
+
+.card.p-md, .themed-card.p-md {
+    padding: var(--spacing-md);
+}
+
+.card.p-lg, .themed-card.p-lg {
+    padding: var(--spacing-lg);
+}
+
+.card.p-xl, .themed-card.p-xl {
+    padding: var(--spacing-xl);
+}
+
+/* ===== Size and Width System (inherited from Container) ===== */
+.card.flex-fill, .themed-card.flex-fill {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Margin utilities */
+.card.m-auto, .themed-card.m-auto {
+    margin: 0 auto;
+}
+
+.card.m-none, .themed-card.m-none {
+    margin: 0;
+}
+
+.card.m-xs, .themed-card.m-xs {
+    margin: var(--spacing-xs);
+}
+
+.card.m-sm, .themed-card.m-sm {
+    margin: var(--spacing-sm);
+}
+
+.card.m-md, .themed-card.m-md {
+    margin: var(--spacing-md);
+}
+
+.card.m-lg, .themed-card.m-lg {
+    margin: var(--spacing-lg);
+}
+
+.card.m-xl, .themed-card.m-xl {
+    margin: var(--spacing-xl);
+}
+
+/* ===== Justify Self System (inherited from Container) ===== */
+.card.justify-self-auto, .themed-card.justify-self-auto {
+    justify-self: auto;
+}
+
+.card.justify-self-start, .themed-card.justify-self-start {
+    justify-self: start;
+}
+
+.card.justify-self-end, .themed-card.justify-self-end {
+    justify-self: end;
+}
+
+.card.justify-self-center, .themed-card.justify-self-center {
+    justify-self: center;
+}
+
+.card.justify-self-stretch, .themed-card.justify-self-stretch {
+    justify-self: stretch;
+}
+
+/* ===== Child Behavior (inherited from Container) ===== */
+/* Flex children default behavior */
+.card.layout-flex > *,
+.themed-card.layout-flex > * {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+/* Flex-column children behavior - ensure they respect container width */
+.card.layout-flex-column > *,
+.themed-card.layout-flex-column > * {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Override: flex-fill children should grow in flex layouts */
+.card.layout-flex > .flex-fill,
+.themed-card.layout-flex > .flex-fill,
+.card.layout-flex > .card.flex-fill,
+.themed-card.layout-flex > .themed-card.flex-fill {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Text-wrap children behavior */
+.card.justify-wrap > *,
+.themed-card.justify-wrap > * {
+    flex: 0 0 auto;
+    min-width: fit-content;
+    max-width: 100%;
+}
+
+/* Center child elements in centered cards */
+.card.align-center > .button,
+.card.align-center > .input-container,
+.card.align-center > .select-container,
+.card.justify-center > .button,
+.card.justify-center.input-container,
+.card.justify-center > .select-container,
+.themed-card.align-center > .button,
+.themed-card.align-center.input-container,
+.themed-card.align-center > .select-container,
+.themed-card.justify-center > .button,
+.themed-card.justify-center.input-container,
+.themed-card.justify-center > .select-container {
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+}
+
+/* ===== Card-Specific Features ===== */
+/* Hover effects */
+.card.themed-card-hover,
+.themed-card.themed-card-hover {
+    transition: all var(--transition-normal);
+}
+
+.card.themed-card-hover:hover,
+.themed-card.themed-card-hover:hover {
+    /* Removed transform to prevent stacking context issues with dropdowns */
+    box-shadow: 0 10px 15px -3px var(--shadow-color-hover);
+}
+
+/* Shadow on hover when Genie is active */
+.card.themed-card-hover.has-genie-active:hover,
+.card.themed-card-hover.no-hover-transform:hover,
+.themed-card.themed-card-hover.has-genie-active:hover,
+.themed-card.themed-card-hover.no-hover-transform:hover {
+    box-shadow: 0 10px 15px -3px var(--shadow-color-hover);
+}
+
+/* Disable hover transforms for cards containing floating elements */
+.card.themed-card-hover:has(.genie-container):hover,
+.themed-card.themed-card-hover:has(.genie-container):hover {
+    box-shadow: 0 10px 15px -3px var(--shadow-color-hover);
+}
+
+.card.card-borderless,
+.themed-card.card-borderless {
+    border: none;
+}
+
+/* ===== Card Layout Behavior ===== */
+/* Cards in grid containers should fill their grid area */
+.container.layout-grid > .card {
+    margin: 0;
+    height: 100%;
+}
+
+/* Cards in positioned layouts should use natural sizing */
+.container.layout-positioned > .card {
+    width: auto;
+    max-width: fit-content;
+    display: inline-block;
+    margin: var(--spacing-sm);
+}
+
+/* ===== Genie Integration ===== */
+.card.genie-trigger,
+.themed-card.genie-trigger {
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.card.genie-trigger:hover,
+.themed-card.genie-trigger:hover {
+    box-shadow: var(--shadow-lg);
+    /* Removed transform to prevent stacking context issues with dropdowns */
+}
+
+.card.genie-trigger.has-genie-active:hover,
+.themed-card.genie-trigger.has-genie-active:hover {
+    /* Enhanced shadow only, no transforms */
+    box-shadow: var(--shadow-lg);
+}
+
+/* Genie positioning overrides */
+.card.layout-flex .genie-container,
+.card.layout-grid .genie-container,
+.themed-card.layout-flex .genie-container,
+.themed-card.layout-grid .genie-container {
+    position: absolute;
+    flex: none;
+    grid-area: unset;
+}
+
+/* Positioning hints for auto-detection */
+.card[data-floating-position="auto"],
+.themed-card[data-floating-position="auto"] {
+    position: relative;
+}
+
+/* Genie trigger highlighting */
+.card.floating-trigger-highlight,
+.themed-card.floating-trigger-highlight {
+    transition: all var(--transition-fast);
+}
+
+.card.floating-trigger-highlight:hover,
+.themed-card.floating-trigger-highlight:hover {
+    background-color: var(--surface-accent-color);
+    border-color: var(--primary-color);
+}
+
+/* ===== FloatingActionButton Support ===== */
+/* FAB containers should maintain positioning within cards */
+.card.layout-flex > .fab-container,
+.card.layout-flex-column > .fab-container,
+.themed-card.layout-flex > .fab-container,
+.themed-card.layout-flex-column > .fab-container {
+    flex: 0 0 auto;
+    position: absolute;
+    align-self: flex-start;
+    z-index: calc(var(--z-fixed, 1030) + 10);
+}

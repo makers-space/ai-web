@@ -1,0 +1,559 @@
+/* ===== TreeView - Clean, Intuitive Styles ===== */
+
+/* ===== Container ===== */
+.tree-view,
+.themed-tree-view {
+    width: 100%;
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: transparent;
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: visible; /* Allow genies to overflow */
+}
+
+/* ===== Background Color Variants with Consolidated Typography & Icon Rules ===== */
+/* 
+ * Each background variant sets both text color and icon color for optimal contrast.
+ * This consolidation eliminates the need for separate JavaScript logic to determine icon variants.
+ * 
+ * Available variants: default (transparent), surface, primary, secondary, tertiary, background
+ */
+
+/* Background color variants with consolidated color rules */
+
+.tree-view-bg-transparent {
+    background-color: transparent;
+}
+
+.tree-view-bg-surface {
+    background-color: var(--surface-color);
+}
+
+/* Primary background - use contrast text and secondary icons */
+.tree-view-bg-primary {
+    background-color: var(--primary-color);
+    color: var(--text-contrast-color);
+}
+
+.tree-view-bg-primary .themed-icon {
+    color: var(--secondary-color) !important;
+}
+
+/* Secondary background - use regular text and tertiary icons */
+.tree-view-bg-secondary {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.tree-view-bg-secondary .themed-icon {
+    color: var(--tertiary-color) !important;
+}
+
+/* Tertiary background - use contrast text and primary icons */
+.tree-view-bg-tertiary {
+    background-color: var(--tertiary-color);
+    color: var(--text-contrast-color);
+}
+
+.tree-view-bg-tertiary .themed-icon {
+    color: var(--primary-color) !important;
+}
+
+/* Background variant - uses main background color */
+.tree-view-bg-background {
+    background-color: var(--background-color);
+}
+
+/* Size variants */
+.tree-view-xs {
+    font-size: var(--font-size-xs);
+}
+
+.tree-view-small,
+.tree-view-sm {
+    font-size: var(--font-size-sm);
+}
+
+.tree-view-large,
+.tree-view-lg {
+    font-size: var(--font-size-lg);
+}
+
+.tree-view-xl {
+    font-size: var(--font-size-xl);
+}
+
+/* Empty state */
+.tree-view-empty {
+    padding: var(--spacing-lg);
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Search input container */
+.tree-view-search {
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-xs);
+    border-bottom: 1px solid var(--border-color);
+    background-color: inherit;
+}
+
+.tree-view-search .input-container {
+    margin: 0;
+    width: 100%;
+}
+
+.tree-view-search .input-field-wrapper {
+    background-color: inherit;
+}
+
+/* ===== Tree Nodes ===== */
+.tree-node {
+    position: relative;
+    margin-bottom: 1px;
+    overflow: visible; /* Allow genies to overflow */
+}
+
+/* Node content container */
+.tree-node-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-height: 2.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: var(--border-radius);
+    position: relative;
+}
+
+/* Hover states - variant specific */
+.tree-view-bg-transparent .tree-node-content:hover {
+    background-color: color-mix(in srgb, var(--text-color) 8%, transparent);
+}
+
+.tree-view-bg-surface .tree-node-content:hover {
+    background-color: var(--background-color);
+}
+
+.tree-view-bg-primary .tree-node-content:hover {
+    background-color: var(--primary-accent-color);
+}
+
+.tree-view-bg-secondary .tree-node-content:hover {
+    background-color: var(--secondary-accent-color);
+}
+
+.tree-view-bg-tertiary .tree-node-content:hover {
+    background-color: var(--tertiary-accent-color);
+}
+
+.tree-view-bg-background .tree-node-content:hover {
+    background-color: var(--surface-color);
+}
+
+/* Selected states - variant specific */
+.tree-view-bg-transparent .tree-node-selected .tree-node-content,
+.tree-view-bg-transparent .tree-node-selected .tree-node-content:hover {
+    background-color: color-mix(in srgb, var(--primary-color) 16%, transparent);
+    color: var(--text-color);
+}
+
+.tree-view-bg-surface .tree-node-selected .tree-node-content {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.tree-view-bg-surface .tree-node-selected .tree-node-content:hover {
+    background-color: var(--background-color);
+    opacity: 0.9;
+}
+
+.tree-view-bg-primary .tree-node-selected .tree-node-content {
+    background-color: var(--primary-accent-color);
+    color: var(--text-contrast-color);
+}
+
+.tree-view-bg-primary .tree-node-selected .tree-node-content:hover {
+    background-color: var(--primary-accent-color);
+    opacity: 0.9;
+}
+
+.tree-view-bg-secondary .tree-node-selected .tree-node-content {
+    background-color: var(--secondary-accent-color);
+    color: var(--text-color);
+}
+
+.tree-view-bg-secondary .tree-node-selected .tree-node-content:hover {
+    background-color: var(--secondary-accent-color);
+    opacity: 0.9;
+}
+
+.tree-view-bg-tertiary .tree-node-selected .tree-node-content {
+    background-color: var(--tertiary-accent-color);
+    color: var(--text-contrast-color);
+}
+
+.tree-view-bg-tertiary .tree-node-selected .tree-node-content:hover {
+    background-color: var(--tertiary-accent-color);
+    opacity: 0.9;
+}
+
+.tree-view-bg-background .tree-node-selected .tree-node-content {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+}
+
+.tree-view-bg-background .tree-node-selected .tree-node-content:hover {
+    background-color: var(--surface-color);
+    opacity: 0.9;
+}
+
+/* Disabled states */
+.tree-node-disabled {
+    cursor: not-allowed;
+}
+.tree-node-disabled > .tree-node-content > .tree-node-icon,
+.tree-node-disabled > .tree-node-content > .tree-node-label {
+    opacity: 0.5;
+}
+
+/* ===== Tree Hierarchy (Simple Indentation) ===== */
+.tree-view-large .tree-node-content,
+.tree-view-lg .tree-node-content,
+.tree-view-xl .tree-node-content {
+    margin-left: 0;
+}
+
+.tree-node-level-1 .tree-node-content {
+    margin-left: 24px;
+}
+
+.tree-node-level-2 .tree-node-content {
+    margin-left: 48px;
+}
+
+.tree-node-level-3 .tree-node-content {
+    margin-left: 72px;
+}
+
+.tree-node-level-4 .tree-node-content {
+    margin-left: 96px;
+}
+
+.tree-node-level-5 .tree-node-content {
+    margin-left: 120px;
+}
+
+.tree-view-connectors .tree-node::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 50%;
+    width: 1px;
+    background-color: var(--border-color);
+    opacity: 0.4;
+    z-index: 0; /* Keep lines behind content */
+}
+
+.tree-view-connectors .tree-node::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 12px;
+    height: 1px;
+    background-color: var(--border-color);
+    opacity: 0.4;
+    z-index: 0; /* Keep lines behind content */
+}
+
+/* Adjust line positions for different levels */
+.tree-view-connectors .tree-node-level-1::before,
+.tree-view-connectors .tree-node-level-1::after {
+    left: 36px;
+}
+
+.tree-view-connectors .tree-node-level-2::before,
+.tree-view-connectors .tree-node-level-2::after {
+    left: 60px;
+}
+
+.tree-view-connectors .tree-node-level-3::before,
+.tree-view-connectors .tree-node-level-3::after {
+    left: 84px;
+}
+
+.tree-view-connectors .tree-node-level-4::before,
+.tree-view-connectors .tree-node-level-4::after {
+    left: 108px;
+}
+
+.tree-view-connectors .tree-node-level-5::before,
+.tree-view-connectors .tree-node-level-5::after {
+    left: 132px;
+}
+
+/* Hide connectors for root level */
+.tree-view-connectors .tree-node-level-0::before,
+.tree-view-connectors .tree-node-level-0::after {
+    display: none;
+}
+
+/* Disable connectors on small size to avoid icon interference */
+.tree-view-small.tree-view-connectors .tree-node::before,
+.tree-view-small.tree-view-connectors .tree-node::after,
+.tree-view-sm.tree-view-connectors .tree-node::before,
+.tree-view-sm.tree-view-connectors .tree-node::after,
+.tree-view-xs.tree-view-connectors .tree-node::before,
+.tree-view-xs.tree-view-connectors .tree-node::after {
+    display: none;
+}
+
+/* ===== Interactive Elements ===== */
+
+/* Toggle (expand/collapse) — icon only, no button chrome */
+.tree-node-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 0;
+    padding: 0;
+    width: max-content;
+}
+
+.tree-node-toggle:hover {
+    color: var(--text-color);
+}
+
+.tree-node-toggle .themed-icon {
+    margin: 0;
+    transition: transform 0.2s ease;
+}
+
+/* Rotate icon when expanded */
+.tree-node.expanded .tree-node-toggle .themed-icon {
+    transform: rotate(90deg);
+}
+
+/* Node icon */
+.tree-node-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 2; /* Ensure icon stays above connector lines */
+}
+
+.tree-node-icon .themed-icon {
+    margin: 0;
+}
+
+/* Node label */
+.tree-node-label {
+    flex: 1;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tree-node-selected .tree-node-label {
+    font-weight: var(--font-weight-medium);
+}
+
+/* ===== Focus States ===== */
+.tree-node:focus-visible .tree-node-content {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ===== Loading States ===== */
+.tree-node-loading .tree-node-icon .themed-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== Size Variants ===== */
+.tree-view-small .tree-node-content,
+.tree-view-sm .tree-node-content,
+.tree-view-xs .tree-node-content {
+    min-height: 1.75rem; /* Significantly smaller than default 2.5rem */
+    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-xs); /* Much tighter padding */
+    gap: calc(var(--spacing-xs) * 0.75); /* Smaller gap between elements */
+    font-size: 0.875rem; /* Smaller text */
+}
+
+/* Much smaller icons and toggle for small variant */
+.tree-view-small .tree-node-toggle,
+.tree-view-sm .tree-node-toggle,
+.tree-view-xs .tree-node-toggle {
+    /* icon sizing is inherited from the icon component itself */
+}
+
+/* Reduce indentation for small variant */
+.tree-view-small .tree-node-level-1 .tree-node-content,
+.tree-view-sm .tree-node-level-1 .tree-node-content,
+.tree-view-xs .tree-node-level-1 .tree-node-content {
+    margin-left: 16px;
+}
+
+.tree-view-small .tree-node-level-2 .tree-node-content,
+.tree-view-sm .tree-node-level-2 .tree-node-content,
+.tree-view-xs .tree-node-level-2 .tree-node-content {
+    margin-left: 32px;
+}
+
+.tree-view-small .tree-node-level-3 .tree-node-content,
+.tree-view-sm .tree-node-level-3 .tree-node-content,
+.tree-view-xs .tree-node-level-3 .tree-node-content {
+    margin-left: 48px;
+}
+
+.tree-view-small .tree-node-level-4 .tree-node-content,
+.tree-view-sm .tree-node-level-4 .tree-node-content,
+.tree-view-xs .tree-node-level-4 .tree-node-content {
+    margin-left: 64px;
+}
+
+.tree-view-small .tree-node-level-5 .tree-node-content,
+.tree-view-sm .tree-node-level-5 .tree-node-content,
+.tree-view-xs .tree-node-level-5 .tree-node-content {
+    margin-left: 80px;
+}
+
+.tree-view-large .tree-node-content,
+.tree-view-lg .tree-node-content,
+.tree-view-xl .tree-node-content {
+    min-height: 3.5rem; /* Significantly larger than default 2.5rem */
+    padding: var(--spacing-md) var(--spacing-lg); /* Much more generous padding */
+    gap: var(--spacing-sm); /* Larger gap between elements */
+    font-size: 1.125rem; /* Larger text */
+}
+
+.tree-view-large .tree-node-toggle,
+.tree-view-lg .tree-node-toggle,
+.tree-view-xl .tree-node-toggle {
+    /* icon sizing is inherited from the icon component itself */
+}
+
+/* Increase indentation for large variant */
+.tree-view-large .tree-node-level-1 .tree-node-content,
+.tree-view-lg .tree-node-level-1 .tree-node-content,
+.tree-view-xl .tree-node-level-1 .tree-node-content {
+    margin-left: 32px;
+}
+
+.tree-view-large .tree-node-level-2 .tree-node-content,
+.tree-view-lg .tree-node-level-2 .tree-node-content,
+.tree-view-xl .tree-node-level-2 .tree-node-content {
+    margin-left: 64px;
+}
+
+.tree-view-large .tree-node-level-3 .tree-node-content,
+.tree-view-lg .tree-node-level-3 .tree-node-content,
+.tree-view-xl .tree-node-level-3 .tree-node-content {
+    margin-left: 96px;
+}
+
+.tree-view-large .tree-node-level-4 .tree-node-content,
+.tree-view-lg .tree-node-level-4 .tree-node-content,
+.tree-view-xl .tree-node-level-4 .tree-node-content {
+    margin-left: 128px;
+}
+
+.tree-view-large .tree-node-level-5 .tree-node-content,
+.tree-view-lg .tree-node-level-5 .tree-node-content,
+.tree-view-xl .tree-node-level-5 .tree-node-content {
+    margin-left: 160px;
+}
+
+/* ===== Genie Integration ===== */
+.tree-node-has-genie::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: var(--spacing-sm);
+    width: 4px;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.tree-node-has-genie:hover::after {
+    opacity: 1;
+}
+
+.tree-node-genie-active::after {
+    display: none;
+}
+
+.tree-node-genie-active {
+    background-color: var(--primary-accent-color);
+    color: var(--text-contrast-color);
+    border-radius: var(--border-radius);
+}
+
+/* ===== Drag & Drop ===== */
+.tree-view-draggable .tree-node[draggable="true"] {
+    cursor: grab;
+}
+
+.tree-view-draggable .tree-node[draggable="true"]:active {
+    cursor: grabbing;
+}
+
+.tree-node-drag-over .tree-node-content {
+    background-color: var(--primary-accent-color);
+    color: var(--text-contrast-color);
+    outline: 2px dashed var(--primary-accent-color);
+    outline-offset: 2px;
+}
+
+/* ===== Search Highlighting ===== */
+.tree-node-highlight {
+    background-color: var(--warning-color);
+    color: var(--text-color);
+    padding: 1px 2px;
+    border-radius: 2px;
+}
+
+/* ===== Utility Classes ===== */
+.justify-self-auto {
+    justify-self: auto;
+}
+
+.justify-self-start {
+    justify-self: start;
+}
+
+.justify-self-end {
+    justify-self: end;
+}
+
+.justify-self-center {
+    justify-self: center;
+}
+
+.justify-self-stretch {
+    justify-self: stretch;
+}

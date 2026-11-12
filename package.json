@@ -1,0 +1,70 @@
+{
+  "name": "ai-base-web",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "React web application with advanced theming system",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@audiowave/react": "^0.6.2",
+    "@mdxeditor/editor": "^4.5.0",
+    "@monaco-editor/react": "^4.8.0-rc.3",
+    "@react-spring/web": "^10.1.2",
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
+    "@tiptap/extension-color": "^3.33.1",
+    "@tiptap/extension-font-family": "^3.33.1",
+    "@tiptap/extension-highlight": "^3.33.1",
+    "@tiptap/extension-image": "^3.33.1",
+    "@tiptap/extension-link": "^3.33.1",
+    "@tiptap/extension-table": "^3.33.1",
+    "@tiptap/extension-table-cell": "^3.33.1",
+    "@tiptap/extension-table-header": "^3.33.1",
+    "@tiptap/extension-table-row": "^3.33.1",
+    "@tiptap/extension-text-align": "^3.33.1",
+    "@tiptap/extension-text-style": "^3.33.1",
+    "@tiptap/extension-underline": "^3.33.1",
+    "@tiptap/pm": "^3.33.1",
+    "@tiptap/react": "^3.33.1",
+    "@tiptap/starter-kit": "^3.33.1",
+    "@xyflow/react": "^12.12.1",
+    "axios": "^1.21.1",
+    "katex": "^0.19.1",
+    "mammoth": "^1.13.0",
+    "monaco-editor": "^0.57.0",
+    "opentype.js": "^2.0.0",
+    "pdf-lib": "^1.17.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-icons": "^5.7.0",
+    "react-pdf": "^11.0.0",
+    "react-router-dom": "^7.18.5",
+    "tiptap-extension-resize-image": "^1.4.7",
+    "y-monaco": "^0.1.6",
+    "y-websocket": "^3.1.0",
+    "yjs": "^13.6.33"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.3.0",
+    "vite": "^8.3.8"
+  },
+  "proseWrap": "preserve",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "overrides": {
+    "dompurify": "^3.4.17"
+  }
+}

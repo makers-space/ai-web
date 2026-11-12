@@ -1,0 +1,634 @@
+/* ===== Flow Component CSS ===== */
+/* React Flow integration with theme system - minimal overrides approach */
+
+.flow-container.themed-flow {
+  position: relative;
+  width: 100%;
+  background: var(--surface-color);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+/* ===== Size Variants ===== */
+.flow-container.flow-xs { height: 300px; }
+.flow-container.flow-sm { height: 400px; }
+.flow-container.flow-md { height: 500px; }
+.flow-container.flow-lg { height: 600px; }
+.flow-container.flow-xl { height: 800px; }
+
+.flow-node-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs);
+}
+
+.flow-node-preview .flow-node-surface {
+  transform: scale(0.85);
+  cursor: default;
+}
+
+/* ===== Theme Integration - Minimal Override Approach ===== */
+/* Let React Flow handle most styling, only override colors to match theme */
+
+/* Node styling - keep React Flow's excellent UX, just adjust colors */
+.themed-flow .react-flow__node {
+  background: var(--card-background);
+  color: var(--text-color);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-family);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.themed-flow .react-flow__node-editable {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+  padding: 0;
+}
+
+.themed-flow .react-flow__node.selected {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.themed-flow .react-flow__node-editable.selected {
+  box-shadow: none;
+}
+
+.themed-flow .react-flow__node:hover {
+  border-color: var(--secondary-color);
+}
+
+.themed-flow .react-flow__node-editable:hover {
+  border-color: transparent;
+}
+
+/* Node handles */
+.themed-flow .react-flow__handle {
+  background: var(--primary-color);
+  border: 2px solid var(--surface-color);
+}
+
+.themed-flow .react-flow__handle:hover {
+  background: var(--secondary-color);
+}
+
+/* Edge styling */
+.themed-flow .react-flow__edge-path {
+  stroke: var(--secondary-color);
+  stroke-width: 2px;
+}
+
+.themed-flow .react-flow__edge.flow-edge-color-primary .react-flow__edge-path {
+  stroke: var(--primary-color);
+}
+
+.themed-flow .react-flow__edge.flow-edge-color-secondary .react-flow__edge-path {
+  stroke: var(--secondary-color);
+}
+
+.themed-flow .react-flow__edge.flow-edge-color-tertiary .react-flow__edge-path {
+  stroke: var(--tertiary-color);
+}
+
+.themed-flow .react-flow__edge.flow-edge-color-success .react-flow__edge-path {
+  stroke: var(--success-color);
+}
+
+.themed-flow .react-flow__edge.flow-edge-color-warning .react-flow__edge-path {
+  stroke: var(--warning-color);
+}
+
+.themed-flow .react-flow__edge.flow-edge-color-error .react-flow__edge-path {
+  stroke: var(--error-color);
+}
+
+.themed-flow .react-flow__edge.flow-edge-color-neutral .react-flow__edge-path {
+  stroke: var(--neutral-color, var(--text-muted, #64748b));
+}
+
+.themed-flow .react-flow__edge.flow-edge-color-surface .react-flow__edge-path {
+  stroke: var(--surface-color);
+}
+
+.themed-flow .react-flow__edge.flow-edge-color-background .react-flow__edge-path {
+  stroke: var(--background-color);
+}
+
+.themed-flow .react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--primary-color);
+  stroke-width: 3px;
+}
+
+.themed-flow .react-flow__edge:hover .react-flow__edge-path {
+  stroke: var(--tertiary-color);
+}
+
+/* Edge labels */
+.themed-flow .react-flow__edge-textbg {
+  fill: var(--surface-color);
+}
+
+.themed-flow .react-flow__edge-text {
+  fill: var(--text-color);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Edge markers (arrowheads) */
+.themed-flow .react-flow__arrowhead {
+  fill: var(--secondary-color);
+}
+
+.themed-flow .react-flow__edge.selected .react-flow__arrowhead {
+  fill: var(--primary-color);
+}
+
+/* Background patterns */
+.themed-flow .react-flow__background {
+  background: var(--surface-color);
+}
+
+.themed-flow .react-flow__background-pattern {
+  stroke: var(--border-color);
+  opacity: 0.4;
+}
+
+/* Make cross pattern more visible */
+.themed-flow .react-flow__background-pattern.cross {
+  stroke-width: 1.5;
+  opacity: 0.5;
+}
+
+/* Controls styling - blend with theme */
+.themed-flow .react-flow__controls {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.themed-flow .react-flow__controls-button {
+  background: transparent;
+  color: var(--text-color);
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.themed-flow .react-flow__controls-button:hover {
+  background: var(--button-hover-background);
+  color: var(--primary-color);
+}
+
+.themed-flow .react-flow__controls-button:last-child {
+  border-bottom: none;
+}
+
+/* Minimap styling */
+.themed-flow .react-flow__minimap {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+}
+
+.themed-flow .react-flow__minimap-mask {
+  fill: var(--primary-color);
+  fill-opacity: 0.1;
+  stroke: var(--primary-color);
+  stroke-width: 1;
+}
+
+.themed-flow .react-flow__minimap-node {
+  fill: var(--secondary-color);
+  stroke: var(--border-color);
+}
+
+/* Selection box */
+.themed-flow .react-flow__selection {
+  background: var(--primary-color);
+  opacity: 0.1;
+  border: 1px solid var(--primary-color);
+}
+
+/* Node resizer */
+.themed-flow .react-flow__resize-control {
+  background: var(--primary-color);
+  border: 1px solid var(--surface-color);
+}
+
+.themed-flow .react-flow__resize-control:hover {
+  background: var(--secondary-color);
+}
+
+/* Attribution (if not hidden) */
+.themed-flow .react-flow__attribution {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.themed-flow .react-flow__attribution a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.themed-flow .react-flow__attribution a:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
+
+/* ===== Custom Editable Node Shapes ===== */
+
+.flow-node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  min-height: 48px;
+}
+
+.flow-node-surface {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px 20px;
+  color: var(--flow-node-text, var(--text-color));
+  font-weight: 600;
+  line-height: 1.3;
+  min-width: 100px;
+  min-height: 48px;
+  max-width: 280px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.flow-node-geometry {
+  position: absolute;
+  inset: 0;
+  background: var(--flow-node-fill, var(--card-background));
+  border: 2px solid var(--flow-node-border, var(--border-color));
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-xs);
+  z-index: -1;
+  transition: inherit;
+  pointer-events: none;
+}
+
+.flow-node-surface.flow-node-color-primary {
+  --flow-node-fill: var(--primary-color);
+  --flow-node-border: var(--primary-accent-color, var(--primary-color));
+  --flow-node-text: var(--text-contrast-color);
+}
+
+.flow-node-surface.flow-node-color-secondary {
+  --flow-node-fill: var(--secondary-color);
+  --flow-node-border: var(--secondary-accent-color, var(--secondary-color));
+  --flow-node-text: var(--text-contrast-color);
+}
+
+.flow-node-surface.flow-node-color-tertiary {
+  --flow-node-fill: var(--tertiary-color);
+  --flow-node-border: var(--tertiary-accent-color, var(--tertiary-color));
+  --flow-node-text: var(--text-contrast-color);
+}
+
+.flow-node-surface.flow-node-color-success {
+  --flow-node-fill: var(--success-color);
+  --flow-node-border: var(--success-accent-color, var(--success-color));
+  --flow-node-text: var(--text-contrast-color);
+}
+
+.flow-node-surface.flow-node-color-warning {
+  --flow-node-fill: var(--warning-color);
+  --flow-node-border: var(--warning-accent-color, var(--warning-color));
+  --flow-node-text: var(--text-contrast-color, #ffffff);
+}
+
+.flow-node-surface.flow-node-color-error {
+  --flow-node-fill: var(--error-color);
+  --flow-node-border: var(--error-accent-color, var(--error-color));
+  --flow-node-text: var(--text-contrast-color);
+}
+
+.flow-node-surface.flow-node-color-neutral {
+  --flow-node-fill: var(--neutral-color);
+  --flow-node-border: var(--neutral-accent-color, var(--neutral-color));
+  --flow-node-text: var(--text-contrast-color);
+}
+
+.flow-node-surface.flow-node-color-surface {
+  --flow-node-fill: var(--surface-color);
+  --flow-node-border: var(--border-color);
+  --flow-node-text: var(--text-color);
+}
+
+.flow-node-surface.flow-node-color-background {
+  --flow-node-fill: var(--background-color);
+  --flow-node-border: var(--border-color);
+  --flow-node-text: var(--text-color);
+}
+
+.flow-node-label {
+  position: relative;
+  z-index: 1;
+  padding: 0 8px;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  white-space: normal;
+  max-width: 100%;
+}
+
+/* Typography size variants */
+.flow-node-surface[data-font-size="xs"] .flow-node-label,
+.flow-node-surface[data-font-size="xs"] .flow-node-input {
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.flow-node-surface[data-font-size="sm"] .flow-node-label,
+.flow-node-surface[data-font-size="sm"] .flow-node-input {
+  font-size: 0.875rem;
+  line-height: 1.25;
+}
+
+.flow-node-surface[data-font-size="md"] .flow-node-label,
+.flow-node-surface[data-font-size="md"] .flow-node-input {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.flow-node-surface[data-font-size="lg"] .flow-node-label,
+.flow-node-surface[data-font-size="lg"] .flow-node-input {
+  font-size: 1.125rem;
+  line-height: 1.35;
+}
+
+.flow-node-surface[data-font-size="xl"] .flow-node-label,
+.flow-node-surface[data-font-size="xl"] .flow-node-input {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.flow-node-surface[data-font-size="2xl"] .flow-node-label,
+.flow-node-surface[data-font-size="2xl"] .flow-node-input {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+/* Typography weight variants */
+.flow-node-surface[data-font-weight="light"] .flow-node-label,
+.flow-node-surface[data-font-weight="light"] .flow-node-input {
+  font-weight: 300;
+}
+
+.flow-node-surface[data-font-weight="normal"] .flow-node-label,
+.flow-node-surface[data-font-weight="normal"] .flow-node-input {
+  font-weight: 400;
+}
+
+.flow-node-surface[data-font-weight="medium"] .flow-node-label,
+.flow-node-surface[data-font-weight="medium"] .flow-node-input {
+  font-weight: 500;
+}
+
+.flow-node-surface[data-font-weight="semibold"] .flow-node-label,
+.flow-node-surface[data-font-weight="semibold"] .flow-node-input {
+  font-weight: 600;
+}
+
+.flow-node-surface[data-font-weight="bold"] .flow-node-label,
+.flow-node-surface[data-font-weight="bold"] .flow-node-input {
+  font-weight: 700;
+}
+
+.flow-node-surface[data-font-weight="extrabold"] .flow-node-label,
+.flow-node-surface[data-font-weight="extrabold"] .flow-node-input {
+  font-weight: 800;
+}
+
+/* Text alignment variants */
+.flow-node-surface[data-text-align="left"] .flow-node-label,
+.flow-node-surface[data-text-align="left"] .flow-node-input {
+  text-align: left;
+}
+
+.flow-node-surface[data-text-align="center"] .flow-node-label,
+.flow-node-surface[data-text-align="center"] .flow-node-input {
+  text-align: center;
+}
+
+.flow-node-surface[data-text-align="right"] .flow-node-label,
+.flow-node-surface[data-text-align="right"] .flow-node-input {
+  text-align: right;
+}
+
+.flow-node-input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 200px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  color: var(--flow-node-text, currentColor);
+  font: inherit;
+  text-align: center;
+  padding: 2px 4px;
+  outline: none;
+}
+
+.flow-node-input:focus {
+  border-bottom-color: var(--primary-color);
+}
+
+.themed-flow .react-flow__node-editable:hover .flow-node-geometry {
+  box-shadow: var(--shadow-lg);
+}
+
+.themed-flow .react-flow__node-editable:hover .flow-node-surface {
+  transform: translateY(-2px);
+}
+
+.themed-flow .react-flow__node-editable.selected .flow-node-geometry {
+  box-shadow: 0 0 0 3px var(--primary-color);
+}
+
+.themed-flow .react-flow__node-editable.selected .flow-node-surface {
+  transform: translateY(-2px);
+}
+
+.flow-node-surface[data-shape="rectangle"] {
+  min-width: 120px;
+  min-height: 56px;
+  max-width: 300px;
+  padding: 14px 20px;
+}
+
+.flow-node-surface[data-shape="circle"] {
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 180px;
+  padding: 20px;
+  aspect-ratio: 1 / 1;
+}
+
+.flow-node-surface[data-shape="circle"] .flow-node-geometry {
+  border-radius: 9999px;
+}
+
+.flow-node-surface[data-shape="circle"] .flow-node-label,
+.flow-node-surface[data-shape="circle"] .flow-node-input {
+  max-width: 85%;
+}
+
+.flow-node-surface[data-shape="diamond"] {
+  padding: 36px 44px;
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 200px;
+}
+
+.flow-node-surface[data-shape="diamond"] .flow-node-geometry {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.flow-node-surface[data-shape="diamond"] .flow-node-label,
+.flow-node-surface[data-shape="diamond"] .flow-node-input {
+  max-width: 90%;
+}
+
+.flow-node-surface[data-shape="cylinder"] {
+  padding: 20px 28px;
+  min-width: 120px;
+  min-height: 64px;
+  max-width: 260px;
+}
+
+.flow-node-surface[data-shape="cylinder"] .flow-node-geometry {
+  --cylinder-curve: 28px;
+  border-radius: 100% / calc(var(--cylinder-curve) * 2);
+  border: 2px solid var(--flow-node-border, var(--border-color));
+  background:
+    radial-gradient(
+      50% var(--cylinder-curve) at 50% var(--cylinder-curve),
+      rgba(0, 0, 0, 0.15) 99.99%,
+      transparent 0
+    ),
+    radial-gradient(
+      50% var(--cylinder-curve) at 50% calc(100% - var(--cylinder-curve)),
+      rgba(255, 255, 255, 0.2) 99.99%,
+      transparent 0
+    ),
+    var(--flow-node-fill, var(--card-background));
+}
+
+.flow-node-surface[data-shape="cylinder"] .flow-node-geometry::before,
+.flow-node-surface[data-shape="cylinder"] .flow-node-geometry::after {
+  display: none;
+}
+
+.flow-node-surface[data-shape="cylinder"] .flow-node-label,
+.flow-node-surface[data-shape="cylinder"] .flow-node-input {
+  max-width: 90%;
+}
+
+.flow-node-preview .flow-node-geometry::before,
+.flow-node-preview .flow-node-geometry::after {
+  display: none;
+}
+
+/* ===== Group Node Styles (Subflows) - Override React Flow defaults ===== */
+
+/* React Flow's built-in group nodes with theme integration */
+.themed-flow .react-flow__node-group {
+  /* Simple transparent background using color-mix for modern browser support */
+  background-color: color-mix(in srgb, var(--surface-color), transparent 80%);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: 12px 16px;
+  transition: border-color 0.2s ease;
+  
+  /* Ensure text is visible */
+  color: var(--text-color);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+}
+
+.themed-flow .react-flow__node-group:hover {
+  border-style: solid;
+  background-color: color-mix(in srgb, var(--surface-color), transparent 70%);
+}
+
+.themed-flow .react-flow__node-group.selected {
+  border-style: solid;
+  border-width: 3px;
+  box-shadow: 0 0 0 1px var(--primary-color);
+  background-color: color-mix(in srgb, var(--surface-color), transparent 60%);
+}
+
+/* Colored Group Variants - Simple background tints */
+.themed-flow .react-flow__node-group.flow-node-color-primary {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background-color: color-mix(in srgb, var(--primary-color), transparent 90%);
+}
+
+.themed-flow .react-flow__node-group.flow-node-color-secondary {
+  border-color: var(--secondary-color);
+  color: var(--secondary-color);
+  background-color: color-mix(in srgb, var(--secondary-color), transparent 90%);
+}
+
+.themed-flow .react-flow__node-group.flow-node-color-tertiary {
+  border-color: var(--tertiary-color);
+  color: var(--tertiary-color);
+  background-color: color-mix(in srgb, var(--tertiary-color), transparent 90%);
+}
+
+.themed-flow .react-flow__node-group.flow-node-color-success {
+  border-color: var(--success-color);
+  color: var(--success-color);
+  background-color: color-mix(in srgb, var(--success-color), transparent 90%);
+}
+
+.themed-flow .react-flow__node-group.flow-node-color-warning {
+  border-color: var(--warning-color);
+  color: var(--warning-color);
+  background-color: color-mix(in srgb, var(--warning-color), transparent 90%);
+}
+
+.themed-flow .react-flow__node-group.flow-node-color-error {
+  border-color: var(--error-color);
+  color: var(--error-color);
+  background-color: color-mix(in srgb, var(--error-color), transparent 90%);
+}
+
+.themed-flow .react-flow__node-group.flow-node-color-neutral {
+  border-color: var(--neutral-color);
+  color: var(--neutral-color);
+  background-color: color-mix(in srgb, var(--neutral-color), transparent 90%);
+}
+
+.themed-flow .react-flow__node-group.flow-node-color-surface {
+  border-color: var(--border-color);
+  color: var(--text-color);
+  background-color: color-mix(in srgb, var(--surface-color), transparent 50%);
+}
+
+.themed-flow .react-flow__node-group.flow-node-color-background {
+  border-color: var(--border-color);
+  color: var(--text-color);
+  background-color: color-mix(in srgb, var(--background-color), transparent 50%);
+}
+

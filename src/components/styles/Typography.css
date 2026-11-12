@@ -1,0 +1,942 @@
+/* Typography component structural styles */
+.typography {
+    margin: var(--spacing-xs) 0;
+    line-height: var(--line-height-normal);
+    transition: color var(--transition-fast);
+    color: var(--text-color); /* Inherit theme text color by default */
+}
+
+/* Block tags from the `as` prop take margins only from margin props /
+   explicit styles; specificity beats the base rules, loses to .margin-*. */
+h1.typography, h2.typography, h3.typography, h4.typography,
+h5.typography, h6.typography, p.typography, div.typography,
+label.typography {
+    margin: 0;
+}
+
+.typography.typography-truncate {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Size classes are defined in the responsive section below */
+/* Letter-spacing for each size */
+.typography-size-xxs {
+    letter-spacing: 0.025em; /* More open spacing for small text readability */
+}
+
+.typography-size-xs {
+    letter-spacing: 0.025em; /* More open spacing for small text readability */
+}
+
+.typography-size-sm {
+    letter-spacing: 0.015em; /* Slightly open spacing for small text */
+}
+
+.typography-size-md {
+    letter-spacing: 0.01em; /* Subtle spacing for medium text */
+}
+
+.typography-size-lg {
+    letter-spacing: 0.005em; /* Very subtle spacing for larger text */
+}
+
+.typography-size-xl {
+    letter-spacing: 0; /* Normal spacing */
+}
+
+.typography-size-2xl {
+    letter-spacing: -0.005em; /* Slightly tight for large text */
+}
+
+.typography-size-3xl {
+    letter-spacing: -0.015em; /* Tighter for very large text */
+}
+
+.typography-size-4xl {
+    letter-spacing: -0.025em; /* Tight spacing for display text */
+}
+
+/* Font Weight Classes - Full range from 100-900 */
+.typography-weight-thin {
+    font-weight: 100;
+    font-family: var(--font-family-thin, var(--font-family-light, var(--font-family)));
+}
+
+.typography-weight-extralight {
+    font-weight: 200;
+    font-family: var(--font-family-extralight, var(--font-family-light, var(--font-family)));
+}
+
+.typography-weight-light {
+    font-weight: 300;
+    font-family: var(--font-family-light, var(--font-family));
+}
+
+.typography-weight-normal,
+.typography-weight-regular {
+    font-weight: 400;
+    font-family: var(--font-family-normal, var(--font-family));
+}
+
+.typography-weight-medium {
+    font-weight: 500;
+    font-family: var(--font-family-medium, var(--font-family));
+}
+
+.typography-weight-semibold {
+    font-weight: 600;
+    font-family: var(--font-family-semibold, var(--font-family));
+}
+
+.typography-weight-bold {
+    font-weight: 700;
+    font-family: var(--font-family-bold, var(--font-family));
+}
+
+.typography-weight-extrabold {
+    font-weight: 800;
+    font-family: var(--font-family-extrabold, var(--font-family));
+}
+
+.typography-weight-black {
+    font-weight: 900;
+    font-family: var(--font-family-black, var(--font-family));
+}
+
+.typography-text {
+    line-height: var(--line-height-normal);
+    margin: var(--spacing-sm) 0;
+    letter-spacing: 0.01em; /* Subtle open spacing for body text readability */
+}
+
+/* Typography Link Styles */
+.typography-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-fast), text-decoration var(--transition-fast);
+    cursor: pointer;
+}
+
+.typography-link:hover {
+    color: var(--primary-color);
+}
+
+.typography-link:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* External Link Styles */
+.typography-link-external {
+    position: relative;
+}
+
+.typography-link-external:hover {
+    color: var(--tertiary-color);
+    text-decoration: underline;
+}
+
+.typography-link-external:focus {
+    outline: 2px solid var(--tertiary-color);
+}
+
+/* Internal Link Styles */
+.typography-link-internal:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Font Family Classes */
+.typography-font-primary {
+    font-family: var(--font-family-primary, var(--font-family));
+}
+
+.typography-font-secondary {
+    font-family: var(--font-family-secondary, var(--font-family));
+}
+
+.typography-font-monospace {
+    font-family: var(--font-family-monospace, 'Courier New', monospace);
+    font-feature-settings: "liga" 1, "calt" 1;
+    letter-spacing: 0.025em; /* Slightly open spacing for monospace readability */
+}
+
+/* Font combination classes - apply font family to weight classes when font prop is used */
+/* Primary font + thin/extralight */
+.typography-font-primary.typography-weight-thin {
+    font-family: var(--font-family-primary-thin, var(--font-family-primary-light, var(--font-family-primary, var(--font-family))));
+}
+
+.typography-font-primary.typography-weight-extralight {
+    font-family: var(--font-family-primary-extralight, var(--font-family-primary-light, var(--font-family-primary, var(--font-family))));
+}
+
+.typography-font-primary.typography-weight-light {
+    font-family: var(--font-family-primary-light, var(--font-family-primary, var(--font-family-light, var(--font-family))));
+}
+
+.typography-font-primary.typography-weight-normal,
+.typography-font-primary.typography-weight-regular {
+    font-family: var(--font-family-primary-normal, var(--font-family-primary, var(--font-family-normal, var(--font-family))));
+}
+
+.typography-font-primary.typography-weight-medium {
+    font-family: var(--font-family-primary-medium, var(--font-family-primary, var(--font-family-medium, var(--font-family))));
+}
+
+.typography-font-primary.typography-weight-semibold {
+    font-family: var(--font-family-primary-semibold, var(--font-family-primary, var(--font-family-semibold, var(--font-family))));
+}
+
+.typography-font-primary.typography-weight-bold {
+    font-family: var(--font-family-primary-bold, var(--font-family-primary, var(--font-family-bold, var(--font-family))));
+}
+
+.typography-font-primary.typography-weight-extrabold {
+    font-family: var(--font-family-primary-extrabold, var(--font-family-primary, var(--font-family-extrabold, var(--font-family))));
+}
+
+.typography-font-primary.typography-weight-black {
+    font-family: var(--font-family-primary-black, var(--font-family-primary, var(--font-family-black, var(--font-family))));
+}
+
+/* Secondary font + thin/extralight */
+.typography-font-secondary.typography-weight-thin {
+    font-family: var(--font-family-secondary-thin, var(--font-family-secondary-light, var(--font-family-secondary, var(--font-family))));
+}
+
+.typography-font-secondary.typography-weight-extralight {
+    font-family: var(--font-family-secondary-extralight, var(--font-family-secondary-light, var(--font-family-secondary, var(--font-family))));
+}
+
+.typography-font-secondary.typography-weight-light {
+    font-family: var(--font-family-secondary-light, var(--font-family-secondary, var(--font-family-light, var(--font-family))));
+}
+
+.typography-font-secondary.typography-weight-normal,
+.typography-font-secondary.typography-weight-regular {
+    font-family: var(--font-family-secondary-normal, var(--font-family-secondary, var(--font-family-normal, var(--font-family))));
+}
+
+.typography-font-secondary.typography-weight-medium {
+    font-family: var(--font-family-secondary-medium, var(--font-family-secondary, var(--font-family-medium, var(--font-family))));
+}
+
+.typography-font-secondary.typography-weight-semibold {
+    font-family: var(--font-family-secondary-semibold, var(--font-family-secondary, var(--font-family-semibold, var(--font-family))));
+}
+
+.typography-font-secondary.typography-weight-bold {
+    font-family: var(--font-family-secondary-bold, var(--font-family-secondary, var(--font-family-bold, var(--font-family))));
+}
+
+.typography-font-secondary.typography-weight-extrabold {
+    font-family: var(--font-family-secondary-extrabold, var(--font-family-secondary, var(--font-family-extrabold, var(--font-family))));
+}
+
+.typography-font-secondary.typography-weight-black {
+    font-family: var(--font-family-secondary-black, var(--font-family-secondary, var(--font-family-black, var(--font-family))));
+}
+
+/* JustifySelf utility classes for Typography components */
+.typography.justify-self-auto {
+    justify-self: auto;
+}
+
+.typography.justify-self-start {
+    justify-self: start;
+}
+
+.typography.justify-self-end {
+    justify-self: end;
+}
+
+.typography.justify-self-center {
+    justify-self: center;
+}
+
+.typography.justify-self-stretch {
+    justify-self: stretch;
+}
+
+/* Margin utility classes for Typography components */
+.typography.margin-none {
+    margin: 0 !important;
+}
+
+.typography.margin-xs {
+    margin: var(--spacing-xs) !important;
+}
+
+.typography.margin-sm {
+    margin: var(--spacing-sm) !important;
+}
+
+.typography.margin-md {
+    margin: var(--spacing-md) !important;
+}
+
+.typography.margin-lg {
+    margin: var(--spacing-lg) !important;
+}
+
+.typography.margin-xl {
+    margin: var(--spacing-xl) !important;
+}
+
+.typography.margin-top-none {
+    margin-top: 0 !important;
+}
+
+.typography.margin-top-xs {
+    margin-top: var(--spacing-xs) !important;
+}
+
+.typography.margin-top-sm {
+    margin-top: var(--spacing-sm) !important;
+}
+
+.typography.margin-top-md {
+    margin-top: var(--spacing-md) !important;
+}
+
+.typography.margin-top-lg {
+    margin-top: var(--spacing-lg) !important;
+}
+
+.typography.margin-top-xl {
+    margin-top: var(--spacing-xl) !important;
+}
+
+.typography.margin-bottom-none {
+    margin-bottom: 0 !important;
+}
+
+.typography.margin-bottom-xs {
+    margin-bottom: var(--spacing-xs) !important;
+}
+
+.typography.margin-bottom-sm {
+    margin-bottom: var(--spacing-sm) !important;
+}
+
+.typography.margin-bottom-md {
+    margin-bottom: var(--spacing-md) !important;
+}
+
+.typography.margin-bottom-lg {
+    margin-bottom: var(--spacing-lg) !important;
+}
+
+.typography.margin-bottom-xl {
+    margin-bottom: var(--spacing-xl) !important;
+}
+
+/* Padding utility classes for Typography components */
+.typography.padding-none {
+    padding: 0 !important;
+}
+
+.typography.padding-xs {
+    padding: var(--spacing-xs) !important;
+}
+
+.typography.padding-sm {
+    padding: var(--spacing-sm) !important;
+}
+
+.typography.padding-md {
+    padding: var(--spacing-md) !important;
+}
+
+.typography.padding-lg {
+    padding: var(--spacing-lg) !important;
+}
+
+.typography.padding-xl {
+    padding: var(--spacing-xl) !important;
+}
+
+/* ===== Responsive Size System ===== */
+/* Component-level responsive design: sizes grow significantly from mobile to desktop */
+/* Mobile-first approach: very compact on mobile, progressively much larger on bigger screens */
+/* Breakpoints: 480px (small→large phones), 768px (tablet portrait), 1025px (desktop), 1440px (large desktop) */
+
+/* Mobile base styles (< 480px) - Extra compact for small phones */
+.typography-size-xxs {
+    font-size: 0.5rem;     /* 8px */
+}
+
+.typography-size-xs {
+    font-size: 0.5625rem;  /* 9px */
+}
+
+.typography-size-sm {
+    font-size: 0.6875rem;  /* 11px */
+}
+
+.typography-size-md {
+    font-size: 0.8125rem;  /* 13px */
+}
+
+.typography-size-lg {
+    font-size: 0.875rem;   /* 14px */
+}
+
+.typography-size-xl {
+    font-size: 0.9375rem;  /* 15px */
+}
+
+.typography-size-2xl {
+    font-size: 1.125rem;   /* 18px */
+}
+
+.typography-size-3xl {
+    font-size: 1.5rem;     /* 24px */
+}
+
+.typography-size-4xl {
+    font-size: 1.875rem;   /* 30px */
+}
+
+/* Large phone adjustments (480px - 767px) - Standard phone size */
+@media (min-width: 480px) {
+    .typography-size-xxs {
+        font-size: 0.5625rem;  /* 9px */
+    }
+
+    .typography-size-xs {
+        font-size: 0.6875rem;  /* 11px - +22% from small phone */
+    }
+
+    .typography-size-sm {
+        font-size: 0.8125rem;  /* 13px - +18% from small phone */
+    }
+
+    .typography-size-md {
+        font-size: 0.9375rem;  /* 15px - +15% from small phone */
+    }
+
+    .typography-size-lg {
+        font-size: 1rem;       /* 16px - +14% from small phone */
+    }
+
+    .typography-size-xl {
+        font-size: 1.125rem;   /* 18px - +20% from small phone */
+    }
+
+    .typography-size-2xl {
+        font-size: 1.375rem;   /* 22px - +22% from small phone */
+    }
+
+    .typography-size-3xl {
+        font-size: 1.875rem;   /* 30px - +25% from small phone */
+    }
+
+    .typography-size-4xl {
+        font-size: 2.375rem;   /* 38px - +27% from small phone */
+    }
+}
+
+/* Tablet adjustments (768px - 1024px) - Moderately sized for comfortable viewing */
+@media (min-width: 768px) {
+    .typography-size-xxs {
+        font-size: 0.6875rem;  /* 11px */
+    }
+
+    .typography-size-xs {
+        font-size: 0.875rem;   /* 14px - +27% from large phone */
+    }
+
+    .typography-size-sm {
+        font-size: 1rem;       /* 16px - +23% from large phone */
+    }
+
+    .typography-size-md {
+        font-size: 1.1875rem;  /* 19px - +27% from large phone */
+    }
+
+    .typography-size-lg {
+        font-size: 1.3125rem;  /* 21px - +31% from large phone */
+    }
+
+    .typography-size-xl {
+        font-size: 1.5rem;     /* 24px - +33% from large phone */
+    }
+
+    .typography-size-2xl {
+        font-size: 1.875rem;   /* 30px - +36% from large phone */
+    }
+
+    .typography-size-3xl {
+        font-size: 2.625rem;   /* 42px - +40% from large phone */
+    }
+
+    .typography-size-4xl {
+        font-size: 3.375rem;   /* 54px - +42% from large phone */
+    }
+}
+
+/* Desktop adjustments (1025px - 1439px) - Spacious for optimal desktop experience */
+@media (min-width: 1025px) {
+    .typography-size-xxs {
+        font-size: 0.75rem;    /* 12px */
+    }
+
+    .typography-size-xs {
+        font-size: 1rem;       /* 16px - +14% from tablet */
+    }
+
+    .typography-size-sm {
+        font-size: 1.1875rem;  /* 19px - +19% from tablet */
+    }
+
+    .typography-size-md {
+        font-size: 1.375rem;   /* 22px - +16% from tablet */
+    }
+
+    .typography-size-lg {
+        font-size: 1.625rem;   /* 26px - +24% from tablet */
+    }
+
+    .typography-size-xl {
+        font-size: 1.9375rem;  /* 31px - +29% from tablet */
+    }
+
+    .typography-size-2xl {
+        font-size: 2.5rem;     /* 40px - +33% from tablet */
+    }
+
+    .typography-size-3xl {
+        font-size: 3.5rem;     /* 56px - +33% from tablet */
+    }
+
+    .typography-size-4xl {
+        font-size: 4.5rem;     /* 72px - +33% from tablet */
+    }
+}
+
+/* Large desktop adjustments (>= 1440px) - Extra spacious for large monitors */
+@media (min-width: 1440px) {
+    .typography-size-xs {
+        font-size: 1.125rem;   /* 18px - +13% from desktop */
+    }
+
+    .typography-size-sm {
+        font-size: 1.375rem;   /* 22px - +16% from desktop */
+    }
+
+    .typography-size-md {
+        font-size: 1.625rem;   /* 26px - +18% from desktop */
+    }
+
+    .typography-size-lg {
+        font-size: 2rem;       /* 32px - +23% from desktop */
+    }
+
+    .typography-size-xl {
+        font-size: 2.5rem;     /* 40px - +29% from desktop */
+    }
+
+    .typography-size-2xl {
+        font-size: 3.25rem;    /* 52px - +30% from desktop */
+    }
+
+    .typography-size-3xl {
+        font-size: 4.625rem;   /* 74px - +32% from desktop */
+    }
+
+    .typography-size-4xl {
+        font-size: 6rem;       /* 96px - +33% from desktop */
+    }
+}
+
+/* ========================================================================== */
+/* Animation Styles                                                           */
+/* ========================================================================== */
+
+.typography-animated-wrapper {
+    display: inline-block;
+    white-space: pre-wrap;
+}
+
+.typography-animated-element,
+.typography-animated-space {
+    display: inline-block;
+    white-space: pre;
+}
+
+.typography-animated-element {
+    will-change: transform, opacity, filter;
+}
+
+.typography-animation-typewriter {
+    display: inline-flex;
+    align-items: baseline;
+    white-space: pre;
+}
+
+.typography-typewriter-cursor {
+    margin-left: 0.25rem;
+    display: inline-block;
+}
+
+.typography-animation-gradient {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.25rem;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.5s ease-out;
+    overflow: hidden;
+    padding: 0.5rem 1rem;
+}
+
+.typography-animation-gradient--border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--typography-gradient-definition, linear-gradient(90deg, var(--primary-color), var(--secondary-accent-color)));
+    background-size: 400% 100%;
+    animation: typography-gradient var(--typography-animation-duration, 2000ms) linear infinite;
+    border-radius: inherit;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.typography-animation-gradient--border::after {
+    content: '';
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--background-color, #060010);
+    border-radius: inherit;
+    z-index: 1;
+}
+
+.typography-animation-gradient-text {
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    background-image: var(--typography-gradient-definition, linear-gradient(90deg, var(--primary-color), var(--secondary-accent-color)));
+    background-size: 400% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    white-space: pre;
+    animation: typography-gradient var(--typography-animation-duration, 2000ms) linear infinite;
+    animation-delay: var(--typography-animation-delay, 0ms);
+}
+
+@keyframes typography-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.typography-animation-shiny {
+    position: relative;
+    display: inline-block;
+    background-image: linear-gradient(120deg, var(--typography-shiny-color, var(--text-color)) 40%, rgba(255, 255, 255, 0.8) 50%, var(--typography-shiny-color, var(--text-color)) 60%);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    white-space: pre-wrap;
+    animation: typography-shiny var(--typography-animation-duration, 5000ms) linear infinite;
+    animation-delay: var(--typography-animation-delay, 0ms);
+}
+
+.typography-animation-shiny.disabled {
+    animation: none;
+    color: var(--typography-shiny-color, var(--text-color));
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+}
+
+@keyframes typography-shiny {
+    0% {
+        background-position: 100%;
+    }
+    100% {
+        background-position: 0%;
+    }
+}
+
+.typography-animation-glitch {
+    position: relative;
+    display: inline-block;
+    color: var(--typography-glitch-color, var(--text-color));
+    white-space: pre;
+    animation: typography-glitch-base var(--typography-glitch-duration-b, 1500ms) steps(1, end) infinite;
+    animation-delay: var(--typography-animation-delay, 0ms);
+}
+
+.typography-animation-glitch::before,
+.typography-animation-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    white-space: inherit;
+    pointer-events: none;
+    clip-path: inset(0 0 0 0);
+    animation-delay: var(--typography-animation-delay, 0ms);
+}
+
+.typography-animation-glitch::before {
+    text-shadow: -5px 0 var(--typography-glitch-accent-1, var(--error-color));
+    animation: typography-glitch var(--typography-glitch-duration-a, 1800ms) steps(2, end) infinite;
+    transform: translateX(-10px);
+}
+
+.typography-animation-glitch::after {
+    text-shadow: 5px 0 var(--typography-glitch-accent-2, var(--tertiary-color));
+    animation: typography-glitch var(--typography-glitch-duration-b, 1500ms) steps(2, end) infinite;
+    transform: translateX(10px);
+}
+
+@keyframes typography-glitch {
+    0% {
+        clip-path: inset(0 0 80% 0);
+        transform: translate(0, 0);
+    }
+    5% {
+        clip-path: inset(30% 0 45% 0);
+        transform: translate(-10px, -5px);
+    }
+    10% {
+        clip-path: inset(15% 0 70% 0);
+        transform: translate(10px, 5px);
+    }
+    15% {
+        clip-path: inset(45% 0 30% 0);
+        transform: translate(-5px, 8px);
+    }
+    20% {
+        clip-path: inset(80% 0 5% 0);
+        transform: translate(12px, -8px);
+    }
+    25% {
+        clip-path: inset(25% 0 60% 0);
+        transform: translate(-12px, 5px);
+    }
+    30% {
+        clip-path: inset(65% 0 15% 0);
+        transform: translate(8px, -5px);
+    }
+    35% {
+        clip-path: inset(20% 0 55% 0);
+        transform: translate(-5px, 10px);
+    }
+    40% {
+        clip-path: inset(40% 0 40% 0);
+        transform: translate(0, 0);
+    }
+    45% {
+        clip-path: inset(10% 0 75% 0);
+        transform: translate(15px, -5px);
+    }
+    50% {
+        clip-path: inset(55% 0 25% 0);
+        transform: translate(-15px, 0);
+    }
+    55% {
+        clip-path: inset(15% 0 70% 0);
+        transform: translate(5px, 8px);
+    }
+    60% {
+        clip-path: inset(50% 0 25% 0);
+        transform: translate(-8px, 5px);
+    }
+    65% {
+        clip-path: inset(30% 0 55% 0);
+        transform: translate(10px, -12px);
+    }
+    70% {
+        clip-path: inset(70% 0 10% 0);
+        transform: translate(-12px, 8px);
+    }
+    75% {
+        clip-path: inset(25% 0 60% 0);
+        transform: translate(5px, -5px);
+    }
+    80% {
+        clip-path: inset(35% 0 50% 0);
+        transform: translate(-5px, 5px);
+    }
+    85% {
+        clip-path: inset(60% 0 20% 0);
+        transform: translate(12px, -8px);
+    }
+    90% {
+        clip-path: inset(15% 0 70% 0);
+        transform: translate(-8px, 8px);
+    }
+    95% {
+        clip-path: inset(45% 0 35% 0);
+        transform: translate(0, 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes typography-glitch-base {
+    0%, 100% {
+        transform: none;
+    }
+    25% {
+        transform: skew(-0.6deg);
+    }
+    50% {
+        transform: skew(0.75deg);
+    }
+    75% {
+        transform: skew(-0.45deg);
+    }
+}
+
+/* Circular Text Animation */
+.typography-animation-circular {
+    margin: 0 auto;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transform-origin: 50% 50%;
+    will-change: transform;
+}
+
+.typography-circular-letter {
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: all 0.5s cubic-bezier(0, 0, 0, 1);
+    transform-origin: center;
+}
+
+/* Proximity Animation */
+.typography-animation-proximity {
+    display: inline-block;
+    white-space: pre-wrap;
+}
+
+.typography-proximity-letter {
+    display: inline-block;
+    will-change: transform, font-weight;
+    transition: font-variation-settings 0.2s ease;
+}
+
+/* Focus Animation */
+.typography-animation-focus {
+    position: relative;
+    display: inline-flex;
+    gap: 1em;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.typography-focus-word {
+    position: relative;
+    display: inline-block;
+    transition: filter 0.3s ease, color 0.3s ease;
+}
+
+.typography-focus-word.active {
+    filter: blur(0);
+}
+
+.typography-focus-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    box-sizing: content-box;
+    border: none;
+}
+
+.typography-focus-frame .corner {
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    border: 3px solid var(--border-color, var(--primary-color));
+    filter: drop-shadow(0px 0px 4px var(--glow-color, var(--primary-color)));
+    border-radius: 3px;
+    transition: none;
+}
+
+.typography-focus-frame .corner.top-left {
+    top: -10px;
+    left: -10px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.typography-focus-frame .corner.top-right {
+    top: -10px;
+    right: -10px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.typography-focus-frame .corner.bottom-left {
+    bottom: -10px;
+    left: -10px;
+    border-right: none;
+    border-top: none;
+}
+
+.typography-focus-frame .corner.bottom-right {
+    bottom: -10px;
+    right: -10px;
+    border-left: none;
+    border-top: none;
+}
+
+/* Scramble Animation */
+.typography-animation-scramble {
+    display: inline-block;
+    white-space: pre-wrap;
+}
+
+.typography-scramble-letter {
+    display: inline-block;
+    will-change: contents;
+}
+
+.typography-animation-glitch.inactive {
+    animation: none;
+}
+
+.typography-animation-glitch.inactive::before,
+.typography-animation-glitch.inactive::after {
+    display: none;
+}

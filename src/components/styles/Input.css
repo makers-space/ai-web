@@ -1,0 +1,903 @@
+/* Input component structural styles */
+.input {
+    display: flex;
+    width: 100%;
+    height: 2.5rem; /* 40px - default size */
+    margin: var(--spacing-sm) 0;
+    padding: 0 var(--spacing-md);
+    border: 1px solid;
+    border-radius: var(--input-radius);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-family, var(--font-family-normal)), sans-serif;
+    background-color: var(--surface-color, var(--background-color));
+    color: var(--text-color);
+    transition: all var(--transition-fast);
+    align-items: center;
+}
+
+/* Override browser autofill background — browsers force their own background-color
+   via an internal UA stylesheet that ignores our CSS. The only reliable cross-browser
+   fix is a large inset box-shadow that paints over the forced colour, and an explicit
+   -webkit-text-fill-color to keep text readable. */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--surface-color, var(--background-color)) inset !important;
+    box-shadow: 0 0 0 1000px var(--surface-color, var(--background-color)) inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+    caret-color: var(--text-color);
+    border-color: var(--border-color);
+    transition: background-color 600000s ease-in-out 0s; /* prevent Chrome's autofill animation */
+}
+
+/* Placeholder text styling */
+.input::placeholder {
+    color: var(--text-color);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--input-accent-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-accent-color), transparent 80%);
+}
+
+.input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Accent color configuration */
+.input,
+.input-container,
+.input-field-wrapper,
+.input-help-text,
+.checkbox-wrapper,
+.input-floating-container,
+.themed-checkbox {
+    --input-accent-color: var(--primary-color);
+}
+
+.input-color-primary {
+    --input-accent-color: var(--primary-color);
+}
+
+.input-color-secondary {
+    --input-accent-color: var(--secondary-color);
+}
+
+.input-color-tertiary {
+    --input-accent-color: var(--tertiary-color);
+}
+
+.input-container {
+    display: block;
+    position: relative;
+    border-radius: var(--input-radius, var(--border-radius-md));
+}
+
+.input-field-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* ===== Responsive Size System ===== */
+/* Matches Button component sizing exactly for visual consistency */
+/* Breakpoints: 480px (small→large phones), 768px (tablet portrait), 1025px (desktop), 1440px (large desktop) */
+
+/* Mobile base styles (< 480px) - Extra compact for small phones */
+.input.input-xxs {
+    height: 1.125rem;
+    padding: 0 0.3125rem;
+    font-size: 0.5625rem;
+}
+
+.input.input-xs {
+    height: 1.25rem;        /* 20px */
+    padding: 0 0.375rem;    /* 6px */
+    font-size: 0.625rem;    /* 10px */
+}
+
+.input.input-sm {
+    height: 1.5rem;         /* 24px */
+    padding: 0 0.5rem;      /* 8px */
+    font-size: 0.6875rem;   /* 11px */
+}
+
+.input.input-md {
+    height: 1.875rem;       /* 30px */
+    padding: 0 0.625rem;    /* 10px */
+    font-size: 0.75rem;     /* 12px */
+}
+
+.input.input-lg {
+    height: 2rem;           /* 32px */
+    padding: 0 0.75rem;     /* 12px */
+    font-size: 0.8125rem;   /* 13px */
+}
+
+.input.input-xl {
+    height: 2.25rem;        /* 36px */
+    padding: 0 0.875rem;    /* 14px */
+    font-size: 0.875rem;    /* 14px */
+}
+
+/* Large phone adjustments (480px - 767px) - Slightly larger for standard phones */
+@media (min-width: 480px) {
+    .input.input-xxs {
+        height: 1.25rem;
+        padding: 0 0.375rem;
+        font-size: 0.625rem;
+    }
+
+    .input.input-xs {
+        height: 1.5rem;         /* 24px */
+        padding: 0 0.5rem;      /* 8px */
+        font-size: 0.6875rem;   /* 11px */
+    }
+
+    .input.input-sm {
+        height: 1.75rem;        /* 28px */
+        padding: 0 0.625rem;    /* 10px */
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .input.input-md {
+        height: 2rem;           /* 32px */
+        padding: 0 0.75rem;     /* 12px */
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .input.input-lg {
+        height: 2.25rem;        /* 36px */
+        padding: 0 0.875rem;    /* 14px */
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .input.input-xl {
+        height: 2.5rem;         /* 40px */
+        padding: 0 1rem;        /* 16px */
+        font-size: 0.9375rem;   /* 15px */
+    }
+}
+
+/* Tablet adjustments (768px - 1024px) - Moderately sized for comfortable interaction */
+@media (min-width: 768px) {
+    .input.input-xxs {
+        height: 1.5rem;
+        padding: 0 0.5rem;
+        font-size: 0.6875rem;
+    }
+
+    .input.input-xs {
+        height: 1.75rem;        /* 28px */
+        padding: 0 0.75rem;     /* 12px */
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .input.input-sm {
+        height: 2rem;           /* 32px */
+        padding: 0 0.875rem;    /* 14px */
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .input.input-md {
+        height: 2.25rem;        /* 36px */
+        padding: 0 1rem;        /* 16px */
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .input.input-lg {
+        height: 2.5rem;         /* 40px */
+        padding: 0 1.125rem;    /* 18px */
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .input.input-xl {
+        height: 2.875rem;       /* 46px */
+        padding: 0 1.375rem;    /* 22px */
+        font-size: 1rem;        /* 16px */
+    }
+}
+
+/* Desktop adjustments (1025px - 1439px) - Spacious for optimal desktop experience */
+@media (min-width: 1025px) {
+    .input.input-xxs {
+        height: 1.625rem;
+        padding: 0 0.625rem;
+        font-size: 0.75rem;
+    }
+
+    .input.input-xs {
+        height: 2rem;           /* 32px */
+        padding: 0 0.875rem;    /* 14px */
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .input.input-sm {
+        height: 2.25rem;        /* 36px */
+        padding: 0 1rem;        /* 16px */
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .input.input-md {
+        height: 2.5rem;         /* 40px */
+        padding: 0 1.125rem;    /* 18px */
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .input.input-lg {
+        height: 2.75rem;        /* 44px */
+        padding: 0 1.375rem;    /* 22px */
+        font-size: 1rem;        /* 16px */
+    }
+
+    .input.input-xl {
+        height: 3.125rem;       /* 50px */
+        font-size: 1.0625rem;   /* 17px */
+        padding: 0 1.625rem;    /* 26px */
+    }
+}
+
+/* Large desktop adjustments (>= 1440px) - Extra spacious for large monitors */
+@media (min-width: 1440px) {
+    .input.input-xxs {
+        height: 1.75rem;
+        padding: 0 0.75rem;
+        font-size: 0.8125rem;
+    }
+
+    .input.input-xs {
+        height: 2.125rem;       /* 34px */
+        padding: 0 1rem;        /* 16px */
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .input.input-sm {
+        height: 2.375rem;       /* 38px */
+        padding: 0 1.125rem;    /* 18px */
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .input.input-md {
+        height: 2.75rem;        /* 44px */
+        padding: 0 1.25rem;     /* 20px */
+        font-size: 1rem;        /* 16px */
+    }
+
+    .input.input-lg {
+        height: 3rem;           /* 48px */
+        padding: 0 1.5rem;      /* 24px */
+        font-size: 1.0625rem;   /* 17px */
+    }
+
+    .input.input-xl {
+        height: 3.5rem;         /* 56px */
+        font-size: 1.125rem;    /* 18px */
+        padding: 0 1.875rem;    /* 30px */
+    }
+}
+
+/* Textarea-specific styles */
+.input.textarea {
+    height: auto;
+    min-height: 3rem; /* Minimum height for textareas */
+    padding: var(--spacing-sm) var(--spacing-md);
+    resize: vertical;
+    align-items: flex-start;
+    line-height: 1.5;
+}
+
+.input.textarea.input-xxs {
+    min-height: 1.75rem;
+    padding: var(--spacing-xs) var(--spacing-xs);
+}
+
+.input.textarea.input-xs {
+    min-height: 2rem;
+    padding: var(--spacing-xs) var(--spacing-xs);
+}
+
+.input.textarea.input-sm {
+    min-height: 2.5rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.input.textarea.input-md {
+    min-height: 3rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.input.textarea.input-lg {
+    min-height: 4rem;
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.input.textarea.input-xl {
+    min-height: 5rem;
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+/* Flex fill styles */
+.input.input-flex-fill {
+    flex: 1;
+}
+
+.input-container.input-container-flex-fill {
+    flex: 1;
+}
+
+.input.themed-input-default {
+    background-color: var(--surface-color);
+    border: 1px solid color-mix(in srgb, var(--input-accent-color), transparent 40%);
+}
+
+.input.themed-input-outline {
+    background-color: var(--surface-color);
+    border: 1px solid var(--input-accent-color);
+}
+
+.input.themed-input-filled {
+    background-color: color-mix(in srgb, var(--input-accent-color), transparent 60%);
+    border: 1px solid transparent;
+}
+
+.input.themed-input-underline {
+    border: none;
+    border-bottom: 2px solid color-mix(in srgb, var(--input-accent-color), transparent 35%);
+    border-radius: 0;
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+    background-image: linear-gradient(var(--input-accent-color), var(--input-accent-color));
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 0% 2px;
+    transition: background-size var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+.input.themed-input-underline.input-focused {
+    border-bottom-color: var(--input-accent-color);
+    background-size: 100% 2px;
+    box-shadow: none;
+}
+
+.input.themed-input-floating {
+    background-color: var(--surface-color, var(--background-color));
+    border: 1px solid color-mix(in srgb, var(--input-accent-color), transparent 40%);
+}
+
+.input-floating-container {
+    position: relative;
+    background-color: transparent;
+    border-radius: var(--input-radius, var(--border-radius-md));
+}
+
+.input-floating-label {
+    color: var(--text-color);
+    position: absolute;
+    left: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-normal);
+    pointer-events: none;
+    transition: all var(--transition-fast);
+    background: transparent !important;
+    padding: 0;
+    border-radius: 0;
+}
+
+.input-floating-label.floating {
+    top: 0;
+    left: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    transform: translateY(-50%);
+    color: var(--input-accent-color);
+    background: var(--floating-label-bg) !important;
+    padding: 0 var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
+}
+
+/* Set floating label background to match input field background for each variant */
+.input-floating-container.variant-floating {
+    --floating-label-bg: var(--surface-color, var(--background-color));
+}
+
+.input-floating-container.variant-outline {
+    --floating-label-bg: var(--background-color);
+}
+
+.input-floating-container.variant-filled {
+    --floating-label-bg: var(--surface-accent-color, rgba(0, 0, 0, 0.04));
+}
+
+.input-floating-container.variant-underline {
+    --floating-label-bg: var(--background-color);
+}
+
+.input-floating-container.variant-default {
+    --floating-label-bg: var(--surface-color, var(--background-color));
+}
+
+/* Fix floating label overlap with left icon */
+.input-field-wrapper.has-icon-left .input-floating-label {
+    left: 2.5rem;
+}
+
+.input-field-wrapper.has-icon-left .input-floating-label.floating {
+    left: 0.5rem;
+}
+
+.input-field-wrapper.has-icon-left .input {
+    padding-left: 2.5rem;
+}
+
+.input-field-wrapper.has-icon-right .input {
+    padding-right: 2.5rem;
+}
+
+/* When password toggle is present with right icon, adjust padding */
+.input-field-wrapper.has-icon-right .input-password-toggle {
+    right: 2.5rem;
+}
+
+/* When password toggle is present without right icon, use default position */
+.input-field-wrapper:not(.has-icon-right) .input-password-toggle {
+    right: var(--spacing-md);
+}
+
+/* Adjust input padding when password toggle is present */
+.input-field-wrapper .input-password-toggle ~ .input,
+.input-field-wrapper .input:has(~ .input-password-toggle) {
+    padding-right: 2.5rem;
+}
+
+/* Override when both right icon and password toggle are present */
+.input-field-wrapper.has-icon-right .input:has(~ .input-password-toggle),
+.input-field-wrapper.has-icon-right .input-password-toggle ~ .input {
+    padding-right: 4.5rem;
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-size: var(--font-size-base);
+    color: var(--primary-color);
+    pointer-events: none;
+}
+
+.input-icon-left {
+    left: var(--spacing-md);
+}
+
+.input-icon-right {
+    right: var(--spacing-md);
+}
+
+.input-password-toggle {
+    position: absolute;
+    right: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    color: var(--primary-color);
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+/* Override Icon component's default margin within input containers */
+.input-icon .themed-icon,
+.input-password-toggle .themed-icon,
+.input-action-button .themed-icon {
+    margin: 0;
+}
+
+.input-password-toggle:hover {
+    background-color: var(--surface-accent-color, rgba(0, 0, 0, 0.05));
+}
+
+/* Default variant already uses the default background, so no need to override */
+
+.input.input-focused {
+    border-color: var(--input-accent-color);
+}
+
+.input.input-focused::placeholder {
+    color: var(--input-accent-color);
+}
+
+.input.input-error,
+.input-field-wrapper.input-error .input,
+.themed-input.input-error {
+    border-color: var(--error-color) !important;
+    background-color: color-mix(in srgb, var(--error-accent-color), transparent 85%);
+}
+
+.input-field-wrapper.input-error .input::placeholder,
+.input-field-wrapper.input-error .input-floating-label.floating {
+    color: var(--error-color) !important;
+}
+
+.input.input-error:focus,
+.input-field-wrapper.input-error .input:focus,
+.themed-input.input-error:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--error-accent-color, rgba(239, 68, 68, 0.15)), transparent 50%) !important;
+}
+
+
+.input.input-success,
+.input-field-wrapper.input-success .input,
+.themed-input.input-success {
+    border-color: var(--success-color) !important;
+    background-color: color-mix(in srgb, var(--success-accent-color), transparent 85%);
+}
+
+.input-field-wrapper.input-success .input::placeholder,
+.input-field-wrapper.input-success .input-floating-label.floating {
+    color: var(--success-color) !important;
+}
+
+.input.input-success:focus,
+.input-field-wrapper.input-success .input:focus,
+.themed-input.input-success:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--success-accent-color, rgba(16, 185, 129, 0.15)), transparent 50%) !important;
+}
+
+.input.input-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.input-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-family-medium, var(--font-family)), sans-serif;
+    color: var(--text-color);
+}
+
+.input-help-text {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-family: var(--font-family, var(--font-family-normal)), sans-serif;
+    line-height: var(--line-height-normal);
+    border-radius: var(--input-radius);
+    background-color: transparent;
+}
+
+.input-error-text {
+    color: var(--error-color) !important;
+    font-weight: var(--font-weight-medium);
+}
+
+.input-help-text-success {
+    color: var(--success-color) !important;
+    font-weight: var(--font-weight-medium);
+}
+
+.input-help-text-warning {
+    color: var(--warning-color) !important;
+    font-weight: var(--font-weight-medium);
+}
+
+.input-help-text-error {
+    color: var(--error-color) !important;
+    font-weight: var(--font-weight-medium);
+}
+
+/* Help text size variants */
+.help-text-xs {
+    font-size: 0.625rem;
+    padding: 0;
+}
+
+.help-text-sm {
+    font-size: 0.625rem;
+    padding: 0;
+}
+
+.help-text-md {
+    font-size: 0.75rem;
+    padding: 0;
+}
+
+.help-text-lg {
+    font-size: var(--font-size-sm);
+    padding: 0;
+}
+
+.help-text-xl {
+    font-size: var(--font-size-base);
+    padding: 0;
+}
+
+.input-required {
+    color: var(--error-color);
+    margin-left: var(--spacing-xs);
+}
+
+/* Checkbox variant styles for Input component */
+
+.checkbox-wrapper .checkbox-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.checkbox-wrapper .themed-checkbox {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    accent-color: var(--input-accent-color);
+}
+
+.checkbox-wrapper .themed-checkbox:checked {
+    background-color: var(--input-accent-color);
+    border-color: var(--input-accent-color);
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m13.854 3.646-7.5 7.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6 10.293l7.146-7.147a.5.5 0 0 1 .708.708z'/%3e%3c/svg%3e");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    accent-color: var(--input-accent-color);
+}
+
+.checkbox-wrapper .checkbox-label {
+    color: inherit;
+    cursor: pointer;
+}
+
+.checkbox-wrapper .checkbox-help-text {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-size-xs);
+    font-family: var(--font-family, var(--font-family-normal)), sans-serif;
+    line-height: var(--line-height-normal);
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.checkbox-wrapper .checkbox-help-text-default {
+    color: var(--text-muted);
+}
+
+.checkbox-wrapper .checkbox-help-text-success {
+    color: var(--success-color) !important;
+    font-weight: var(--font-weight-medium);
+}
+
+.checkbox-wrapper .checkbox-help-text-warning {
+    color: var(--warning-color) !important;
+    font-weight: var(--font-weight-medium);
+}
+
+.checkbox-wrapper .checkbox-help-text-error {
+    color: var(--error-color) !important;
+    font-weight: var(--font-weight-medium);
+}
+
+/* Checkbox help text size variants */
+.checkbox-wrapper .checkbox-help-text.help-text-xs {
+    font-size: 0.625rem;
+    padding: var(--spacing-xs) var(--spacing-xs);
+}
+
+.checkbox-wrapper .checkbox-help-text.help-text-sm {
+    font-size: 0.625rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.checkbox-wrapper .checkbox-help-text.help-text-md {
+    font-size: 0.75rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+}
+
+.checkbox-wrapper .checkbox-help-text.help-text-lg {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.checkbox-wrapper .checkbox-help-text.help-text-xl {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+/* When input has value, use default background color regardless of variant */
+.input.input-has-value.themed-input-default {
+    background-color: var(--background-color);
+}
+
+.input.input-has-value.themed-input-outline {
+    background-color: var(--background-color);
+}
+
+.input.input-has-value.themed-input-filled {
+    background-color: var(--background-color);
+}
+
+.input.input-has-value.themed-input-underline {
+    background-color: var(--background-color);
+}
+
+.input.input-has-value.themed-input-floating {
+    background-color: var(--background-color);
+}
+
+/* Search input styling */
+.input[type="search"] {
+    /* Remove default search input styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Style the search input clear button (webkit browsers) */
+.input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    margin-left: var(--spacing-xs);
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    position: relative;
+}
+
+.input[type="search"]::-webkit-search-cancel-button {
+    background: var(--input-accent-color);
+    -webkit-mask: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3e%3cpath d='M18 6L6 18M6 6l12 12' stroke='currentColor' stroke-width='2' stroke-linecap='round'/%3e%3c/svg%3e") no-repeat center;
+    -webkit-mask-size: 12px 12px;
+    mask: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3e%3cpath d='M18 6L6 18M6 6l12 12' stroke='currentColor' stroke-width='2' stroke-linecap='round'/%3e%3c/svg%3e") no-repeat center;
+    mask-size: 12px 12px;
+}
+
+.input[type="search"]::-webkit-search-cancel-button:hover {
+    background: color-mix(in srgb, var(--input-accent-color), transparent 20%);
+}
+
+/* Ensure search input with icons has proper spacing for the clear button */
+.input-field-wrapper.has-icon-right .input[type="search"] {
+    padding-right: calc(var(--spacing-xl) + var(--spacing-lg)); /* Extra space for both icon and clear button */
+}
+
+.input-field-wrapper:not(.has-icon-right) .input[type="search"] {
+    padding-right: var(--spacing-lg); /* Space for clear button only */
+}
+
+/* ===== DATE INPUT SPECIFIC STYLES ===== */
+
+/* Webkit date picker button styling */
+.input[type="date"]::-webkit-calendar-picker-indicator,
+.input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+.input[type="time"]::-webkit-calendar-picker-indicator,
+.input[type="month"]::-webkit-calendar-picker-indicator,
+.input[type="week"]::-webkit-calendar-picker-indicator {
+    opacity: 0; /* Hide the default picker, we use our custom icon */
+    position: absolute;
+    right: var(--spacing-sm);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Firefox date input styling */
+.input[type="date"]::-moz-calendar-picker-indicator,
+.input[type="datetime-local"]::-moz-calendar-picker-indicator,
+.input[type="time"]::-moz-calendar-picker-indicator {
+    opacity: 0; /* Hide default, use our custom icon */
+    position: absolute;
+    right: var(--spacing-sm);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+
+input[type="date"]:in-range::-webkit-datetime-edit-year-field,
+input[type="date"]:in-range::-webkit-datetime-edit-month-field,
+input[type="date"]:in-range::-webkit-datetime-edit-day-field,
+input[type="date"]:in-range::-webkit-datetime-edit-text {
+    display: none;
+}
+
+/* ===== RANGE INPUT SPECIFIC STYLES ===== */
+
+.input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 0;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    height: auto !important;
+}
+
+.input[type="range"]:focus {
+    outline: none;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Track styles */
+.input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+    background: color-mix(in srgb, var(--input-accent-color), transparent 75%);
+    border-radius: 999px;
+}
+
+.input[type="range"]::-moz-range-track {
+    height: 4px;
+    background: color-mix(in srgb, var(--input-accent-color), transparent 75%);
+    border-radius: 999px;
+}
+
+/* Thumb styles */
+.input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--input-accent-color);
+    border: 2px solid var(--surface-color, var(--background-color));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: -6px;
+    cursor: grab;
+}
+
+.input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--input-accent-color);
+    border: 2px solid var(--surface-color, var(--background-color));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: grab;
+}
+
+.input[type="range"]:active::-webkit-slider-thumb,
+.input[type="range"]:active::-moz-range-thumb {
+    cursor: grabbing;
+}
+
+/* JustifySelf utility classes for Input components */
+.input-container.justify-self-auto {
+    justify-self: auto;
+}
+
+.input-container.justify-self-start {
+    justify-self: start;
+}
+
+.input-container.justify-self-end {
+    justify-self: end;
+}
+
+.input-container.justify-self-center {
+    justify-self: center;
+}
+
+.input-container.justify-self-stretch {
+    justify-self: stretch;
+}

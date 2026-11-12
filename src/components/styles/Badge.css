@@ -1,0 +1,310 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    margin: var(--spacing-xs);
+    border-radius: var(--border-radius-md);
+    white-space: nowrap;
+    background-color: var(--surface-accent-color);
+    color: var(--text-contrast-color);
+}
+
+/* Badge Variants using proper theme colors */
+.badge.themed-badge-primary {
+    background-color: var(--primary-color);
+}
+
+.badge.themed-badge-secondary {
+    background-color: var(--secondary-color);
+}
+
+.badge.themed-badge-success {
+    background-color: var(--success-color);
+}
+
+.badge.themed-badge-warning {
+    background-color: var(--warning-color);
+}
+
+.badge.themed-badge-error,
+.badge.themed-badge-danger {
+    background-color: var(--error-color);
+}
+
+.badge.themed-badge-tertiary {
+    background-color: var(--tertiary-color);
+}
+
+/* Size variations - xs/sm/md/lg/xl scale */
+/* Mobile base styles (< 480px) - Extra compact for small phones */
+.badge.badge-xs {
+    padding: calc(var(--spacing-xs) * 0.3) calc(var(--spacing-xs) * 0.7);
+    font-size: 0.4375rem;   /* 7px */
+}
+
+.badge.badge-sm {
+    padding: calc(var(--spacing-xs) * 0.4) calc(var(--spacing-xs) * 0.9);
+    font-size: 0.5625rem;   /* 9px */
+}
+
+.badge.badge-md {
+    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-xs);
+    font-size: 0.625rem;    /* 10px */
+}
+
+.badge.badge-lg {
+    padding: calc(var(--spacing-xs) * 0.6) calc(var(--spacing-xs) * 1.1);
+    font-size: 0.6875rem;   /* 11px */
+}
+
+.badge.badge-xl {
+    padding: calc(var(--spacing-xs) * 0.7) calc(var(--spacing-sm) * 0.9);
+    font-size: 0.75rem;     /* 12px */
+}
+
+/* Large phone adjustments (480px - 767px) - Slightly larger for standard phones */
+@media (min-width: 480px) {
+    .badge.badge-xs {
+        padding: calc(var(--spacing-xs) * 0.4) calc(var(--spacing-xs) * 0.9);
+        font-size: 0.5625rem;   /* 9px */
+    }
+
+    .badge.badge-sm {
+        padding: calc(var(--spacing-xs) * 0.5) var(--spacing-xs);
+        font-size: 0.6875rem;   /* 11px */
+    }
+
+    .badge.badge-md {
+        padding: calc(var(--spacing-xs) * 0.7) calc(var(--spacing-xs) * 1.2);
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .badge.badge-lg {
+        padding: calc(var(--spacing-xs) * 0.8) calc(var(--spacing-sm) * 1.1);
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .badge.badge-xl {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.875rem;    /* 14px */
+    }
+}
+
+/* Tablet adjustments (768px - 1024px) - Moderately sized for comfortable viewing */
+@media (min-width: 768px) {
+    .badge.badge-xs {
+        padding: calc(var(--spacing-xs) * 0.5) var(--spacing-xs);
+        font-size: 0.6875rem;   /* 11px */
+    }
+
+    .badge.badge-sm {
+        padding: calc(var(--spacing-xs) * 0.7) calc(var(--spacing-xs) * 1.2);
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .badge.badge-md {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .badge.badge-lg {
+        padding: calc(var(--spacing-xs) * 1.1) calc(var(--spacing-sm) * 1.2);
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .badge.badge-xl {
+        padding: calc(var(--spacing-xs) * 1.2) calc(var(--spacing-sm) * 1.3);
+        font-size: 1rem;        /* 16px */
+    }
+}
+
+/* Desktop adjustments (1025px - 1439px) - Spacious for optimal desktop experience */
+@media (min-width: 1025px) {
+    .badge.badge-xs {
+        padding: calc(var(--spacing-xs) * 0.6) calc(var(--spacing-xs) * 1.2);
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .badge.badge-sm {
+        padding: calc(var(--spacing-xs) * 0.8) calc(var(--spacing-sm) * 1.1);
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .badge.badge-md {
+        padding: calc(var(--spacing-xs) * 1.1) calc(var(--spacing-sm) * 1.2);
+        font-size: 1rem;        /* 16px */
+    }
+
+    .badge.badge-lg {
+        padding: calc(var(--spacing-xs) * 1.3) calc(var(--spacing-sm) * 1.4);
+        font-size: 1.0625rem;   /* 17px */
+    }
+
+    .badge.badge-xl {
+        padding: var(--spacing-sm) calc(var(--spacing-md) * 1.2);
+        font-size: 1.125rem;    /* 18px */
+    }
+}
+
+/* Large desktop adjustments (>= 1440px) - Extra spacious for large monitors */
+@media (min-width: 1440px) {
+    .badge.badge-xs {
+        padding: calc(var(--spacing-xs) * 0.75) calc(var(--spacing-xs) * 1.4);
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .badge.badge-sm {
+        padding: var(--spacing-xs) calc(var(--spacing-sm) * 1.2);
+        font-size: 1rem;        /* 16px */
+    }
+
+    .badge.badge-md {
+        padding: calc(var(--spacing-xs) * 1.2) calc(var(--spacing-sm) * 1.4);
+        font-size: 1.125rem;    /* 18px */
+    }
+
+    .badge.badge-lg {
+        padding: calc(var(--spacing-sm) * 1.1) calc(var(--spacing-md) * 1.2);
+        font-size: 1.25rem;     /* 20px */
+    }
+
+    .badge.badge-xl {
+        padding: calc(var(--spacing-sm) * 1.2) calc(var(--spacing-md) * 1.4);
+        font-size: 1.375rem;    /* 22px */
+    }
+}
+
+/* Large phone adjustments (480px - 767px) - Slightly larger for standard phones */
+@media (min-width: 480px) {
+    .badge.badge-xs {
+        padding: calc(var(--spacing-xs) * 0.5) var(--spacing-xs);
+        font-size: 0.5625rem;   /* 9px */
+    }
+
+    .badge.badge-sm {
+        padding: calc(var(--spacing-xs) * 0.6) calc(var(--spacing-xs) * 1.2);
+        font-size: 0.6875rem;   /* 11px */
+    }
+
+    .badge.badge-md {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .badge.badge-lg {
+        padding: calc(var(--spacing-xs) * 1.1) calc(var(--spacing-sm) * 1.1);
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .badge.badge-xl {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.875rem;    /* 14px */
+    }
+}
+
+/* Tablet adjustments (768px - 1024px) - Moderately sized for comfortable viewing */
+@media (min-width: 768px) {
+    .badge.badge-xs {
+        padding: calc(var(--spacing-xs) * 0.6) calc(var(--spacing-xs) * 1.2);
+        font-size: 0.625rem;    /* 10px */
+    }
+
+    .badge.badge-sm {
+        padding: calc(var(--spacing-xs) * 0.75) calc(var(--spacing-sm) * 0.9);
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .badge.badge-md {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .badge.badge-lg {
+        padding: calc(var(--spacing-xs) * 1.2) calc(var(--spacing-sm) * 1.2);
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .badge.badge-xl {
+        padding: var(--spacing-sm) calc(var(--spacing-md) * 1.1);
+        font-size: 0.9375rem;   /* 15px */
+    }
+}
+
+/* Desktop adjustments (1025px - 1439px) - Spacious for optimal desktop experience */
+@media (min-width: 1025px) {
+    .badge.badge-xs {
+        padding: calc(var(--spacing-xs) * 0.7) calc(var(--spacing-xs) * 1.4);
+        font-size: 0.6875rem;   /* 11px */
+    }
+
+    .badge.badge-sm {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .badge.badge-md {
+        padding: calc(var(--spacing-xs) * 1.1) calc(var(--spacing-sm) * 1.1);
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .badge.badge-lg {
+        padding: calc(var(--spacing-xs) * 1.3) calc(var(--spacing-sm) * 1.3);
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .badge.badge-xl {
+        padding: calc(var(--spacing-sm) * 1.1) calc(var(--spacing-md) * 1.2);
+        font-size: 1rem;        /* 16px */
+    }
+}
+
+/* Large desktop adjustments (>= 1440px) - Extra spacious for large monitors */
+@media (min-width: 1440px) {
+    .badge.badge-xs {
+        padding: calc(var(--spacing-xs) * 0.8) calc(var(--spacing-xs) * 1.6);
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .badge.badge-sm {
+        padding: calc(var(--spacing-xs) * 1.1) calc(var(--spacing-sm) * 1.1);
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .badge.badge-md {
+        padding: calc(var(--spacing-xs) * 1.2) calc(var(--spacing-sm) * 1.2);
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .badge.badge-lg {
+        padding: calc(var(--spacing-sm) * 1.1) calc(var(--spacing-md) * 1.1);
+        font-size: 1rem;        /* 16px */
+    }
+
+    .badge.badge-xl {
+        padding: calc(var(--spacing-sm) * 1.2) calc(var(--spacing-md) * 1.3);
+        font-size: 1.125rem;    /* 18px */
+    }
+}
+
+/* JustifySelf utility classes for Badge components */
+.badge.themed-badge.justify-self-auto {
+    justify-self: auto;
+}
+
+.badge.themed-badge.justify-self-start {
+    justify-self: start;
+}
+
+.badge.themed-badge.justify-self-end {
+    justify-self: end;
+}
+
+.badge.themed-badge.justify-self-center {
+    justify-self: center;
+}
+
+.badge.themed-badge.justify-self-stretch {
+    justify-self: stretch;
+}

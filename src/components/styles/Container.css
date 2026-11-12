@@ -1,0 +1,570 @@
+/* ===== Container Component CSS ===== */
+/* Base layout container with no visual styling - provides structure only */
+
+.container,
+.themed-container {
+    /* Base structure */
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+
+    /* Layout foundation */
+    position: relative;
+    overflow: visible;
+    box-sizing: border-box;
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+
+    /* Default to block layout */
+    display: block;
+}
+
+/* ===== Layout Types ===== */
+.container.layout-block,
+.themed-container.layout-block {
+    display: block;
+}
+
+.container.layout-flex,
+.themed-container.layout-flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.container.layout-flex-column,
+.themed-container.layout-flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.container.layout-grid,
+.themed-container.layout-grid {
+    display: grid;
+    align-items: stretch;
+    min-height: 0;
+}
+
+.container.layout-multicolumn,
+.themed-container.layout-multicolumn {
+    column-count: 2;
+}
+
+.container.layout-positioned,
+.themed-container.layout-positioned {
+    position: relative;
+    min-height: 200px;
+}
+
+/* ===== Grid System ===== */
+.container.grid-1, .themed-container.grid-1 {
+    grid-template-columns: 1fr;
+}
+
+.container.grid-2, .themed-container.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.container.grid-3, .themed-container.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.container.grid-4, .themed-container.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.container.grid-5, .themed-container.grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.container.grid-6, .themed-container.grid-6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.container.grid-auto, .themed-container.grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.container.grid-auto-sm, .themed-container.grid-auto-sm {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.container.grid-auto-lg, .themed-container.grid-auto-lg {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.container.grid-auto-4, .themed-container.grid-auto-4 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    max-width: 100%;
+}
+
+@media (min-width: 1400px) {
+    .container.grid-auto-4, .themed-container.grid-auto-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ===== Responsive grid breakpoints ===== */
+@media (max-width: 640px) {
+    .container.grid-2, .themed-container.grid-2,
+    .container.grid-3, .themed-container.grid-3,
+    .container.grid-4, .themed-container.grid-4,
+    .container.grid-5, .themed-container.grid-5,
+    .container.grid-6, .themed-container.grid-6 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+    .container.grid-3, .themed-container.grid-3,
+    .container.grid-4, .themed-container.grid-4,
+    .container.grid-5, .themed-container.grid-5,
+    .container.grid-6, .themed-container.grid-6 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+    .container.grid-4, .themed-container.grid-4,
+    .container.grid-5, .themed-container.grid-5,
+    .container.grid-6, .themed-container.grid-6 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ===== Grid item spanning (`span` prop; collapses with the breakpoints) ===== */
+.container.grid-span-2, .themed-container.grid-span-2,
+.card.grid-span-2, .themed-card.grid-span-2 {
+    grid-column: span 2;
+}
+
+.container.grid-span-3, .themed-container.grid-span-3,
+.card.grid-span-3, .themed-card.grid-span-3 {
+    grid-column: span 3;
+}
+
+.container.grid-span-full, .themed-container.grid-span-full,
+.card.grid-span-full, .themed-card.grid-span-full {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 900px) {
+    .container.grid-span-3, .themed-container.grid-span-3,
+    .card.grid-span-3, .themed-card.grid-span-3 {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 640px) {
+    .container.grid-span-2, .themed-container.grid-span-2,
+    .card.grid-span-2, .themed-card.grid-span-2,
+    .container.grid-span-3, .themed-container.grid-span-3,
+    .card.grid-span-3, .themed-card.grid-span-3 {
+        grid-column: span 1;
+    }
+}
+
+/* ===== Hoverable containers (`hoverable` prop) ===== */
+.container.container-hoverable, .themed-container.container-hoverable {
+    cursor: pointer;
+    border-radius: var(--border-radius-lg);
+    transition: background-color 0.15s ease;
+}
+
+.container.container-hoverable:hover, .themed-container.container-hoverable:hover {
+    background-color: var(--surface-accent-color, var(--surface-color));
+}
+
+/* ===== Multi-column System ===== */
+.container.columns-2, .themed-container.columns-2 {
+    column-count: 2;
+}
+
+.container.columns-3, .themed-container.columns-3 {
+    column-count: 3;
+}
+
+.container.columns-4, .themed-container.columns-4 {
+    column-count: 4;
+}
+
+.container.columns-auto, .themed-container.columns-auto {
+    column-count: auto;
+    column-width: 250px;
+}
+
+/* ===== Flex Utilities ===== */
+.container.flex-row, .themed-container.flex-row {
+    flex-direction: row;
+}
+
+.container.flex-column, .themed-container.flex-column {
+    flex-direction: column;
+}
+
+.container.flex-wrap, .themed-container.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.container.flex-nowrap, .themed-container.flex-nowrap {
+    flex-wrap: nowrap;
+}
+
+/* ===== Alignment System ===== */
+/* Align items (cross-axis) */
+.container.align-start, .themed-container.align-start {
+    align-items: flex-start;
+}
+
+.container.align-center, .themed-container.align-center {
+    align-items: center;
+}
+
+.container.align-end, .themed-container.align-end {
+    align-items: flex-end;
+}
+
+.container.align-stretch, .themed-container.align-stretch {
+    align-items: stretch;
+}
+
+.container.align-baseline, .themed-container.align-baseline {
+    align-items: baseline;
+}
+
+/* Justify content (main-axis) */
+.container.justify-start, .themed-container.justify-start {
+    justify-content: flex-start;
+}
+
+.container.justify-center, .themed-container.justify-center {
+    justify-content: center;
+}
+
+.container.justify-end, .themed-container.justify-end {
+    justify-content: flex-end;
+}
+
+.container.justify-between, .themed-container.justify-between {
+    justify-content: space-between;
+}
+
+.container.justify-around, .themed-container.justify-around {
+    justify-content: space-around;
+}
+
+.container.justify-evenly, .themed-container.justify-evenly {
+    justify-content: space-evenly;
+}
+
+/* Special text-wrapping behavior */
+.container.justify-wrap,
+.themed-container.justify-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+/* Block layout text alignment */
+.container.layout-block.justify-center, .themed-container.layout-block.justify-center {
+    text-align: center;
+}
+
+.container.layout-block.justify-end, .themed-container.layout-block.justify-end {
+    text-align: right;
+}
+
+.container.layout-block.justify-start, .themed-container.layout-block.justify-start {
+    text-align: left;
+}
+
+/* Block layout child centering - center block-level children with explicit widths */
+.container.layout-block.justify-center > *,
+.themed-container.layout-block.justify-center > * {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container.layout-block.justify-end > *,
+.themed-container.layout-block.justify-end > * {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.container.layout-block.justify-start > *,
+.themed-container.layout-block.justify-start > * {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* ===== Spacing System ===== */
+/* Gap utilities */
+.container.gap-none, .themed-container.gap-none {
+    gap: 0;
+    column-gap: 0;
+}
+
+.container.gap-xs, .themed-container.gap-xs {
+    gap: var(--spacing-xs);
+    column-gap: var(--spacing-xs);
+}
+
+.container.gap-sm, .themed-container.gap-sm {
+    gap: var(--spacing-sm);
+    column-gap: var(--spacing-sm);
+}
+
+.container.gap-md, .themed-container.gap-md {
+    gap: var(--spacing-md);
+    column-gap: var(--spacing-md);
+}
+
+.container.gap-lg, .themed-container.gap-lg {
+    gap: var(--spacing-lg);
+    column-gap: var(--spacing-lg);
+}
+
+.container.gap-xl, .themed-container.gap-xl {
+    gap: var(--spacing-xl);
+    column-gap: var(--spacing-xl);
+}
+
+/* Padding utilities */
+.container.p-none, .themed-container.p-none {
+    padding: 0;
+}
+
+.container.p-xs, .themed-container.p-xs {
+    padding: var(--spacing-xs);
+}
+
+.container.p-sm, .themed-container.p-sm {
+    padding: var(--spacing-sm);
+}
+
+.container.p-md, .themed-container.p-md {
+    padding: var(--spacing-md);
+}
+
+.container.p-lg, .themed-container.p-lg {
+    padding: var(--spacing-lg);
+}
+
+.container.p-xl, .themed-container.p-xl {
+    padding: var(--spacing-xl);
+}
+
+/* ===== Size and Width System ===== */
+.container.flex-fill, .themed-container.flex-fill {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+}
+
+/* Max width utilities */
+.container.max-width, .themed-container.max-width {
+    max-width: var(--container-max-width, 1200px);
+}
+
+.container.max-width-sm, .themed-container.max-width-sm {
+    max-width: 576px;
+}
+
+.container.max-width-md, .themed-container.max-width-md {
+    max-width: 768px;
+}
+
+.container.max-width-lg, .themed-container.max-width-lg {
+    max-width: 992px;
+}
+
+.container.max-width-xl, .themed-container.max-width-xl {
+    max-width: 1200px;
+}
+
+.container.max-width-full, .themed-container.max-width-full {
+    max-width: 100%;
+}
+
+/* Margin utilities */
+.container.m-auto, .themed-container.m-auto {
+    margin: 0 auto;
+}
+
+.container.m-none, .themed-container.m-none {
+    margin: 0;
+}
+
+.container.m-xs, .themed-container.m-xs {
+    margin: var(--spacing-xs);
+}
+
+.container.m-sm, .themed-container.m-sm {
+    margin: var(--spacing-sm);
+}
+
+.container.m-md, .themed-container.m-md {
+    margin: var(--spacing-md);
+}
+
+.container.m-lg, .themed-container.m-lg {
+    margin: var(--spacing-lg);
+}
+
+.container.m-xl, .themed-container.m-xl {
+    margin: var(--spacing-xl);
+}
+
+/* ===== Justify Self System ===== */
+.container.justify-self-auto, .themed-container.justify-self-auto {
+    justify-self: auto;
+}
+
+.container.justify-self-start, .themed-container.justify-self-start {
+    justify-self: start;
+}
+
+.container.justify-self-end, .themed-container.justify-self-end {
+    justify-self: end;
+}
+
+.container.justify-self-center, .themed-container.justify-self-center {
+    justify-self: center;
+}
+
+.container.justify-self-stretch, .themed-container.justify-self-stretch {
+    justify-self: stretch;
+}
+
+/* ===== Child Behavior ===== */
+/* Flex children default behavior */
+.container.layout-flex > *,
+.themed-container.layout-flex > * {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+/* Override: flex-fill children should grow in flex layouts */
+.container.layout-flex > .flex-fill,
+.themed-container.layout-flex > .flex-fill,
+.container.layout-flex > .container.flex-fill,
+.themed-container.layout-flex > .themed-container.flex-fill {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Text-wrap children behavior */
+.container.justify-wrap > *,
+.themed-container.justify-wrap > * {
+    flex: 0 0 auto;
+    min-width: fit-content;
+    max-width: 100%;
+}
+
+/* Center child elements in centered containers */
+.container.align-center > .button,
+.container.align-center > .input-container,
+.container.align-center > .select-container,
+.container.justify-center > .button,
+.container.justify-center > .input-container,
+.container.justify-center > .select-container,
+.themed-container.align-center > .button,
+.themed-container.align-center > .input-container,
+.themed-container.align-center > .select-container,
+.themed-container.justify-center > .button,
+.themed-container.justify-center > .input-container,
+.themed-container.justify-center > .select-container {
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+}
+
+/* ===== Grid Column Spanning ===== */
+.col-span-1 {
+    grid-column: span 1;
+}
+
+.col-span-2 {
+    grid-column: span 2;
+}
+
+.col-span-3 {
+    grid-column: span 3;
+}
+
+.col-span-4 {
+    grid-column: span 4;
+}
+
+.col-span-5 {
+    grid-column: span 5;
+}
+
+.col-span-6 {
+    grid-column: span 6;
+}
+
+.col-span-7 {
+    grid-column: span 7;
+}
+
+.col-span-8 {
+    grid-column: span 8;
+}
+
+.col-span-9 {
+    grid-column: span 9;
+}
+
+.col-span-10 {
+    grid-column: span 10;
+}
+
+.col-span-11 {
+    grid-column: span 11;
+}
+
+.col-span-12 {
+    grid-column: span 12;
+}
+
+.col-span-full {
+    grid-column: 1 / -1;
+}
+
+/* ===== Genie Integration ===== */
+.container.genie-trigger,
+.themed-container.genie-trigger {
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.container.genie-trigger:hover,
+.themed-container.genie-trigger:hover {
+    background-color: var(--surface-accent-color);
+    border-radius: var(--border-radius-md);
+}
+
+.container.has-genie-active,
+.themed-container.has-genie-active {
+    /* Disable transforms when floating card is active */
+    transform: none;
+}
+
+/* Genie positioning overrides */
+.container.layout-flex .genie-container,
+.container.layout-grid .genie-container,
+.themed-container.layout-flex .genie-container,
+.themed-container.layout-grid .genie-container {
+    position: absolute;
+    flex: none;
+    grid-area: unset;
+}

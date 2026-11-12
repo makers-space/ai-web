@@ -1,0 +1,129 @@
+/* Dark Theme CSS */
+/* Dark mode theme with high contrast and modern feel */
+
+/* Google Fonts - All families in single import */
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;200;300;400;500;600;700;800;900&family=Montserrat+Alternates:wght@100;200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap');
+
+.theme-dark {
+    /* Enhanced Color System - Dark Theme */
+
+    /* Basic Color System */
+    --primary-color: #4D9BF9;
+    --primary-accent-color: #2563eb;
+
+    --secondary-color: #FF570A ;
+    --secondary-accent-color: #8F2D00  ;
+
+    --tertiary-color: #E2ADF2 ;
+    --tertiary-accent-color: #8E1CB0 ;
+
+    --neutral-color: #D6C092 ;
+    --neutral-accent-color: #7D5D19;
+    
+    /* Semantic Colors */
+    --success-color: #70B97C;
+    --success-accent-color: #3F784C;
+
+    --warning-color: #FFD400;
+    --warning-accent-color: #EDA60C;
+
+    --error-color: #E03616;
+    --error-accent-color: #D95C43;
+    
+    /* Surface Colors */
+    --background-color: #1f2937;
+    --surface-color: #374151;
+    --surface-accent-color: #4b5563;
+
+    /* Border Colors */
+    --border-color: #60a5fa;
+    --border-light: #C9DDF8;
+
+    --text-color: #C9DDF8;
+    --text-contrast-color: #0C2F5A; /* Contrast text color matches surface color */
+
+    /* Overlay and Backdrop Colors */
+    --backdrop-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black for dark theme */
+    
+    /* Font System - 7 Font Weights */
+    --font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* Primary Font Family (Urbanist - Modern & Elegant) */
+    --font-family-primary: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-primary-light: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-primary-normal: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-primary-medium: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-primary-semibold: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-primary-bold: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-primary-extrabold: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-primary-black: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    
+    /* Secondary Font Family (Montserrat Alternates - Modern Alternative) */
+    --font-family-secondary: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-secondary-light: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-secondary-normal: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-secondary-medium: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-secondary-semibold: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-secondary-bold: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-secondary-extrabold: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-secondary-black: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    
+    /* Monospace Font Family (Share Tech Mono - Futuristic Code) */
+    --font-family-monospace: 'Share Tech Mono', 'Courier New', monospace;
+
+    /* Legacy Font Family Variables for Different Weights (backward compatibility) */
+    --font-family-light: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-normal: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-medium: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-semibold: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-bold: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-extrabold: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-black: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* Code Editor Font Family */
+    --font-family-code: 'Share Tech Mono', 'Courier New', monospace;
+
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semi-bold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extra-bold: 800;
+    --font-weight-black: 900;
+
+    /* Code Editor Colors - derived from dark palette */
+    --code-background:      #1f2937;
+    --code-foreground:      #c9ddf8;
+    --code-gutter:          #2d3748;
+    --code-line-highlight:  #2d3748;
+    --code-selection:       #264f78;
+    --code-cursor:          #4d9bf9;
+    --code-line-number:     #4a5568;
+    --code-keyword:         #4d9bf9;
+    --code-string:          #e2adf2;
+    --code-number:          #ffd400;
+    --code-comment:         #6b7f9e;
+    --code-type:            #ff8c5a;
+    --code-function:        #79c0ff;
+    --code-variable:        #c9ddf8;
+    --code-operator:        #60a5fa;
+
+    /* Border Radius System - Dark theme uses rounded corners */
+    --border-radius: 0.5rem; /* 8px */
+    --card-radius: 0.75rem; /* 12px */
+    --input-radius: 0.375rem; /* 6px */
+    --button-radius: 0.5rem; /* 8px */
+    --checkbox-radius: 0.25rem; /* 4px */
+    --fab-radius: 50%; /* Circular */
+    --progress-radius: 0.25rem; /* 4px */
+    --notification-radius: 0.5rem; /* 8px */
+
+    /* Shadow System - Dark theme uses deep black shadows */
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-color-hover: rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 1px 2px var(--shadow-color);
+    --shadow-md: 0 4px 6px var(--shadow-color);
+    --shadow-lg: 0 8px 20px var(--shadow-color);
+    --shadow-xl: 0 12px 24px var(--shadow-color);
+    --shadow-2xl: 0 16px 40px var(--shadow-color);
+}

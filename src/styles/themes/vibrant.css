@@ -1,0 +1,123 @@
+/* Vibrant Theme CSS */
+/* Colorful and energetic design with bold styling */
+
+/* Google Fonts - All families in single import */
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Bungee+Spice&family=VT323&display=swap');
+
+.theme-vibrant {
+  /* Enhanced Color System - Vibrant Theme */
+
+  /* Basic Color System */
+  --primary-color: #2176AE;
+  --primary-accent-color: #175178;
+
+  --secondary-color: #f97316;
+  --secondary-accent-color: #c2410c;
+
+  --tertiary-color: #D12B1F;
+  --tertiary-accent-color: #E83151;
+
+  --neutral-color: #6b7280;
+  --neutral-accent-color: #374151;
+  
+  /* Semantic Colors */
+  --success-color: #16a34a;
+  --success-accent-color: #15803d;
+  
+  --warning-color: #f59e0b;
+  --warning-accent-color: #d97706;
+  
+  --error-color: #dc2626;
+  --error-accent-color: #991b1b;
+  
+  /* Surface and Border Colors */
+  --background-color: #F2822C;
+  --surface-color: #FBB13C;
+  --surface-accent-color: #a8121e82;
+
+  /* Border styles */
+  --border-color: #2176AE;
+  --border-light: #fed7aa;
+  
+  --text-color: #0A6270;
+  --text-contrast-color: #FFB885; /* Contrast text color matches surface color */
+  
+  /* Overlay and Backdrop Colors */
+  --backdrop-color: rgba(239, 68, 68, 0.4); /* Semi-transparent vibrant red */
+    
+  /* Font System - 7 Font Weights */
+  --font-family: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
+  
+  /* Primary Font Family (Gloria Hallelujah - Handwritten & Playful) */
+  --font-family-primary: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
+  --font-family-primary-light: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
+  --font-family-primary-normal: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
+  --font-family-primary-medium: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
+  --font-family-primary-semibold: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
+  --font-family-primary-bold: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
+  --font-family-primary-extrabold: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
+  --font-family-primary-black: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
+  
+  /* Secondary Font Family (Bungee Spice - Bold & Colorful) */
+  --font-family-secondary: 'Bungee Spice', 'Impact', 'Arial Black', sans-serif;
+  --font-family-secondary-light: 'Bungee Spice', 'Impact', 'Arial Black', sans-serif;
+  --font-family-secondary-normal: 'Bungee Spice', 'Impact', 'Arial Black', sans-serif;
+  --font-family-secondary-medium: 'Bungee Spice', 'Impact', 'Arial Black', sans-serif;
+  --font-family-secondary-semibold: 'Bungee Spice', 'Impact', 'Arial Black', sans-serif;
+  --font-family-secondary-bold: 'Bungee Spice', 'Impact', 'Arial Black', sans-serif;
+  --font-family-secondary-extrabold: 'Bungee Spice', 'Impact', 'Arial Black', sans-serif;
+  --font-family-secondary-black: 'Bungee Spice', 'Impact', 'Arial Black', sans-serif;
+  
+  /* Monospace Font Family (VT323 - Retro & Pixelated) */
+  --font-family-monospace: 'VT323', 'Courier New', monospace;
+  
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+  --font-weight-black: 900;    
+  
+  /* Code Editor Colors - derived from vibrant palette */
+  --code-background:      #f5973a;
+  --code-foreground:      #0a2e3a;
+  --code-gutter:          #f2822c;
+  --code-line-highlight:  #e07820;
+  --code-selection:       #a0522d;
+  --code-cursor:          #175178;
+  --code-line-number:     #7a5020;
+  --code-keyword:         #1a4a70;
+  --code-string:          #6b0010;
+  --code-number:          #b02020;
+  --code-comment:         #7a6040;
+  --code-type:            #175178;
+  --code-function:        #2176ae;
+  --code-variable:        #0a2e3a;
+  --code-operator:        #d12b1f;
+
+  /* Border Radius System - Vibrant theme uses playful rounded corners */
+  --border-radius: 1rem;           /* 16px */
+  --card-radius: 1.5rem;           /* 24px */
+  --input-radius: 0.75rem;         /* 12px */
+  --button-radius: 1rem;           /* 16px */
+  --checkbox-radius: 0.5rem;       /* 8px */
+  --fab-radius: 50%;               /* Circular */  
+  --progress-radius: 9999px;       /* Pill shape */
+  --notification-radius: 1rem;     /* 16px */
+
+  /* Shadow System - Vibrant theme uses colorful red-tinted shadows */
+  --shadow-color: rgba(239, 68, 68, 0.2);
+  --shadow-color-hover: rgba(239, 68, 68, 0.3);
+  --shadow-sm: 0 1px 3px var(--shadow-color);
+  --shadow-md: 0 4px 8px var(--shadow-color);
+  --shadow-lg: 0 8px 20px var(--shadow-color);  
+  --shadow-xl: 0 12px 28px var(--shadow-color);
+  --shadow-2xl: 0 16px 40px var(--shadow-color);
+}
+
+/* Vibrant theme uses VT323 for code editing */
+.theme-vibrant .code-editor-font,
+.theme-vibrant .monaco-editor {
+  font-family: 'VT323', 'Courier New', monospace !important;
+}

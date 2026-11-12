@@ -1,0 +1,143 @@
+.button-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.button-group.nowrap {
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--button-radius, var(--border-radius-md));
+    overflow: visible;
+    gap: var(--spacing-xs) 0;
+}
+
+.button-group .button.themed-button {
+    margin: 0 !important;
+    position: relative;
+    z-index: 1;
+    box-shadow: var(--shadow-sm);
+    border-radius: 0 !important;
+}
+
+.button-group .button.themed-button.button-group-edge-left {
+    border-top-left-radius: var(--button-radius, var(--border-radius-md)) !important;
+    border-bottom-left-radius: var(--button-radius, var(--border-radius-md)) !important;
+}
+
+.button-group .button.themed-button.button-group-edge-right {
+    border-top-right-radius: var(--button-radius, var(--border-radius-md)) !important;
+    border-bottom-right-radius: var(--button-radius, var(--border-radius-md)) !important;
+}
+
+.button-group .button.themed-button:hover,
+.button-group .button.themed-button.selected {
+    z-index: 2;
+    transform: none !important;
+}
+
+.button-group:hover {
+    transform: translateY(-1px);
+}
+
+.button-group.spaced {
+    overflow: visible;
+    box-shadow: none;
+    background: transparent;
+    gap: var(--spacing-xs);
+}
+
+.button-group.spaced .button.themed-button {
+    border-radius: var(--button-radius, var(--border-radius-md)) !important;
+    margin: 0 !important;
+}
+
+.button-group.spaced.xs,
+.button-group.spaced.sm {
+    gap: var(--spacing-xs);
+}
+
+.button-group.spaced.lg,
+.button-group.spaced.xl {
+    gap: var(--spacing-sm);
+}
+
+/* A spaced group sits flush in its container; the container's justify/align
+   props and the parent's gap decide where it goes. */
+.button-group.spaced,
+.button-group.spaced.nowrap {
+    margin: 0;
+}
+
+.button-group.spaced.nowrap {
+    gap: var(--spacing-xs);
+}
+
+.button-group.spaced .button.themed-button.themed-button-secondary {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--secondary-color) !important;
+}
+
+.button-group.spaced .button.themed-button.themed-button-border-shadow {
+    border: none !important;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15) !important;
+}
+
+.button-group.spaced .button.themed-button.themed-button-border-shadow:hover,
+.button-group.spaced .button.themed-button.themed-button-border-shadow.selected {
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25) !important;
+    background-color: var(--primary-color) !important;
+    color: var(--text-contrast-color) !important;
+}
+
+.button-group .button.themed-button.themed-button-border-shadow {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.button-group .button.themed-button.themed-button-border-shadow:hover,
+.button-group .button.themed-button.themed-button-border-shadow.selected {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: var(--primary-color) !important;
+    color: var(--text-contrast-color) !important;
+}
+
+.button-group .button.themed-button.themed-button-border-shadow:first-child {
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.15) !important;
+}
+
+.button-group .button.themed-button.themed-button-border-shadow:last-child {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+}
+
+.button-group .button.themed-button.themed-button-border-shadow:first-child:last-child {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15) !important;
+}
+
+.button-group {
+    position: relative;
+    isolation: auto;
+}
+
+.button-group.has-genie-active {
+    transform: none !important;
+}
+
+/* Genie trigger styling for button groups */
+.button-group.genie-trigger {
+    cursor: pointer;
+}
+
+/* Button group background variants for floating card triggers */
+.button-group.floating-trigger-highlight:hover {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.button-group-container {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}

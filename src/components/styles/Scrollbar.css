@@ -1,0 +1,75 @@
+/* Custom Scrollbar Styling */
+/* Uses existing theme color variables for consistent styling */
+
+/* Apply custom scrollbars to specific components with scrollable content */
+.table-scroll-wrapper,
+.data-content,
+.page,
+.card,
+.container,
+.themed-container,
+.themed-editor [class*="_contentEditable_"],
+.themed-editor .mdxeditor-root-contenteditable,
+body {
+    scrollbar-color: transparent transparent;
+}
+
+/* Firefox hover state support */
+.table-scroll-wrapper:hover,
+.data-content:hover,
+.page:hover,
+.card:hover,
+.container:hover,
+.themed-container:hover,
+.themed-editor [class*="_contentEditable_"]:hover {
+    scrollbar-width: auto;
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+/* Webkit scrollbar styling for Chrome, Safari, Edge */
+.table-scroll-wrapper::-webkit-scrollbar,
+.data-content::-webkit-scrollbar,
+.page::-webkit-scrollbar,
+.card::-webkit-scrollbar,
+.container::-webkit-scrollbar,
+.themed-container::-webkit-scrollbar,
+.themed-editor [class*="_contentEditable_"]::-webkit-scrollbar,
+.themed-editor .mdxeditor-root-contenteditable::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-track,
+.data-content::-webkit-scrollbar-track,
+.page::-webkit-scrollbar-track,
+.card::-webkit-scrollbar-track,
+.container::-webkit-scrollbar-track,
+.themed-container::-webkit-scrollbar-track,
+.themed-editor [class*="_contentEditable_"]::-webkit-scrollbar-track,
+.themed-editor .mdxeditor-root-contenteditable::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb,
+.data-content::-webkit-scrollbar-thumb,
+.page::-webkit-scrollbar-thumb,
+.card::-webkit-scrollbar-thumb,
+.container::-webkit-scrollbar-thumb,
+.themed-container::-webkit-scrollbar-thumb,
+.themed-editor [class*="_contentEditable_"]::-webkit-scrollbar-thumb,
+.themed-editor .mdxeditor-root-contenteditable::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+    opacity: 0.3;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb:hover,
+.data-content::-webkit-scrollbar-thumb:hover,
+.page::-webkit-scrollbar-thumb:hover,
+.card::-webkit-scrollbar-thumb:hover,
+.container::-webkit-scrollbar-thumb:hover,
+.themed-container::-webkit-scrollbar-thumb:hover,
+.themed-editor [class*="_contentEditable_"]::-webkit-scrollbar-thumb:hover,
+.themed-editor .mdxeditor-root-contenteditable::-webkit-scrollbar-thumb:hover {
+    opacity: 0.7;
+}

@@ -1,0 +1,123 @@
+/* Modern Theme CSS */
+/* Clean and professional design with modern aesthetics */
+
+/* Google Fonts - All families in single import */
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;200;300;400;500;600;700;800;900&family=Montserrat+Alternates:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
+
+.theme-modern {
+  /* Enhanced Color System - Modern Theme */
+
+  /* Basic Color System */
+  --primary-color: #3F84E5;
+  --primary-accent-color: #98B3E6;
+
+  --secondary-color: #F45D01;
+  --secondary-accent-color: #FEB485;
+
+  --tertiary-color: #8b5cf6; 
+  --tertiary-accent-color: #7c3aed;
+
+  --neutral-color: #6b7280;
+  --neutral-accent-color: #374151; 
+  
+  /* Semantic Colors */
+  --success-color: #10b981;
+  --success-accent-color: #059669;
+    
+  --warning-color: #fbbf24;
+  --warning-accent-color: #f59e0b;
+    
+  --error-color: #ef4444;
+  --error-accent-color: #dc2626;
+  
+  /* Surface and Border Colors */
+  --background-color: #C6D8FF;
+  --surface-color: #E2E7F3;
+  --surface-accent-color: #f3f4f6;
+  --border-color: #e5e7eb;
+  --border-light: #f3f4f6;
+
+  --text-color: #0C2F5A;
+  --text-contrast-color: #C9DDF8;
+
+  /* Shadow System - Modern theme uses subtle blue-tinted shadows */
+  --shadow-color: rgba(59, 131, 246, 0.315);
+  --shadow-color-hover: rgba(59, 131, 246, 0.4);
+  --shadow-sm: 0 1px 2px var(--shadow-color);
+  --shadow-md: 0 4px 6px var(--shadow-color);
+  --shadow-lg: 0 10px 15px -3px var(--shadow-color);
+  --shadow-xl: 0 20px 25px -5px var(--shadow-color);
+  --shadow-2xl: 0 25px 50px -12px var(--shadow-color);
+
+  /* Overlay and Backdrop Colors */
+  --backdrop-color: rgba(31, 41, 55, 0.5);
+
+    /* Font System - 7 Font Weights */
+  --font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Primary Font Family (Urbanist - Modern & Elegant) */
+  --font-family-primary: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-primary-light: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-primary-normal: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-primary-medium: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-primary-semibold: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-primary-bold: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-primary-extrabold: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-primary-black: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Secondary Font Family (Montserrat Alternates - Modern Alternative) */
+  --font-family-secondary: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-secondary-light: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-secondary-normal: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-secondary-medium: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-secondary-semibold: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-secondary-bold: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-secondary-extrabold: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-secondary-black: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Monospace Font Family (JetBrains Mono - Code) */
+  --font-family-monospace: 'JetBrains Mono', 'Courier New', monospace;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+  --font-weight-black: 900;
+  
+  /* Code Editor Colors - derived from modern palette */
+  --code-background:      #eef2fb;
+  --code-foreground:      #0c2f5a;
+  --code-gutter:          #e2e7f3;
+  --code-line-highlight:  #dde6f7;
+  --code-selection:       #bfdbfe;
+  --code-cursor:          #3f84e5;
+  --code-line-number:     #9ca3af;
+  --code-keyword:         #3f84e5;
+  --code-string:          #7c3aed;
+  --code-number:          #f45d01;
+  --code-comment:         #6b7280;
+  --code-type:            #7c3aed;
+  --code-function:        #1d4ed8;
+  --code-variable:        #374151;
+  --code-operator:        #3f84e5;
+
+  /* Border Radius System - Modern theme uses subtle rounded corners */
+  --border-radius: 0.375rem;      /* 6px */
+  --card-radius: 0.5rem;          /* 8px */
+  --input-radius: 0.375rem;       /* 6px */
+  --button-radius: 0.375rem;      /* 6px */
+  --checkbox-radius: 0.25rem;     /* 4px */
+  --fab-radius: 50%;              /* Circular */
+  --progress-radius: 9999px;      /* Pill shape */
+  --notification-radius: 0.5rem;  /* 8px */
+
+}
+
+/* Modern Theme Code Editor Styling */
+.theme-modern .code-viewer-container {
+  background-color: var(--code-background);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-md);
+}

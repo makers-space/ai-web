@@ -1,0 +1,159 @@
+/* ===== Genie Container ===== */
+.genie-container {
+    position: fixed;
+    pointer-events: none;
+    /* Significantly higher z-index to ensure it's above all elements */
+    z-index: 999999;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all var(--transition-normal);
+    will-change: transform, opacity;
+    /* Force new stacking context and prevent parent interference */
+    isolation: isolate;
+    /* Completely hide when not visible */
+    visibility: hidden;
+    /* Remove focus outline */
+    outline: none;
+}
+
+.genie-container.visible {
+    pointer-events: all;
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+}
+
+/* ===== Positioning Variants ===== */
+/* Transform origins for proper scaling animation based on position */
+.genie-container.position-top-left {
+    transform-origin: bottom left;
+    /* Make container grow from left to right naturally */
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.genie-container.position-top-right {
+    transform-origin: bottom right;
+    /* Make container grow from right to left */
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.genie-container.position-bottom-left {
+    transform-origin: top left;
+    /* Make container grow from left to right naturally */
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.genie-container.position-bottom-right {
+    transform-origin: top right;
+    /* Make container grow from right to left */
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* ===== Genie Content ===== */
+.genie-content {
+    /* Let Card component handle background, border, shadow, and border-radius theming */
+    /* Ensure content is always above everything including backdrop */
+    z-index: 999999;
+    /* Ensure proper sizing with scrolling as needed */
+    box-sizing: border-box;
+    width: fit-content;
+    overflow: auto;
+}
+
+/* ===== Backdrop ===== */
+.genie-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--backdrop-color);
+    z-index: 999998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+    /* Prevent backdrop from interfering with hover events */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.genie-backdrop.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ===== Animation Variants ===== */
+.genie-container.animation-slide-up {
+    transform: translateY(20px) scale(0.9);
+}
+
+.genie-container.animation-slide-up.visible {
+    transform: translateY(0) scale(1);
+}
+
+.genie-container.animation-slide-down {
+    transform: translateY(-20px) scale(0.9);
+}
+
+.genie-container.animation-slide-down.visible {
+    transform: translateY(0) scale(1);
+}
+
+.genie-container.animation-fade {
+    transform: none;
+}
+
+.genie-container.animation-fade.visible {
+    transform: none;
+}
+
+/* ===== Variant Styles ===== */
+.genie-container.variant-tooltip {
+    /* Tooltips are typically smaller and less prominent */
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.genie-container.variant-popover,
+.genie-container.variant-dropdown,
+.genie-container.variant-menu {
+    /* Menus and popovers need stronger shadows */
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+.genie-container.variant-modal {
+    /* Modals can be larger and more prominent */
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.2));
+}
+
+.genie-container.variant-notification {
+    /* Notifications may need different positioning or styling */
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+}
+
+/* ===== Utility Classes ===== */
+.genie-container.justify-self-auto {
+    justify-self: auto;
+}
+
+.genie-container.justify-self-start {
+    justify-self: start;
+}
+
+.genie-container.justify-self-end {
+    justify-self: end;
+}
+
+.genie-container.justify-self-center {
+    justify-self: center;
+}
+
+.genie-container.justify-self-stretch {
+    justify-self: stretch;
+}

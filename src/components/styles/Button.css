@@ -1,0 +1,611 @@
+/* Button component structural styles */
+.button.themed-button {
+    display: flex;
+    height: 2.5rem;
+    margin: var(--spacing-sm) 0;
+    padding: 0 var(--spacing-md);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--button-radius, var(--border-radius-md));
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-family-medium, var(--font-family)), sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+    white-space: nowrap;
+    background-color: var(--surface-color);
+    color: var(--primary-color);
+    position: relative;
+    isolation: auto;
+    justify-content: center;
+}
+
+.button.themed-button .button-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+}
+
+/* Remove any unwanted focus outlines */
+.button.themed-button:focus {
+    outline: none;
+}
+
+/* Hover and Selected states with highest specificity */
+.button.themed-button.themed-button-primary:hover,
+.button.themed-button.themed-button-primary.selected,
+.button.themed-button.selected,
+.button.themed-button.selected.themed-button-primary,
+.button.themed-button:hover {
+    /* Hover + Selected states: primary color background, contrast text, primary color border */
+    background-color: var(--primary-color) !important;
+    color: var(--text-contrast-color) !important;
+    border-color: var(--primary-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+.button.themed-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Button hover effects that need to be disabled when floating card is active */
+.button.themed-button.has-genie-active {
+    /* Disable transform-based hover effects */
+    transform: none !important;
+}
+
+/* Genie trigger styling for buttons */
+.button.themed-button.genie-trigger {
+    cursor: pointer;
+}
+
+/* Button background variants for floating card triggers */
+.button.themed-button.floating-trigger-highlight:hover {
+    background-color: var(--primary-accent-color) !important;
+}
+
+/* Secondary variant */
+.button.themed-button.themed-button-secondary {
+    /* Normal state: surface color background, secondary color text, secondary color border */
+    background-color: var(--surface-color) !important;
+    color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}
+
+.button.themed-button.themed-button-secondary:hover,
+.button.themed-button.themed-button-secondary.selected {
+    /* Hover + Selected states: secondary color background, contrast text, secondary color border */
+    background-color: var(--secondary-color) !important;
+    color: var(--text-contrast-color) !important;
+    border-color: var(--secondary-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Tertiary variant */
+.button.themed-button.themed-button-tertiary {
+    /* Normal state: surface color background, tertiary color text, tertiary color border */
+    background-color: var(--surface-color) !important;
+    color: var(--tertiary-color) !important;
+    border-color: var(--tertiary-color) !important;
+}
+
+.button.themed-button.themed-button-tertiary:hover,
+.button.themed-button.themed-button-tertiary.selected {
+    /* Hover + Selected states: tertiary color background, contrast text, tertiary color border */
+    background-color: var(--tertiary-color) !important;
+    color: var(--text-contrast-color) !important;
+    border-color: var(--tertiary-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Button variant: border-shadow */
+.button.themed-button.themed-button-border-shadow {
+    /* Normal state: surface color background, color from color prop, no border, bottom and left shadow */
+    background-color: var(--surface-color) !important;
+    color: var(--button-variant-color, var(--primary-color)) !important;
+    border: none !important;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.button.themed-button.themed-button-border-shadow:hover,
+.button.themed-button.themed-button-border-shadow.selected {
+    /* Hover + Selected states: color background, contrast text, stronger shadow */
+    background-color: var(--button-variant-color, var(--primary-color)) !important;
+    color: var(--text-contrast-color) !important;
+    border: none !important;
+    box-shadow: 0 6px 8px var(--shadow-color-hover);
+    transform: translateY(-1px);
+}
+
+/* Button variant: ghost */
+.button.themed-button.themed-button-variant-ghost {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: var(--button-variant-color, var(--primary-color)) !important;
+    box-shadow: none !important;
+}
+
+.button.themed-button.themed-button-variant-ghost:hover,
+.button.themed-button.themed-button-variant-ghost.selected {
+    background-color: color-mix(in srgb, var(--button-variant-color, var(--primary-color)) 14%, transparent) !important;
+    border-color: var(--button-variant-color, var(--primary-color)) !important;
+    color: var(--button-variant-color, var(--primary-color)) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Button variant: solid */
+.button.themed-button.themed-button-variant-solid {
+    background-color: var(--button-variant-color, var(--primary-color)) !important;
+    border-color: var(--button-variant-color, var(--primary-color)) !important;
+    color: var(--text-contrast-color) !important;
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+.button.themed-button.themed-button-variant-solid:hover,
+.button.themed-button.themed-button-variant-solid.selected {
+    background-color: color-mix(in srgb, var(--button-variant-color, var(--primary-color)) 88%, black 12%) !important;
+    border-color: color-mix(in srgb, var(--button-variant-color, var(--primary-color)) 88%, black 12%) !important;
+    color: var(--text-contrast-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px var(--shadow-color-hover);
+}
+
+/* Size variations - xs/sm/md/lg/xl scale */
+/* NOTE: Heights are set by the responsive system below (line ~400+).
+   These rules set margin/padding/font-size defaults and act as a fallback. */
+.button.themed-button.xxs {
+    height: 1.125rem; /* 18px - one notch below xs */
+    margin: calc(var(--spacing-xs) * 0.5) 0;
+    padding: 0 var(--spacing-xs);
+    font-size: 0.6875rem;
+}
+
+.button.themed-button.xs {
+    height: 1.25rem; /* 20px - matches Input/Select xs mobile base */
+    margin: calc(var(--spacing-xs) * 0.5) 0;
+    padding: 0 var(--spacing-xs);
+    font-size: 0.75rem;
+}
+
+.button.themed-button.sm {
+    height: 1.5rem; /* 24px - matches Input/Select sm mobile base */
+    margin: var(--spacing-xs) 0;
+    padding: 0 var(--spacing-sm);
+    font-size: var(--font-size-xs);
+}
+
+.button.themed-button.md {
+    height: 1.875rem; /* 30px - matches Input/Select md mobile base */
+    margin: var(--spacing-sm) 0;
+    padding: 0 var(--spacing-md);
+    font-size: var(--font-size-sm);
+}
+
+.button.themed-button.lg {
+    height: 2rem; /* 32px - matches Input/Select lg mobile base */
+    margin: var(--spacing-md) 0;
+    padding: 0 var(--spacing-lg);
+    font-size: var(--font-size-base);
+}
+
+.button.themed-button.xl {
+    height: 2.25rem; /* 36px - matches Input/Select xl mobile base */
+    margin: var(--spacing-md) 0;
+    padding: 0 var(--spacing-xl);
+    font-size: var(--font-size-lg);
+}
+
+/* Success variant */
+.button.themed-button.themed-button-success {
+    background-color: var(--surface-color) !important;
+    color: var(--success-color) !important;
+    border-color: var(--success-color) !important;
+}
+
+.button.themed-button.themed-button-success:hover,
+.button.themed-button.themed-button-success.selected {
+    background-color: var(--success-color) !important;
+    color: var(--text-contrast-color) !important;
+    border-color: var(--success-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Success with ghost variant */
+.button.themed-button.themed-button-success.themed-button-variant-ghost {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: var(--success-color) !important;
+    box-shadow: none !important;
+}
+
+.button.themed-button.themed-button-success.themed-button-variant-ghost:hover,
+.button.themed-button.themed-button-success.themed-button-variant-ghost.selected {
+    background-color: color-mix(in srgb, var(--success-color) 14%, transparent) !important;
+    border-color: var(--success-color) !important;
+    color: var(--success-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Success with solid variant */
+.button.themed-button.themed-button-success.themed-button-variant-solid {
+    background-color: var(--success-color) !important;
+    border-color: var(--success-color) !important;
+    color: var(--text-contrast-color) !important;
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+.button.themed-button.themed-button-success.themed-button-variant-solid:hover,
+.button.themed-button.themed-button-success.themed-button-variant-solid.selected {
+    background-color: color-mix(in srgb, var(--success-color) 88%, black 12%) !important;
+    border-color: color-mix(in srgb, var(--success-color) 88%, black 12%) !important;
+    color: var(--text-contrast-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px var(--shadow-color-hover);
+}
+
+/* Warning variant */
+.button.themed-button.themed-button-warning {
+    background-color: var(--surface-color) !important;
+    color: var(--warning-color) !important;
+    border-color: var(--warning-color) !important;
+}
+
+.button.themed-button.themed-button-warning:hover,
+.button.themed-button.themed-button-warning.selected {
+    background-color: var(--warning-color) !important;
+    color: var(--text-contrast-color) !important;
+    border-color: var(--warning-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Warning with ghost variant */
+.button.themed-button.themed-button-warning.themed-button-variant-ghost {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: var(--warning-color) !important;
+    box-shadow: none !important;
+}
+
+.button.themed-button.themed-button-warning.themed-button-variant-ghost:hover,
+.button.themed-button.themed-button-warning.themed-button-variant-ghost.selected {
+    background-color: color-mix(in srgb, var(--warning-color) 14%, transparent) !important;
+    border-color: var(--warning-color) !important;
+    color: var(--warning-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Warning with solid variant */
+.button.themed-button.themed-button-warning.themed-button-variant-solid {
+    background-color: var(--warning-color) !important;
+    border-color: var(--warning-color) !important;
+    color: var(--text-contrast-color) !important;
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+.button.themed-button.themed-button-warning.themed-button-variant-solid:hover,
+.button.themed-button.themed-button-warning.themed-button-variant-solid.selected {
+    background-color: color-mix(in srgb, var(--warning-color) 88%, black 12%) !important;
+    border-color: color-mix(in srgb, var(--warning-color) 88%, black 12%) !important;
+    color: var(--text-contrast-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px var(--shadow-color-hover);
+}
+
+/* Error variant */
+.button.themed-button.themed-button-error {
+    background-color: var(--surface-color) !important;
+    color: var(--error-color) !important;
+    border-color: var(--error-color) !important;
+}
+
+.button.themed-button.themed-button-error:hover,
+.button.themed-button.themed-button-error.selected {
+    background-color: var(--error-color) !important;
+    color: var(--text-contrast-color) !important;
+    border-color: var(--error-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Error with ghost variant */
+.button.themed-button.themed-button-error.themed-button-variant-ghost {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: var(--error-color) !important;
+    box-shadow: none !important;
+}
+
+.button.themed-button.themed-button-error.themed-button-variant-ghost:hover,
+.button.themed-button.themed-button-error.themed-button-variant-ghost.selected {
+    background-color: color-mix(in srgb, var(--error-color) 14%, transparent) !important;
+    border-color: var(--error-color) !important;
+    color: var(--error-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Error with solid variant */
+.button.themed-button.themed-button-error.themed-button-variant-solid {
+    background-color: var(--error-color) !important;
+    border-color: var(--error-color) !important;
+    color: var(--text-contrast-color) !important;
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+.button.themed-button.themed-button-error.themed-button-variant-solid:hover,
+.button.themed-button.themed-button-error.themed-button-variant-solid.selected {
+    background-color: color-mix(in srgb, var(--error-color) 88%, black 12%) !important;
+    border-color: color-mix(in srgb, var(--error-color) 88%, black 12%) !important;
+    color: var(--text-contrast-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px var(--shadow-color-hover);
+}
+
+/* Warning variant */
+.button.themed-button.themed-button-warning {
+    background-color: var(--surface-color) !important;
+    color: var(--warning-color) !important;
+    border-color: var(--warning-color) !important;
+}
+
+.button.themed-button.themed-button-warning:hover,
+.button.themed-button.themed-button-warning.selected {
+    background-color: var(--warning-color) !important;
+    color: var(--text-contrast-color) !important;
+    border-color: var(--warning-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* Error variant */
+.button.themed-button.themed-button-error {
+    background-color: var(--surface-color) !important;
+    color: var(--error-color) !important;
+    border-color: var(--error-color) !important;
+}
+
+.button.themed-button.themed-button-error:hover,
+.button.themed-button.themed-button-error.selected {
+    background-color: var(--error-color) !important;
+    color: var(--text-contrast-color) !important;
+    border-color: var(--error-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px var(--shadow-color-hover);
+}
+
+/* JustifySelf utility classes for Button components */
+.button.themed-button.justify-self-auto {
+    justify-self: auto;
+}
+
+.button.themed-button.justify-self-start {
+    justify-self: start;
+}
+
+.button.themed-button.justify-self-end {
+    justify-self: end;
+}
+
+.button.themed-button.justify-self-center {
+    justify-self: center;
+}
+
+.button.themed-button.justify-self-stretch {
+    justify-self: stretch;
+}
+
+/* ===== Responsive Size System ===== */
+/* Component-level responsive design: button sizes adapt automatically based on viewport */
+/* Mobile-first approach: Start with smallest sizes, grow significantly for larger screens */
+/* Breakpoints: 480px (small→large phones), 768px (tablet portrait), 1025px (desktop), 1440px (large desktop) */
+
+/* Mobile base styles (< 480px) - Extra compact for small phones */
+.button.themed-button.xxs {
+    height: 1.125rem;       /* 18px */
+    padding: 0 0.3125rem;   /* 5px */
+    font-size: 0.5625rem;   /* 9px */
+    min-width: 1.125rem;
+}
+
+.button.themed-button.xs {
+    height: 1.25rem;        /* 20px */
+    padding: 0 0.375rem;    /* 6px */
+    font-size: 0.625rem;    /* 10px */
+    min-width: 1.25rem;
+}
+
+.button.themed-button.sm {
+    height: 1.5rem;         /* 24px */
+    padding: 0 0.5rem;      /* 8px */
+    font-size: 0.6875rem;   /* 11px */
+    min-width: 1.5rem;
+}
+
+.button.themed-button.md {
+    height: 1.875rem;       /* 30px */
+    padding: 0 0.625rem;    /* 10px */
+    font-size: 0.75rem;     /* 12px */
+    min-width: 1.875rem;
+}
+
+.button.themed-button.lg {
+    height: 2rem;           /* 32px */
+    padding: 0 0.75rem;     /* 12px */
+    font-size: 0.8125rem;   /* 13px */
+    min-width: 2rem;
+}
+
+.button.themed-button.xl {
+    height: 2.25rem;        /* 36px */
+    padding: 0 0.875rem;    /* 14px */
+    font-size: 0.875rem;    /* 14px */
+    min-width: 2.25rem;
+}
+
+/* Large phone adjustments (480px - 767px) - Slightly larger for standard phones */
+@media (min-width: 480px) {
+    .button.themed-button.xxs {
+        height: 1.25rem;        /* 20px */
+        padding: 0 0.375rem;    /* 6px */
+        font-size: 0.625rem;    /* 10px */
+    }
+
+    .button.themed-button.xs {
+        height: 1.5rem;         /* 24px */
+        padding: 0 0.5rem;      /* 8px */
+        font-size: 0.6875rem;   /* 11px */
+    }
+
+    .button.themed-button.sm {
+        height: 1.75rem;        /* 28px */
+        padding: 0 0.625rem;    /* 10px */
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .button.themed-button.md {
+        height: 2rem;           /* 32px */
+        padding: 0 0.75rem;     /* 12px */
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .button.themed-button.lg {
+        height: 2.25rem;        /* 36px */
+        padding: 0 0.875rem;    /* 14px */
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .button.themed-button.xl {
+        height: 2.5rem;         /* 40px */
+        padding: 0 1rem;        /* 16px */
+        font-size: 0.9375rem;   /* 15px */
+    }
+}
+
+/* Tablet adjustments (768px - 1024px) - Moderately sized for comfortable interaction */
+@media (min-width: 768px) {
+    .button.themed-button.xxs {
+        height: 1.5rem;         /* 24px */
+        padding: 0 0.5rem;      /* 8px */
+        font-size: 0.6875rem;   /* 11px */
+    }
+
+    .button.themed-button.xs {
+        height: 1.75rem;        /* 28px */
+        padding: 0 0.75rem;     /* 12px */
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .button.themed-button.sm {
+        height: 2rem;           /* 32px */
+        padding: 0 0.875rem;    /* 14px */
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .button.themed-button.md {
+        height: 2.25rem;        /* 36px */
+        padding: 0 1rem;        /* 16px */
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .button.themed-button.lg {
+        height: 2.5rem;         /* 40px */
+        padding: 0 1.125rem;    /* 18px */
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .button.themed-button.xl {
+        height: 2.875rem;       /* 46px */
+        padding: 0 1.375rem;    /* 22px */
+        font-size: 1rem;        /* 16px */
+    }
+}
+
+/* Desktop adjustments (1025px - 1439px) - Spacious for optimal desktop experience */
+@media (min-width: 1025px) {
+    .button.themed-button.xxs {
+        height: 1.625rem;       /* 26px */
+        padding: 0 0.625rem;    /* 10px */
+        font-size: 0.75rem;     /* 12px */
+    }
+
+    .button.themed-button.xs {
+        height: 2rem;           /* 32px */
+        padding: 0 0.875rem;    /* 14px */
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .button.themed-button.sm {
+        height: 2.25rem;        /* 36px */
+        padding: 0 1rem;        /* 16px */
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .button.themed-button.md {
+        height: 2.5rem;         /* 40px */
+        padding: 0 1.125rem;    /* 18px */
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .button.themed-button.lg {
+        height: 2.75rem;        /* 44px */
+        padding: 0 1.375rem;    /* 22px */
+        font-size: 1rem;        /* 16px */
+    }
+
+    .button.themed-button.xl {
+        height: 3.125rem;       /* 50px */
+        font-size: 1.0625rem;   /* 17px */
+        padding: 0 1.625rem;    /* 26px */
+    }
+}
+
+/* Large desktop adjustments (>= 1440px) - Extra spacious for large monitors */
+@media (min-width: 1440px) {
+    .button.themed-button.xxs {
+        height: 1.75rem;        /* 28px */
+        padding: 0 0.75rem;     /* 12px */
+        font-size: 0.8125rem;   /* 13px */
+    }
+
+    .button.themed-button.xs {
+        height: 2.125rem;       /* 34px */
+        padding: 0 1rem;        /* 16px */
+        font-size: 0.875rem;    /* 14px */
+    }
+
+    .button.themed-button.sm {
+        height: 2.375rem;       /* 38px */
+        padding: 0 1.125rem;    /* 18px */
+        font-size: 0.9375rem;   /* 15px */
+    }
+
+    .button.themed-button.md {
+        height: 2.75rem;        /* 44px */
+        padding: 0 1.25rem;     /* 20px */
+        font-size: 1rem;        /* 16px */
+    }
+
+    .button.themed-button.lg {
+        height: 3rem;           /* 48px */
+        padding: 0 1.5rem;      /* 24px */
+        font-size: 1.0625rem;   /* 17px */
+    }
+
+    .button.themed-button.xl {
+        height: 3.5rem;         /* 56px */
+        font-size: 1.125rem;    /* 18px */
+        padding: 0 1.875rem;    /* 30px */
+    }
+}

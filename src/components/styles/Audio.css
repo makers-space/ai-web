@@ -1,0 +1,428 @@
+/* ===== Audio Component CSS ===== */
+/* Spinning disc audio player with minimalist design */
+
+.audio-container {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md, 16px);
+    background: transparent;
+    width: fit-content;
+    max-width: 100%;
+}
+
+/* Header - Title and Metadata */
+.audio-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs, 4px);
+    text-align: center;
+    width: 100%;
+}
+
+.audio-title {
+    color: var(--text-color);
+}
+
+.audio-metadata {
+    color: var(--text-color);
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+}
+
+.audio-separator {
+    margin: 0 var(--spacing-xs, 6px);
+}
+
+/* Disc Player - Skip buttons and spinning disc */
+.audio-player {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg, 20px);
+}
+
+.audio-skip-button {
+    flex-shrink: 0;
+}
+
+/* Disc Wrapper */
+.audio-wrapper {
+    position: relative;
+    flex-shrink: 0;
+    pointer-events: none; /* Allow clicks to pass through to children */
+}
+
+/* Disc */
+.audio {
+    position: relative;
+    width: var(--disc-size, 160px);
+    height: var(--disc-size, 160px);
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+    transform: rotate(var(--disc-rotation, 0deg));
+    cursor: grab;
+    pointer-events: auto; /* Disc itself receives pointer events */
+    will-change: transform;
+}
+
+.audio:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.audio.dragging {
+    cursor: grabbing;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transition: none;
+}
+
+/* Disc Cover Image */
+.audio-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Disc Placeholder */
+.audio-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-color);
+    opacity: 0.6;
+}
+
+/* Progress Circle Overlay */
+.audio-progress-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--disc-size, 160px);
+    height: var(--disc-size, 160px);
+    transform: rotate(-90deg);
+    pointer-events: none;
+}
+
+.audio-progress-stroke {
+    cx: calc(var(--disc-size) / 2);
+    cy: calc(var(--disc-size) / 2);
+    r: var(--progress-radius);
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: var(--progress-circumference);
+    stroke-dashoffset: var(--progress-offset);
+    color: var(--secondary-accent-color);
+    opacity: 0.8;
+    transition: stroke-dashoffset 0.1s linear;
+}
+
+.audio.dragging .audio-progress-stroke {
+    transition: none;
+}
+
+/* Color variants for progress stroke */
+.audio-color-secondary .audio-progress-stroke {
+    color: var(--tertiary-accent-color);
+}
+
+.audio-color-tertiary .audio-progress-stroke {
+    color: var(--primary-accent-color);
+}
+
+/* Progress Timer */
+.audio-timer {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs, 4px);
+    color: var(--text-color);
+    opacity: 0.8;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+}
+
+.audio-time-separator {
+    opacity: 0.5;
+}
+
+/* Center Play/Pause Button */
+.audio-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.audio-play-button {
+    border-radius: 50% !important;
+    width: 64px !important;
+    height: 64px !important;
+    padding: 0 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.audio-play-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Size variants for play button */
+.audio-size-xs .audio-play-button {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.audio-size-sm .audio-play-button {
+    width: 48px !important;
+    height: 48px !important;
+}
+
+.audio-size-md .audio-play-button {
+    width: 56px !important;
+    height: 56px !important;
+}
+
+.audio-size-lg .audio-play-button {
+    width: 64px !important;
+    height: 64px !important;
+}
+
+.audio-size-xl .audio-play-button {
+    width: 72px !important;
+    height: 72px !important;
+}
+
+/* Waveform */
+.audio-waveform-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    border-radius: var(--border-radius-md, 8px);
+    background: transparent;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.audio-waveform-container.loading {
+    opacity: 0.7;
+}
+
+.audio-waveform-container.errored {
+    opacity: 0.6;
+}
+
+.audio-waveform-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.audio-waveform-status {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.75rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    pointer-events: none;
+    text-align: center;
+    padding: 0 var(--spacing-sm, 8px);
+}
+
+.audio-waveform-status-error {
+    color: var(--error-color);
+    opacity: 1;
+}
+
+/* Size variants for waveform */
+.audio-size-xs .audio-waveform-container {
+    max-width: 200px;
+}
+
+.audio-size-sm .audio-waveform-container {
+    max-width: 250px;
+}
+
+.audio-size-md .audio-waveform-container {
+    max-width: 300px;
+}
+
+.audio-size-lg .audio-waveform-container {
+    max-width: 350px;
+}
+
+.audio-size-xl .audio-waveform-container {
+    max-width: 400px;
+}
+
+/* Volume and Loop Controls */
+.audio-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm, 8px);
+    width: 100%;
+    max-width: 400px;
+    min-width: 0;
+}
+
+.audio-volume-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm, 8px);
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 200px;
+}
+
+/* Square, fixed-size action buttons so loop/edit never overlap the volume slider */
+.audio-control-button {
+    flex-shrink: 0;
+    aspect-ratio: 1;
+    padding: 0 !important;
+}
+
+.audio-volume-slider {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 3px;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 9999px;
+    background: var(--border-color);
+    cursor: pointer;
+}
+
+.audio-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    border: none;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+}
+
+.audio-volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    border: none;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+}
+
+/* Color variants for volume slider */
+.audio-color-primary .audio-volume-slider::-webkit-slider-thumb,
+.audio-color-primary .audio-volume-slider::-moz-range-thumb {
+    background: var(--secondary-accent-color);
+}
+
+.audio-color-secondary .audio-volume-slider::-webkit-slider-thumb,
+.audio-color-secondary .audio-volume-slider::-moz-range-thumb {
+    background: var(--tertiary-accent-color);
+}
+
+.audio-color-tertiary .audio-volume-slider::-webkit-slider-thumb,
+.audio-color-tertiary .audio-volume-slider::-moz-range-thumb {
+    background: var(--primary-accent-color);
+}
+
+/* ===== Responsive Design ===== */
+/* Breakpoints: 480px (small→large phones), 768px (tablet portrait), 1024px (tablet landscape/small desktop), 1440px (large desktop) */
+
+/* Large desktop (≥1440px) - Slightly larger spacing */
+@media (min-width: 1440px) {
+    .audio-container {
+        gap: var(--spacing-lg, 18px);
+    }
+
+    .audio-player {
+        gap: var(--spacing-xl, 24px);
+    }
+
+    .audio-controls {
+        gap: var(--spacing-xl, 24px);
+        max-width: 450px;
+    }
+}
+
+/* Tablet (768px - 1024px) - Slightly reduced spacing */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .audio-container {
+        gap: var(--spacing-sm, 12px);
+    }
+
+    .audio-player {
+        gap: var(--spacing-md, 16px);
+    }
+
+    .audio-controls {
+        gap: var(--spacing-md, 16px);
+        max-width: 350px;
+    }
+
+    .audio-volume-group {
+        max-width: 160px;
+    }
+}
+
+/* Large phones (480px - 767px) - Compact layout */
+@media (min-width: 480px) and (max-width: 767px) {
+    .audio-container {
+        gap: var(--spacing-sm, 10px);
+    }
+
+    .audio-player {
+        gap: var(--spacing-sm, 14px);
+    }
+
+    .audio-controls {
+        gap: var(--spacing-sm, 14px);
+        max-width: 300px;
+    }
+
+    .audio-volume-group {
+        max-width: 140px;
+    }
+}
+
+/* Small phones (<480px) - Mobile-optimized */
+@media (max-width: 479px) {
+    .audio-container {
+        gap: var(--spacing-xs, 8px);
+    }
+
+    .audio-player {
+        gap: var(--spacing-sm, 12px);
+    }
+
+    .audio-skip-button {
+        display: none;
+    }
+
+    .audio-controls {
+        flex-direction: column;
+        gap: var(--spacing-sm, 12px);
+    }
+
+    .audio-volume-group {
+        width: 100%;
+        max-width: none;
+    }
+}

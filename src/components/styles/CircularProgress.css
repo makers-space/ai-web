@@ -1,0 +1,317 @@
+/* ===== CircularProgress Component CSS ===== */
+/* Animated circular loading indicator with pure rotation animation */
+
+.circular-progress,
+.themed-circular-progress {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* Base scale for mobile */
+    transform: scale(1);
+}
+
+/* ===== Responsive Scaling ===== */
+/* Mobile first - base sizes set in JavaScript */
+
+/* Large phones (480px - 767px) */
+@media (min-width: 480px) {
+    .circular-progress,
+    .themed-circular-progress {
+        transform: scale(1.15);
+    }
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) {
+    .circular-progress,
+    .themed-circular-progress {
+        transform: scale(1.35);
+    }
+}
+
+/* Desktop (1025px - 1439px) */
+@media (min-width: 1025px) {
+    .circular-progress,
+    .themed-circular-progress {
+        transform: scale(1.5);
+    }
+}
+
+/* Large desktop (≥1440px) */
+@media (min-width: 1440px) {
+    .circular-progress,
+    .themed-circular-progress {
+        transform: scale(1.7);
+    }
+}
+
+/* ===== SVG Container ===== */
+.circular-progress-svg {
+    display: block;
+}
+
+/* ===== Track (Background Circle) ===== */
+.circular-progress-track {
+    stroke: var(--surface-accent-color);
+    opacity: 0.3;
+}
+
+/* ===== Progress Bar (Animated Circle) ===== */
+.circular-progress-bar {
+    stroke: var(--primary-color);
+    stroke-linecap: round;
+    animation: circular-progress-rotate 1.4s ease-in-out infinite;
+    transform-origin: center;
+}
+
+/* Default md size uses the base animation */
+.circular-progress-md .circular-progress-bar {
+    animation: circular-progress-rotate 1.4s ease-in-out infinite;
+}
+
+/* ===== Rotation Animation ===== */
+@keyframes circular-progress-rotate {
+    0% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+    }
+}
+
+/* ===== Size-specific animations for varying dash lengths ===== */
+.circular-progress-xs .circular-progress-bar {
+    animation: circular-progress-rotate-xs 1.4s ease-in-out infinite;
+}
+
+@keyframes circular-progress-rotate-xs {
+    0% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 35, 150;
+        stroke-dashoffset: -20;
+    }
+    100% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 35, 150;
+        stroke-dashoffset: -70;
+    }
+}
+
+.circular-progress-sm .circular-progress-bar {
+    animation: circular-progress-rotate-sm 1.4s ease-in-out infinite;
+}
+
+@keyframes circular-progress-rotate-sm {
+    0% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 45, 200;
+        stroke-dashoffset: -25;
+    }
+    100% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 45, 200;
+        stroke-dashoffset: -90;
+    }
+}
+
+.circular-progress-lg .circular-progress-bar {
+    animation: circular-progress-rotate-lg 1.4s ease-in-out infinite;
+}
+
+@keyframes circular-progress-rotate-lg {
+    0% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 1, 300;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 140, 300;
+        stroke-dashoffset: -50;
+    }
+    100% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 140, 300;
+        stroke-dashoffset: -180;
+    }
+}
+
+.circular-progress-xl .circular-progress-bar {
+    animation: circular-progress-rotate-xl 1.4s ease-in-out infinite;
+}
+
+@keyframes circular-progress-rotate-xl {
+    0% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 1, 350;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 160, 350;
+        stroke-dashoffset: -60;
+    }
+    100% {
+        transform: rotate(-90deg);
+        stroke-dasharray: 160, 350;
+        stroke-dashoffset: -220;
+    }
+}
+
+/* ===== Size Variants ===== */
+/* Size dimensions are handled via JavaScript for precise SVG sizing */
+
+/* ===== Speed Variants ===== */
+.circular-progress-slow .circular-progress-bar,
+.circular-progress-slow .circular-progress-default .circular-progress-bar {
+    animation-duration: 2.4s;
+}
+
+.circular-progress-default-speed .circular-progress-bar,
+.circular-progress-default-speed .circular-progress-default .circular-progress-bar {
+    animation-duration: 1.4s;
+}
+
+.circular-progress-fast .circular-progress-bar,
+.circular-progress-fast .circular-progress-default .circular-progress-bar {
+    animation-duration: 0.8s;
+}
+
+/* Speed variants for size-specific animations */
+.circular-progress-slow.circular-progress-small .circular-progress-bar {
+    animation: circular-progress-rotate-small 2.4s ease-in-out infinite;
+}
+
+.circular-progress-fast.circular-progress-small .circular-progress-bar {
+    animation: circular-progress-rotate-small 0.8s ease-in-out infinite;
+}
+
+.circular-progress-slow.circular-progress-large .circular-progress-bar {
+    animation: circular-progress-rotate-large 2.4s ease-in-out infinite;
+}
+
+.circular-progress-fast.circular-progress-large .circular-progress-bar {
+    animation: circular-progress-rotate-large 0.8s ease-in-out infinite;
+}
+
+.circular-progress-slow.circular-progress-xl .circular-progress-bar {
+    animation: circular-progress-rotate-xl 2.4s ease-in-out infinite;
+}
+
+.circular-progress-fast.circular-progress-xl .circular-progress-bar {
+    animation: circular-progress-rotate-xl 0.8s ease-in-out infinite;
+}
+
+/* ===== Color Variants ===== */
+.circular-progress-primary .circular-progress-bar {
+    stroke: var(--primary-color);
+}
+
+.circular-progress-secondary .circular-progress-bar {
+    stroke: var(--secondary-color);
+}
+
+.circular-progress-tertiary .circular-progress-bar {
+    stroke: var(--tertiary-color);
+}
+
+.circular-progress-success .circular-progress-bar {
+    stroke: var(--success-color);
+}
+
+.circular-progress-warning .circular-progress-bar {
+    stroke: var(--warning-color);
+}
+
+.circular-progress-error .circular-progress-bar {
+    stroke: var(--error-color);
+}
+
+/* ===== JustifySelf utility classes ===== */
+.circular-progress.justify-self-auto {
+    justify-self: auto;
+}
+
+.circular-progress.justify-self-start {
+    justify-self: start;
+}
+
+.circular-progress.justify-self-end {
+    justify-self: end;
+}
+
+.circular-progress.justify-self-center {
+    justify-self: center;
+}
+
+.circular-progress.justify-self-stretch {
+    justify-self: stretch;
+}
+
+/* ===== Alternative Animation Variants ===== */
+/* You can add more animation styles here for different effects */
+
+/* Pulsing effect variant */
+.circular-progress.pulse .circular-progress-bar {
+    animation: circular-progress-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes circular-progress-pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: rotate(-90deg) scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: rotate(-90deg) scale(1.1);
+    }
+}
+
+/* Dash growing/shrinking effect */
+.circular-progress.dash .circular-progress-bar {
+    animation: circular-progress-dash 2s linear infinite;
+}
+
+@keyframes circular-progress-dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+    }
+}
+
+/* Spinner effect - continuous rotation */
+.circular-progress.spinner .circular-progress-bar {
+    animation: circular-progress-spin 1s linear infinite;
+}
+
+@keyframes circular-progress-spin {
+    from {
+        transform: rotate(-90deg);
+    }
+    to {
+        transform: rotate(270deg);
+    }
+}

@@ -1,0 +1,304 @@
+/* Global CSS Reset and Variables */
+/* ======================================================================== */
+
+/* CSS Reset and Globals */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  height: 100dvh;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif), serif;
+  line-height: var(--line-height-normal, 1.5);
+  color: var(--text-color, #1a1a1a);
+  background-color: var(--background-color);
+}
+
+/* CSS Variables - Structural Values */
+:root {
+
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem;    /* 4px */
+  --spacing-sm: 0.5rem;     /* 8px */
+  --spacing-md: 0.75rem;    /* 12px */
+  --spacing-lg: 1rem;       /* 16px */
+  --spacing-xl: 1.5rem;     /* 24px */
+  --spacing-2xl: 2rem;      /* 32px */
+  --spacing-3xl: 3rem;      /* 48px */
+  --spacing-4xl: 4rem;      /* 64px */
+
+  /* Font Sizes */
+  --font-size-xs: 0.8rem;
+  --font-size-sm: 1.0rem;
+  --font-size-base: 1.2rem;
+  --font-size-lg: 1.4rem;
+  --font-size-xl: 1.6rem;
+  --font-size-2xl: 1.8rem;
+  --font-size-3xl: 2.0rem; 
+  --font-size-4xl: 2.2rem;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* Border Radius */
+  --border-radius-sm: 0.125rem; /* 2px */
+  --border-radius-md: 0.375rem; /* 6px */
+  --border-radius-lg: 0.5rem;   /* 8px */
+  --border-radius-xl: 0.75rem;  /* 12px */
+  --border-radius-2xl: 1rem;    /* 16px */
+  --border-radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);  /* Z-Index Scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-select-dropdown: 10000; /* Select dropdowns above all regular components */
+  --z-fab: 100000; /* Floating Action Buttons */
+  --z-genie: 999999; /* Genie overlays (highest priority) */  /* Transitions */
+  --transition-fast: 50ms ease;
+  --transition-normal: 100ms ease;
+  --transition-slow: 150ms ease;
+
+  /* Grid System */
+  --grid-gap: var(--spacing-lg);
+  --section-spacing: var(--spacing-xl);
+
+  /* Component Sizing */
+  --button-height: 2.5rem;
+  --input-height: 2.5rem;
+  --header-height: 4rem;
+}
+
+/* Utility Classes */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.min-h-screen { min-height: 100vh; }
+
+/* Height Utilities */
+.h-200 { height: 200px; }
+.h-250 { height: 250px; }
+.h-300 { height: 300px; }
+
+/* Flexbox Utilities */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-1 { flex: 1; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }
+.gap-xl { gap: var(--spacing-xl); }
+
+/* Padding Utilities */
+.pt-80 { padding-top: 80px !important; }
+.pt-130 { padding-top: 130px !important; }
+
+/* FAB Support Utilities */
+.fab-container-parent {
+  position: relative;
+  isolation: auto;
+}
+
+/* Scrollable area markers for FAB detection */
+.scrollable-area {
+  position: relative;
+}
+
+[data-scrollable] {
+  position: relative;
+  overflow: auto;
+}
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+.p-xl { padding: var(--spacing-xl); }
+
+/* Spacing Utilities */
+.m-sm { margin: var(--spacing-sm); }
+.m-md { margin: var(--spacing-md); }
+.m-lg { margin: var(--spacing-lg); }
+.m-xl { margin: var(--spacing-xl); }
+
+.mb-xs { margin-bottom: var(--spacing-xs); }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+.mb-xl { margin-bottom: var(--spacing-xl); }
+
+/* Margin Utilities */
+.mt-xs { margin-top: var(--spacing-xs); }
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+.mt-xl { margin-top: var(--spacing-xl); }
+
+/* Typography Margin Utilities */
+.margin-top-xs { margin-top: var(--spacing-xs); }
+.margin-top-sm { margin-top: var(--spacing-sm); }
+.margin-top-md { margin-top: var(--spacing-md); }
+.margin-top-lg { margin-top: var(--spacing-lg); }
+.margin-top-xl { margin-top: var(--spacing-xl); }
+
+.margin-bottom-xs { margin-bottom: var(--spacing-xs); }
+.margin-bottom-sm { margin-bottom: var(--spacing-sm); }
+.margin-bottom-md { margin-bottom: var(--spacing-md); }
+.margin-bottom-lg { margin-bottom: var(--spacing-lg); }
+.margin-bottom-xl { margin-bottom: var(--spacing-xl); }
+
+/* Position Utilities */
+.relative { position: relative !important; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+
+/* Display Utilities */
+.block { display: block; }
+.inline-block { display: inline-block; }
+.none { display: none; }
+
+/* Border Utilities */
+.border { border: 1px solid var(--border-color) !important; }
+.rounded { border-radius: var(--border-radius) !important; }
+.border-rounded { border-radius: var(--border-radius) !important; }
+
+/* Text Alignment Utilities */
+.text-left { text-align: left; }
+.text-center { text-align: center !important; }
+.text-right { text-align: right; }
+
+/* Text Color Utilities */
+.text-white { color: white !important; }
+.text-black { color: black !important; }
+.text-primary { color: var(--primary-color) !important; }
+.text-muted { color: var(--text-muted) !important; }
+
+/* Border Color Utilities */
+.border-primary { border-color: var(--primary-color) !important; }
+.border-2 { border-width: 2px !important; }
+
+/* Justify Self Utility Classes */
+.justify-self-auto { justify-self: auto; }
+.justify-self-start { justify-self: start; }
+.justify-self-end { justify-self: end; }
+.justify-self-center { justify-self: center; }
+.justify-self-stretch { justify-self: stretch; }
+
+/* Theme Override Wrapper */
+.theme-override-wrapper {
+  max-width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   @media print — App chrome & layout
+   Editor-specific print rules live at the bottom of Editor.css.
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media print {
+
+    @page { margin: 1in; }
+
+    *,
+    *::before,
+    *::after {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    html, body, #root {
+        height: auto !important;
+        overflow: visible !important;
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        /* Do NOT override font-size / line-height — preserve document text sizes */
+    }
+
+    /* Hide all app chrome */
+    .navigation-fab,
+    .notification-display,
+    .fab-container,
+    .fab-snap-preview,
+    .genie-container,
+    .page-header,
+    .file-header-card,
+    .file-metadata-bar,
+    .version-header-card,
+    .version-footer-card {
+        display: none !important;
+    }
+
+    .page, .themed-page {
+        min-height: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        display: block !important;
+    }
+
+    .container, .themed-container {
+        min-height: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .card, .themed-card {
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+        overflow: visible !important;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 { color: #000 !important; page-break-after: avoid; }
+    p, li, td, th, blockquote { color: #000 !important; }
+    a { color: #000 !important; text-decoration: underline !important; }
+    img { max-width: 100% !important; page-break-inside: avoid; }
+
+    table { border-collapse: collapse !important; }
+    th, td { border: 1px solid #666 !important; padding: 4pt 6pt !important; color: #000 !important; }
+    th { background: #eee !important; }
+
+    pre, blockquote, table, figure, .docx-image-wrapper { page-break-inside: avoid; }
+}

@@ -1,0 +1,116 @@
+/* Admin Theme CSS */
+/* Professional enterprise theme with subtle shadows and clean typography */
+
+/* Google Fonts - All families in single import */
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&family=Kode+Mono:wght@400;500;600;700&family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap');
+
+.theme-admin {
+  /* Enhanced Color System - Admin Theme */
+
+  /* Basic Color System */
+  --primary-color: #EEC643;
+  --primary-accent-color: #f59e0b;
+  
+  --secondary-color: #ffffff;
+  --secondary-accent-color: #808080;
+
+  --tertiary-color: #83C5BE;
+  --tertiary-accent-color: #006D77;
+
+  --neutral-color: #A6A6A8;
+  --neutral-accent-color: #CECECE;
+  
+  /* Semantic Colors */
+  --success-color: #10b981;
+  --success-accent-color: #059669;
+  
+  --warning-color: #ffc107;
+  --warning-accent-color: #f59e0b;
+  
+  --error-color: #B42F2D;
+  --error-accent-color: #73201C;
+  
+  /* Surface and Border Colors */
+  --background-color: #141414;
+  --surface-color: #333333;
+  --surface-accent-color: #444444;
+  --border-color: #dee2e6;
+  --border-light: #f8f9fa;
+
+  /* Text Colors */
+  --text-color: #96A2B0;
+  --text-contrast-color: #141414; /* Contrast text color matches surface color */
+    
+  /* Overlay and Backdrop Colors */
+  --backdrop-color: rgba(73, 80, 87, 0.6); /* Semi-transparent professional gray */
+  
+  /* Font System - 7 Font Weights */
+  --font-family: 'Jura', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+  /* Primary Font Family (Jura - Modern & Bold) */
+  --font-family-primary: 'Jura', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-primary-light: 'Jura', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-primary-normal: 'Jura', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-primary-medium: 'Jura', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-primary-semibold: 'Jura', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-primary-bold: 'Jura', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-primary-extrabold: 'Jura', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-primary-black: 'Jura', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+  /* Secondary Font Family (Kode Mono - Technical & Monospace Style) */
+  --font-family-secondary: 'Kode Mono', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-secondary-light: 'Kode Mono', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-secondary-normal: 'Kode Mono', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-secondary-medium: 'Kode Mono', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-secondary-semibold: 'Kode Mono', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-secondary-bold: 'Kode Mono', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-secondary-extrabold: 'Kode Mono', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-secondary-black: 'Kode Mono', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* Monospace Font Family (Roboto Mono - Technical & Code) */
+  --font-family-monospace: 'Roboto Mono', 'Courier New', monospace;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+  --font-weight-black: 900;
+
+  /* Code Editor Colors - derived from admin palette (dark corporate) */
+  --code-background:      #1a1a1a;
+  --code-foreground:      #96a2b0;
+  --code-gutter:          #252525;
+  --code-line-highlight:  #222222;
+  --code-selection:       #4a3d10;
+  --code-cursor:          #eec643;
+  --code-line-number:     #555f6b;
+  --code-keyword:         #eec643;
+  --code-string:          #83c5be;
+  --code-number:          #f59e0b;
+  --code-comment:         #555f6b;
+  --code-type:            #006d77;
+  --code-function:        #b8a030;
+  --code-variable:        #96a2b0;
+  --code-operator:        #f59e0b;
+
+  /* Border Radius System - Small, professional radii */
+  --border-radius: 4px;
+  --card-radius: 4px;
+  --input-radius: 4px;
+  --button-radius: 4px;  
+  --checkbox-radius: 2px;
+  --fab-radius: 28px;
+  --progress-radius: 2px;
+  --notification-radius: 4px;
+    
+  /* Shadow System - Admin theme uses subtle professional shadows */
+  --shadow-color: rgba(161, 161, 161, 0.795);
+  --shadow-color-hover: rgba(155, 155, 155, 0.3);
+  --shadow-sm: 0 1px 2px var(--shadow-color);
+  --shadow-md: 0 2px 4px var(--shadow-color);
+  --shadow-lg: 0 4px 8px var(--shadow-color);  
+  --shadow-xl: 0 6px 12px var(--shadow-color);
+  --shadow-2xl: 0 8px 20px var(--shadow-color);
+}

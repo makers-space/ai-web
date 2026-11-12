@@ -1,0 +1,355 @@
+/* ===== Video Component CSS ===== */
+/* Slim horizontal control bar that appears on hover */
+
+.video-player-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: var(--border-radius-lg, 8px);
+    background-color: transparent;
+    overflow: hidden;
+}
+
+/* Fullscreen mode - center the video */
+.video-player-container:fullscreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+}
+
+.video-player-container:fullscreen .video-player-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-player-container video,
+.video-player-container iframe,
+.video-player-container .react-player,
+.video-player-inner {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.video-player-inner {
+    position: relative;
+    background-color: transparent;
+}
+
+.video-player-container .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* Slim horizontal control bar */
+.video-overlay-controls {
+    position: absolute;
+    left: 50%;
+    bottom: var(--spacing-md, 12px);
+    transform: translateX(-50%) translateY(8px);
+    display: flex;
+    width: calc(100% - var(--video-controls-horizontal-gutter, 32px));
+    max-width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.video-player-container:focus-within .video-overlay-controls,
+.video-player-container.is-scrubbing .video-overlay-controls,
+.video-player-container.controls-visible .video-overlay-controls {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+@media (hover: none) {
+    .video-overlay-controls {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Wider horizontal control bar with full functionality */
+.video-controls-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    width: fit-content;
+    max-width: 100%;
+}
+
+/* Color variants for control bar background */
+/* Default: transparent bg, primary button color, secondary accent bars */
+.video-color-default .video-controls-bar {
+    --video-bg-color: rgba(255, 255, 255, 0.15);
+    --video-text-color: var(--primary-color);
+    --video-accent-color: var(--secondary-color);
+    background: var(--video-bg-color);
+}
+
+/* Primary: primary bg, secondary button color, secondary accent bars */
+.video-color-primary .video-controls-bar {
+    --video-bg-color: var(--primary-color);
+    --video-text-color: var(--secondary-color);
+    --video-accent-color: var(--secondary-color);
+    background: var(--video-bg-color);
+    opacity: 0.85;
+}
+
+/* Secondary: secondary bg, tertiary button color, tertiary accent bars */
+.video-color-secondary .video-controls-bar {
+    --video-bg-color: var(--secondary-color);
+    --video-text-color: var(--tertiary-color);
+    --video-accent-color: var(--tertiary-color);
+    background: var(--video-bg-color);
+    opacity: 0.85;
+}
+
+/* Tertiary: tertiary bg, primary button color, primary accent bars */
+.video-color-tertiary .video-controls-bar {
+    --video-bg-color: var(--tertiary-color);
+    --video-text-color: var(--primary-color);
+    --video-accent-color: var(--primary-color);
+    background: var(--video-bg-color);
+    opacity: 0.85;
+}
+
+/* Volume control slider */
+.video-volume-control {
+    display: flex;
+    align-items: center;
+    width: 80px;
+    flex-shrink: 0;
+}
+
+.video-volume-input {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--video-accent-color, #ffffff) 30%, transparent);
+    cursor: pointer;
+}
+
+.video-volume-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--video-accent-color, #ffffff);
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.video-volume-input::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--video-accent-color, #ffffff);
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+/* Progress slider inside control bar */
+.video-progress-input {
+    flex: 1;
+    min-width: 120px;
+    height: 5px;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--video-accent-color, #ffffff) 30%, transparent);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.video-progress-input:hover,
+.video-progress-input:focus-visible {
+    background: color-mix(in srgb, var(--video-accent-color, #ffffff) 40%, transparent);
+}
+
+.video-progress-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    margin-top: -4.5px;
+    border-radius: 50%;
+    background: var(--video-accent-color, #ffffff);
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.video-progress-input::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    margin-top: -4.5px;
+    border-radius: 50%;
+    background: var(--video-accent-color, #ffffff);
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.video-progress-input::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    border-radius: 9999px;
+    background: transparent;
+}
+
+.video-progress-input::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    border-radius: 9999px;
+    background: transparent;
+    border: none;
+}
+
+/* Control buttons - using our Button component with ghost variant */
+.video-control-button {
+    flex-shrink: 0;
+    min-width: 32px !important;
+    height: 32px !important;
+    padding: 0 4px !important;
+}
+
+/* Secondary buttons (rewind, forward, speed) with subtle styling */
+.video-control-button-secondary {
+    opacity: 0.8;
+}
+
+.video-control-button-secondary:hover {
+    opacity: 1;
+}
+
+/* Timecode with bold digits */
+.video-timecode {
+    color: var(--video-text-color, #ffffff);
+    white-space: nowrap;
+    min-width: 50px;
+    text-align: center;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+}
+
+/* Separator - hidden by default, shown on extra small screens */
+.video-timecode-separator {
+    display: none;
+    min-width: auto !important;
+    padding: 0 4px;
+}
+
+/* Responsive adjustments - Tablet */
+@media (max-width: 1024px) {
+    .video-controls-bar {
+        gap: 6px;
+        padding: 6px 10px;
+    }
+
+    .video-control-button {
+        min-width: 28px !important;
+        height: 28px !important;
+        padding: 0 3px !important;
+    }
+
+    .video-timecode {
+        min-width: 42px;
+        font-size: 0.8rem;
+    }
+
+    .video-volume-control {
+        width: 60px;
+    }
+
+    .video-control-button-secondary {
+        display: none;
+    }
+}
+
+/* Responsive adjustments - Mobile */
+@media (max-width: 768px) {
+    .video-controls-bar {
+        gap: 4px;
+        padding: 4px 8px;
+    }
+
+    .video-control-button {
+        min-width: 24px !important;
+        height: 24px !important;
+        padding: 0 2px !important;
+    }
+
+    .video-timecode {
+        min-width: 36px;
+        font-size: 0.7rem;
+    }
+
+    .video-volume-control {
+        display: none;
+    }
+
+    .video-progress-input {
+        height: 4px;
+        min-width: 100px;
+    }
+
+    .video-progress-input::-webkit-slider-thumb,
+    .video-progress-input::-moz-range-thumb {
+        width: 10px;
+        height: 10px;
+        margin-top: -3px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .video-controls-bar {
+        padding: 3px 6px;
+        gap: 3px;
+    }
+
+    .video-control-button {
+        min-width: 20px !important;
+        height: 20px !important;
+        padding: 0 !important;
+    }
+
+    .video-timecode {
+        min-width: 30px;
+        font-size: 0.65rem;
+    }
+
+    .video-timecode-separator {
+        display: inline;
+        padding: 0 2px;
+    }
+
+    .video-progress-input {
+        display: none;
+    }
+
+    .video-control-button-secondary {
+        display: none;
+    }
+}

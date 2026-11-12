@@ -1,0 +1,334 @@
+/* ===== FloatingActionButton Component CSS ===== */
+/* Floating Action Button with complete positional awareness and parent container detection */
+
+/* FAB Container - holds both FAB and Genie for unified positioning */
+.fab-container {
+    position: fixed;
+    z-index: 100000;
+    touch-action: none;
+}
+
+.fab-container.fab-draggable {
+    position: absolute;
+    cursor: move;
+    user-select: none;
+    /* Use absolute positioning instead of predefined positions */
+    transform: none !important;
+}
+
+.fab-container.fab-dragging {
+    transition: none !important;
+    z-index: 100002; /* Raise z-index while dragging */
+}
+
+/* Snapping animation */
+.fab-container.fab-snapping {
+    transition: left 0.3s ease-out, top 0.3s ease-out !important;
+    z-index: 100001;
+}
+
+/* Show subtle indication when near snap edge */
+.fab-container.fab-dragging.fab-near-edge .floating-action-button {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25), 0 3px 8px rgba(0, 0, 0, 0.18),
+    0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Snap preview pulse animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+    100% {
+        transform: scale(1.02);
+        opacity: 0.6;
+    }
+}
+
+/* Snap preview indicator - semi-transparent clone of the actual button */
+.fab-snap-preview {
+    animation: pulse 0.8s ease-in-out infinite alternate;
+    opacity: 0.5;
+}
+
+/* Cursor for draggable buttons */
+.fab-container.fab-draggable .floating-action-button.fab-handle {
+    cursor: grab;
+}
+
+.fab-container.fab-dragging .floating-action-button.fab-handle {
+    cursor: grabbing;
+}
+
+.floating-action-button {
+    /* Remove positioning from button since container handles it */
+    position: relative;
+    z-index: inherit; /* Keep button layering consistent with container */
+    padding: var(--spacing-sm) !important; /* Default inner padding for medium FABs */
+
+    /* Override Button component styles for perfect circular shape */
+    border-radius: 50% !important; /* Force circular shape; Override button border radius */
+    width: 56px;
+    height: 56px; /* Override Button height */
+    min-width: 56px; /* Prevent shrinking */
+    min-height: 56px; /* Prevent shrinking */
+    margin: var(--spacing-xs) !important; /* Override button margins */
+
+    /* Enhanced shadow for floating appearance */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    /* Smooth transitions */
+    transition: transform var(--transition-normal),
+    box-shadow var(--transition-normal),
+    opacity var(--transition-normal);
+
+    /* Prevent text selection */
+    user-select: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Accessibility */
+    cursor: pointer;
+}
+
+/* Enhanced hover effects */
+.floating-action-button:not(:disabled):hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), 0 3px 8px rgba(0, 0, 0, 0.15);
+    z-index: 100001; /* Slightly higher on hover */
+}
+
+/* Active state */
+.floating-action-button:not(:disabled):active {
+    transform: scale(0.95);
+}
+
+/* Disabled state */
+.floating-action-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* When floating card is active */
+.floating-action-button.has-floating-card-active {
+    z-index: 100002; /* Highest for active state */
+}
+
+/* ===== FAB Badge Positioning ===== */
+.fab-container .fab-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    z-index: 100001; /* Above the FAB but below Genie */
+    pointer-events: none; /* Don't interfere with FAB clicks */
+    min-width: 16px;
+    height: 16px;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Badge size adjustments based on FAB size */
+.fab-container:has(.floating-action-button.small) .fab-badge {
+    top: -2px;
+    right: -2px;
+    min-width: 14px;
+    height: 14px;
+    font-size: 9px;
+}
+
+.fab-container:has(.floating-action-button.large) .fab-badge {
+    top: -6px;
+    right: -6px;
+    min-width: 20px;
+    height: 20px;
+    font-size: 11px;
+}
+
+/* ===== Size Variants ===== */
+.floating-action-button.xs {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    margin: 0 !important;
+    padding: var(--spacing-xs) !important;
+}
+
+.floating-action-button.sm {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    margin: 0 !important;
+    padding: var(--spacing-sm) !important;
+}
+
+.floating-action-button.md {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    min-height: 56px;
+    padding: var(--spacing-md) !important;
+}
+
+.floating-action-button.lg {
+    width: 72px;
+    height: 72px;
+    min-width: 72px;
+    min-height: 72px;
+    margin: var(--spacing-sm) !important;
+    padding: var(--spacing-lg) !important;
+}
+
+.floating-action-button.xl {
+    width: 88px;
+    height: 88px;
+    min-width: 88px;
+    min-height: 88px;
+    margin: var(--spacing-md) !important;
+    padding: var(--spacing-xl) !important;
+}
+
+/* ===== Position Variants ===== */
+/* Default positioning with standard offsets - Apply to container */
+
+/* Top positions */
+.fab-container.fab-position-top-left {
+    top: var(--spacing-lg);
+    left: var(--spacing-lg);
+}
+
+.fab-container.fab-position-top {
+    top: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.fab-container.fab-position-top:hover .floating-action-button {
+    transform: scale(1.1);
+}
+
+.fab-container.fab-position-top-right {
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+}
+
+/* Middle positions */
+.fab-container.fab-position-left {
+    top: 50%;
+    left: var(--spacing-lg);
+    transform: translateY(-50%);
+}
+
+.fab-container.fab-position-left:hover .floating-action-button {
+    transform: scale(1.1);
+}
+
+.fab-container.fab-position-right {
+    top: 50%;
+    right: var(--spacing-lg);
+    transform: translateY(-50%);
+}
+
+.fab-container.fab-position-right:hover .floating-action-button {
+    transform: scale(1.1);
+}
+
+/* Bottom positions */
+.fab-container.fab-position-bottom-left {
+    bottom: var(--spacing-lg);
+    left: var(--spacing-lg);
+}
+
+.fab-container.fab-position-bottom {
+    bottom: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.fab-container.fab-position-bottom:hover .floating-action-button {
+    transform: scale(1.1);
+}
+
+.fab-container.fab-position-bottom-right {
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+}
+
+/* ===== Parent Type Awareness ===== */
+/* Adjust positioning based on parent container type */
+
+/* Page container - uses viewport positioning */
+.fab-container.fab-parent-page {
+    position: fixed;
+}
+
+/* Card container - positions relative to card bounds */
+.fab-container.fab-parent-card {
+    position: absolute;
+}
+
+/* Container - positions relative to container bounds */
+.fab-container.fab-parent-container {
+    position: absolute;
+}
+
+/* ===== Scroll Behavior ===== */
+/* Control whether FAB scrolls with content - always scroll with parent by default */
+
+.fab-container.fab-scroll-with-parent.fab-parent-card,
+.fab-container.fab-scroll-with-parent.fab-parent-container {
+    position: absolute;
+}
+
+/* ===== Accessibility ===== */
+/* Focus styling */
+.floating-action-button:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .floating-action-button {
+        border: 2px solid;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .floating-action-button {
+        transition: none;
+    }
+
+    .floating-action-button:hover {
+        transform: none;
+    }
+}
+
+/* ===== Animation Keyframes ===== */
+@keyframes fab-bounce-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Entry animation */
+.floating-action-button {
+    animation: fab-bounce-in 0.3s ease-out;
+}
