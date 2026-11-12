@@ -114,9 +114,9 @@ const HomePage = () => {
             <Button 
               variant="primary" 
               size="xl" 
-              onClick={() => navigate('/components')}
+              onClick={() => navigate('/models')}
             >
-              Explore UI Components
+              Browse AI Models
             </Button>
             <Button 
               variant="secondary" 

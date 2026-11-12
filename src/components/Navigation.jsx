@@ -50,7 +50,7 @@ const getRouteConfig = () => {
     };
 };
 
-const PUBLIC_PAGES = ['/', '/components'];
+const PUBLIC_PAGES = ['/'];
 
 /**
  * Navigation - App navigation component with draggable FAB and Genie integration
@@ -92,11 +92,29 @@ export const Navigation = ({
             });
 
             items.push({
-                id: 'components',
-                label: 'Components',
-                icon: 'FiCode',
-                path: '/components',
-                roles: ['USER', 'CREATOR', 'ADMIN', 'OWNER'],
+                id: 'models',
+                label: 'Models',
+                icon: 'FiBox',
+                path: '/models',
+                roles: ['USER', 'CREATOR', 'SUPER_CREATOR', 'ADMIN', 'OWNER'],
+                requireAuth: true
+            });
+
+            items.push({
+                id: 'devices',
+                label: 'Devices',
+                icon: 'FiMonitor',
+                path: '/devices',
+                roles: ['USER', 'CREATOR', 'SUPER_CREATOR', 'ADMIN', 'OWNER'],
+                requireAuth: true
+            });
+
+            items.push({
+                id: 'settings',
+                label: 'Settings',
+                icon: 'FiSliders',
+                path: '/settings',
+                roles: ['USER', 'CREATOR', 'SUPER_CREATOR', 'ADMIN', 'OWNER'],
                 requireAuth: true
             });
 
@@ -118,14 +136,6 @@ export const Navigation = ({
                 label: 'Home',
                 icon: 'FiHome',
                 path: '/',
-                publicOnly: true
-            });
-
-            items.push({
-                id: 'components-demo',
-                label: 'Explore Components',
-                icon: 'FiGrid',
-                path: '/components',
                 publicOnly: true
             });
 

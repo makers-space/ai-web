@@ -5,12 +5,15 @@ import { AuthProvider } from '@contexts/AuthContext';
 import { NotificationProvider } from '@contexts/NotificationContext';
 
 // Import all pages
-import ComponentDemo from './pages/ComponentDemo';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import AdminPage from './pages/AdminPage';
+import DevicesPage from './pages/DevicesPage';
+import SettingsPage from './pages/SettingsPage';
+import ModelsPage from './pages/ModelsPage';
+import { OllamaBanner } from './components/OllamaBanner';
 
 // Import Navigation and NotificationDisplay components
 import { Navigation, NotificationDisplay, RouteAccessControl } from '@components/Components';
@@ -19,6 +22,7 @@ import { Navigation, NotificationDisplay, RouteAccessControl } from '@components
 function AppRouter() {
   return (
     <>
+      <OllamaBanner />
       <Routes>
         {/* Authentication routes */}
         <Route path="/login" element={
@@ -43,14 +47,25 @@ function AppRouter() {
             <HomePage />
           </RouteAccessControl>
         } />
-        <Route path="/components" element={
-          <RouteAccessControl path="/components">
-            <ComponentDemo />
-          </RouteAccessControl>
-        } />
         <Route path="/admin" element={
           <RouteAccessControl path="/admin">
             <AdminPage />
+          </RouteAccessControl>
+        } />
+
+        <Route path="/models" element={
+          <RouteAccessControl path="/models">
+            <ModelsPage />
+          </RouteAccessControl>
+        } />
+        <Route path="/devices" element={
+          <RouteAccessControl path="/devices">
+            <DevicesPage />
+          </RouteAccessControl>
+        } />
+        <Route path="/settings" element={
+          <RouteAccessControl path="/settings">
+            <SettingsPage />
           </RouteAccessControl>
         } />
 
