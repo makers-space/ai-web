@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Page, Container, Card, Typography, Button, Badge, Input, ProgressBar } from '@components/Components';
+import { Page, Container, Card, Typography, Button, ButtonGroup, Badge, Icon, Input, Select, ProgressBar } from '@components/Components';
 import { useNotification } from '@contexts/NotificationContext';
 import { deviceService, modelService, describeError } from '../client/ai.client';
 
@@ -22,6 +22,13 @@ const PICK_LABELS = { fast: 'Fastest', balanced: 'Best balance', best: 'Best qua
 const FIT_COLORS = { gpu: 'success', mixed: 'warning', cpu: 'warning', too_large: 'error' };
 const RESUMABLE = ['DOWNLOAD_INTERRUPTED', 'OLLAMA_DOWN', 'DISK_FULL'];
 const ABILITY_LABELS = { tools: 'Can use tools', vision: 'Can read images', thinking: 'Thinks step by step' };
+
+const CREATIVITY = [
+    { label: 'Precise', value: 0.2 },
+    { label: 'Balanced', value: 0.7 },
+    { label: 'Inventive', value: 1.2 }
+];
+const creativityOf = (value) => (Number(value) <= 0.3 ? 'Precise' : Number(value) <= 0.9 ? 'Balanced' : 'Inventive');
 
 const TEMPLATES = [
     {
@@ -343,11 +350,69 @@ const RunningTab = ({ running, canManage, onUnload }) => {
     );
 };
 
+const EMPTY_MODEL_FORM = { displayName: '', from: '', system: '', creativity: 0.7, contextSize: '' };
+
+const ModelFields = ({ form, setForm, bases }) => {
+    const [advanced, setAdvanced] = useState(form.contextSize !== '');
+    const change = (field) => (event) => setForm((current) => ({ ...current, [field]: event.target.value }));
+    return (
+        <>
+            <Input label="Name" value={form.displayName} onChange={change('displayName')} width="100%" />
+            <Select
+                label="Built on"
+                width="100%"
+                options={bases.map((model) => ({ value: model.name, label: model.displayName }))}
+                value={form.from}
+                onChange={(value) => setForm((current) => ({ ...current, from: value }))}
+            />
+            <Input
+                label="Instructions"
+                helpText="How this model should behave every time it is used."
+                multiline
+                rows={5}
+                value={form.system}
+                onChange={change('system')}
+                width="100%"
+            />
+            <Container layout="flex-column" gap="xs" padding="none" width="100%">
+                <Typography size="sm" weight="semibold">Creativity</Typography>
+                <ButtonGroup size="sm" width="100%" wrap={false} justify="start" selectable={false}>
+                    {CREATIVITY.map((level) => (
+                        <Button
+                            key={level.label}
+                            size="sm"
+                            color={creativityOf(form.creativity) === level.label ? 'primary' : 'secondary'}
+                            selected={creativityOf(form.creativity) === level.label}
+                            onClick={() => setForm((current) => ({ ...current, creativity: level.value }))}
+                        >
+                            {level.label}
+                        </Button>
+                    ))}
+                </ButtonGroup>
+            </Container>
+            <Container layout="flex" gap="sm" padding="none">
+                <Button size="sm" color="secondary" onClick={() => setAdvanced((open) => !open)}>
+                    {advanced ? 'Hide advanced' : 'Advanced'}
+                </Button>
+            </Container>
+            {advanced && (
+                <Input
+                    label="Reading size in tokens (optional)"
+                    helpText="How much text the model can take in at once. Leave empty to use the model's own setting. Larger uses more memory."
+                    value={form.contextSize}
+                    onChange={change('contextSize')}
+                    width="100%"
+                />
+            )}
+        </>
+    );
+};
+
 const MineTab = ({ installed, canManage, onCreated, onDelete }) => {
     const { success, error: notifyError } = useNotification();
     const [template, setTemplate] = useState(null);
-    const [form, setForm] = useState({ displayName: '', from: '', system: '', creativity: 0.7, contextSize: '' });
-    const [advanced, setAdvanced] = useState(false);
+    const [editing, setEditing] = useState(null);
+    const [form, setForm] = useState(EMPTY_MODEL_FORM);
     const [busy, setBusy] = useState(false);
 
     if (!installed) return <Typography color="muted">Looking for installed models…</Typography>;
@@ -356,52 +421,72 @@ const MineTab = ({ installed, canManage, onCreated, onDelete }) => {
     const mine = installed.models.filter((model) => model.personal);
 
     const choose = (option) => {
+        setEditing(null);
         setTemplate(option.id);
-        setForm({
-            displayName: option.displayName,
-            from: bases[0]?.name || '',
-            system: option.system,
-            creativity: option.creativity,
-            contextSize: ''
-        });
-        setAdvanced(false);
+        setForm({ ...EMPTY_MODEL_FORM, displayName: option.displayName, from: bases[0]?.name || '', system: option.system, creativity: option.creativity });
     };
 
-    const change = (field) => (event) => setForm((current) => ({ ...current, [field]: event.target.value }));
+    const startEdit = (model) => {
+        setTemplate(null);
+        setEditing(model.name);
+        setForm({
+            displayName: model.displayName,
+            from: bases.find((base) => base.name === model.basedOn || base.name === `${model.basedOn}:latest`)?.name || model.basedOn || '',
+            system: model.system || '',
+            creativity: model.parameters?.temperature ?? 0.7,
+            contextSize: model.parameters?.num_ctx ? String(model.parameters.num_ctx) : ''
+        });
+    };
 
-    const create = async () => {
-        const name = slug(form.displayName);
-        if (!name) {
-            notifyError('Give your model a name using letters or numbers.');
-            return;
-        }
+    const parametersOf = () => {
         const parameters = { temperature: Number(form.creativity) };
-        if (form.contextSize !== '') {
-            const size = Number(form.contextSize);
-            if (!Number.isInteger(size) || size < 512 || size > 262144) {
-                notifyError('Reading size must be a whole number from 512 to 262144.');
-                return;
-            }
-            parameters.num_ctx = size;
+        if (form.contextSize === '') return parameters;
+        const size = Number(form.contextSize);
+        if (!Number.isInteger(size) || size < 512 || size > 262144) {
+            notifyError('Reading size must be a whole number from 512 to 262144.');
+            return null;
         }
+        return { ...parameters, num_ctx: size };
+    };
 
+    const run = async (work, done) => {
         setBusy(true);
         try {
-            await modelService.createModel({
-                name,
-                displayName: form.displayName.trim(),
-                from: form.from,
-                system: form.system,
-                parameters
-            });
-            success(`${form.displayName.trim()} is ready. It is in your Installed list.`);
+            await work();
+            success(done);
             setTemplate(null);
+            setEditing(null);
             onCreated();
         } catch (error) {
             notifyError(describeError(error));
         } finally {
             setBusy(false);
         }
+    };
+
+    const create = () => {
+        const name = slug(form.displayName);
+        if (!name) {
+            notifyError('Give your model a name using letters or numbers.');
+            return;
+        }
+        const parameters = parametersOf();
+        if (!parameters) return;
+        const displayName = form.displayName.trim();
+        run(
+            () => modelService.createModel({ name, displayName, from: form.from, system: form.system, parameters }),
+            `${displayName} is ready. It is in your Installed list.`
+        );
+    };
+
+    const save = (model) => {
+        const parameters = parametersOf();
+        if (!parameters) return;
+        const displayName = form.displayName.trim();
+        run(
+            () => modelService.updateModel({ name: model.name, displayName, from: form.from, system: form.system, parameters }),
+            `${displayName} was updated.`
+        );
     };
 
     return (
@@ -439,66 +524,7 @@ const MineTab = ({ installed, canManage, onCreated, onDelete }) => {
 
                     {template && (
                         <>
-                            <Input label="Name" value={form.displayName} onChange={change('displayName')} width="100%" />
-                            <Container layout="flex-column" gap="xs" padding="none" width="100%">
-                                <Typography as="label" size="sm" weight="semibold" htmlFor="base-model">Built on</Typography>
-                                <select
-                                    id="base-model"
-                                    value={form.from}
-                                    onChange={change('from')}
-                                    style={{
-                                        width: '100%',
-                                        padding: '0.6rem',
-                                        borderRadius: '0.5rem',
-                                        border: '1px solid var(--border-color)',
-                                        background: 'var(--background-color)',
-                                        color: 'var(--text-color)',
-                                        font: 'inherit'
-                                    }}
-                                >
-                                    {bases.map((model) => (
-                                        <option key={model.name} value={model.name}>{model.displayName}</option>
-                                    ))}
-                                </select>
-                            </Container>
-                            <Input
-                                label="Instructions"
-                                helpText="How this model should behave every time it is used."
-                                multiline
-                                rows={5}
-                                value={form.system}
-                                onChange={change('system')}
-                                width="100%"
-                            />
-                            <Container layout="flex-column" gap="xs" padding="none" width="100%">
-                                <Typography as="label" size="sm" weight="semibold" htmlFor="creativity">
-                                    Creativity: {Number(form.creativity) <= 0.3 ? 'Precise' : Number(form.creativity) <= 0.9 ? 'Balanced' : 'Inventive'}
-                                </Typography>
-                                <input
-                                    id="creativity"
-                                    type="range"
-                                    min="0"
-                                    max="1.5"
-                                    step="0.1"
-                                    value={form.creativity}
-                                    onChange={change('creativity')}
-                                    style={{ width: '100%' }}
-                                />
-                            </Container>
-                            <Container layout="flex" gap="sm" padding="none">
-                                <Button size="sm" color="secondary" onClick={() => setAdvanced((open) => !open)}>
-                                    {advanced ? 'Hide advanced' : 'Advanced'}
-                                </Button>
-                            </Container>
-                            {advanced && (
-                                <Input
-                                    label="Reading size in tokens (optional)"
-                                    helpText="How much text the model can take in at once. Leave empty to use the model's own setting. Larger uses more memory."
-                                    value={form.contextSize}
-                                    onChange={change('contextSize')}
-                                    width="100%"
-                                />
-                            )}
+                            <ModelFields key={template} form={form} setForm={setForm} bases={bases} />
                             <Container layout="flex" gap="sm" padding="none">
                                 <Button onClick={create} disabled={busy || !form.displayName.trim() || !form.from}>
                                     {busy ? 'Creating…' : 'Create model'}
@@ -518,8 +544,39 @@ const MineTab = ({ installed, canManage, onCreated, onDelete }) => {
                             <Typography as="h3" size="lg" weight="bold">{model.displayName}</Typography>
                             <Typography size="sm" color="muted">Built on {model.basedOn}</Typography>
                         </Container>
-                        {canManage && <Button color="secondary" onClick={() => onDelete(model)}>Delete</Button>}
+                        {canManage && editing !== model.name && (
+                            <Container layout="flex" gap="xs" padding="none">
+                                <Button color="secondary" onClick={() => startEdit(model)}>Edit</Button>
+                                <Button color="secondary" onClick={() => onDelete(model)}>Delete</Button>
+                            </Container>
+                        )}
                     </Row>
+                    {editing === model.name ? (
+                        <>
+                            <ModelFields key={model.name} form={form} setForm={setForm} bases={bases} />
+                            <Container layout="flex" gap="sm" padding="none">
+                                <Button onClick={() => save(model)} disabled={busy || !form.displayName.trim() || !form.from}>
+                                    {busy ? 'Saving…' : 'Save changes'}
+                                </Button>
+                                <Button color="secondary" onClick={() => setEditing(null)} disabled={busy}>Cancel</Button>
+                            </Container>
+                        </>
+                    ) : (
+                        <>
+                            <Typography size="sm" weight="semibold">Instructions</Typography>
+                            {model.system
+                                ? (
+                                    <Container layout="flex-column" gap="none" padding="none" width="100%">
+                                        {model.system.split('\n').map((line, index) => <Typography key={index} as="p" size="sm">{line || ' '}</Typography>)}
+                                    </Container>
+                                )
+                                : <Typography size="sm" color="muted">No instructions were given to this model.</Typography>}
+                            <Typography size="sm" color="muted">
+                                Creativity: {creativityOf(model.parameters?.temperature ?? 0.7)}
+                                {model.parameters?.num_ctx ? ` · Reading size: ${model.parameters.num_ctx} tokens` : ''}
+                            </Typography>
+                        </>
+                    )}
                 </Card>
             ))}
         </Container>
@@ -546,6 +603,7 @@ const ModelsPage = () => {
             notifyError(describeError(error, 'Installed models could not be loaded.'));
         }
     }, [notifyError]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const loadCatalogue = useCallback(async (deviceId) => {
         try {
@@ -563,10 +621,17 @@ const ModelsPage = () => {
         }
     }, []);
 
-    const refresh = useCallback(() => {
-        loadInstalled();
-        if (device) loadCatalogue(device.id);
-    }, [device, loadInstalled, loadCatalogue]);
+    const refresh = useCallback(async () => {
+        setRefreshing(true);
+        await Promise.all([loadInstalled(), device ? loadCatalogue(device.id) : null, loadRunning()]);
+        setRefreshing(false);
+    }, [device, loadInstalled, loadCatalogue, loadRunning]);
+
+    useEffect(() => {
+        const onFocus = () => refreshRef.current();
+        window.addEventListener('focus', onFocus);
+        return () => window.removeEventListener('focus', onFocus);
+    }, []);
 
     useEffect(() => {
         (async () => {
@@ -725,6 +790,9 @@ const ModelsPage = () => {
                             {option.label}{option.id === 'installed' && counts.installed !== null ? ` (${counts.installed})` : ''}
                         </Button>
                     ))}
+                    <Button variant="ghost" size="sm" disabled={refreshing} title="Refresh models and disk space" aria-label="Refresh models and disk space" onClick={refresh}>
+                        <Icon name="FiRefreshCw" size="xs" />
+                    </Button>
                 </Container>
 
                 {tab === 'discover' && (

@@ -17,6 +17,7 @@ import { ButtonGroup } from './ButtonGroup';
 import { Select } from './Select';
 import { Badge } from './Badge';
 import Icon from './Icon';
+import Input from './Input';
 import Typography from './Typography';
 import CircularProgress from './CircularProgress';
 
@@ -58,6 +59,7 @@ const PdfViewer = forwardRef(({
     blob,
     fileName = 'document.pdf',
     readOnly = false,
+    compact = false,
     onSave,
     onError,
     color = 'primary',
@@ -974,7 +976,7 @@ const PdfViewer = forwardRef(({
                     {numPages && (
                         <div className="pdf-page-layout-container">
                             {/* Previous Page Thumbnail Nav */}
-                            {numPages > 1 && currentPage > 1 ? (
+                            {!compact && numPages > 1 && currentPage > 1 ? (
                                 <div
                                     className="pdf-thumbnail-nav prev"
                                     onClick={(e) => { e.preventDefault(); transitionPage(p => Math.max(1, p - 1)); }}
@@ -1409,7 +1411,7 @@ const PdfViewer = forwardRef(({
                             </div>
 
                             {/* Next Page Thumbnail Nav */}
-                            {numPages > 1 && currentPage < numPages ? (
+                            {!compact && numPages > 1 && currentPage < numPages ? (
                                 <div
                                     className="pdf-thumbnail-nav next"
                                     onClick={(e) => { e.preventDefault(); transitionPage(p => Math.min(numPages, p + 1)); }}
@@ -1441,17 +1443,27 @@ const PdfViewer = forwardRef(({
 
             {/* Minimal info pill at bottom center */}
             {numPages > 0 && (
-                <div className="pdf-page-nav pdf-page-nav-minimal">
+                <div className={`pdf-page-nav ${compact && numPages > 1 ? 'pdf-page-nav-compact' : 'pdf-page-nav-minimal'}`}>
+                    {compact && numPages > 1 && (
+                        <Button size="xxs" variant="ghost" disabled={currentPage <= 1} title="Previous page" aria-label="Previous page" onClick={() => transitionPage(p => Math.max(1, p - 1))}>
+                            <Icon name="FiChevronLeft" />
+                        </Button>
+                    )}
                     <Typography size="xs" className="pdf-page-nav-zoom">{Math.round((scale / baseScale) * 100)}% | Page {currentPage} of {numPages}</Typography>
+                    {compact && numPages > 1 && (
+                        <Button size="xxs" variant="ghost" disabled={currentPage >= numPages} title="Next page" aria-label="Next page" onClick={() => transitionPage(p => Math.min(numPages, p + 1))}>
+                            <Icon name="FiChevronRight" />
+                        </Button>
+                    )}
                 </div>
             )}
 
             {/* Hidden file input for image annotations */}
-            <input
+            <Input
                 ref={imageInputRef}
                 type="file"
+                hidden
                 accept="image/png,image/jpeg,image/gif,image/webp"
-                style={{ display: 'none' }}
                 onChange={handleImageUpload}
             />
 

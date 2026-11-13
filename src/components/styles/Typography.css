@@ -940,3 +940,11 @@ label.typography {
 .typography-animation-glitch.inactive::after {
     display: none;
 }
+
+/* size="inherit": take the size of the surrounding text, for links inside a sentence */
+.typography.typography-size-inherit,
+.typography-size-inherit {
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+}

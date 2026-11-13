@@ -151,12 +151,12 @@ const AudioMetadataForm = ({ initial, onSave, onClose }) => {
 
             <Container layout="flex-column" gap="xs" padding="none">
                 <Typography size="xs" color="secondary">Cover image</Typography>
-                <input
+                <Input
                     ref={coverInputRef}
                     type="file"
+                    hidden
                     accept="image/*"
                     onChange={handleCoverPick}
-                    style={{ display: 'none' }}
                 />
                 <Container layout="flex" gap="sm" align="center" padding="none">
                     {coverPreview && (

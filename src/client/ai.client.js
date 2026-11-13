@@ -1,4 +1,4 @@
-import { sharedAPI as api, API_BASE_URL } from './app.client.js';
+import { sharedAPI as api, API_BASE_URL, refreshCsrfToken } from './app.client.js';
 
 export const deviceService = {
     listDevices: () => api.get('/devices'),
@@ -23,7 +23,9 @@ export const modelService = {
     listRunning: () => api.get('/models/running'),
     deleteModel: (name) => api.post('/models/delete', { name }),
     unloadModel: (name) => api.post('/models/unload', { name }),
+    loadModel: (name) => api.post('/models/load', name ? { name } : {}),
     createModel: (request) => api.post('/models/create', request),
+    updateModel: (request) => api.post('/models/update', request),
 
     getDeviceCatalogue: (deviceId) => api.get(`/devices/${deviceId}/catalogue`),
 
@@ -70,4 +72,98 @@ export const readBrowserDevice = () => ({
 export const formatGb = (megabytes, digits = 0) => {
     if (megabytes === null || megabytes === undefined) return 'Unknown';
     return `${(megabytes / 1024).toFixed(digits)} GB`;
+};
+
+const csrfToken = async () => document.cookie.match(/(?:^|; )csrfToken=([^;]+)/)?.[1] || refreshCsrfToken();
+
+const readEvents = async (response, onEvent) => {
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+        for (const line of lines) {
+            if (line.trim()) onEvent(JSON.parse(line));
+        }
+    }
+};
+
+export const chatService = {
+    list: (search) => api.get('/chats', { params: search ? { search } : {} }),
+    create: (body = {}) => api.post('/chats', body),
+    get: (id) => api.get(`/chats/${id}`),
+    update: (id, changes) => api.patch(`/chats/${id}`, changes),
+    remove: (id) => api.delete(`/chats/${id}`),
+    summarise: (id) => api.post(`/chats/${id}/summary`, {}, { timeout: 0 }),
+    exportChat: (id, format) => api.get(`/chats/${id}/export`, { params: { format } }),
+
+    attachUpload: (id, file) => api.post(`/chats/${id}/attachments`, file, {
+        params: { name: file.name },
+        headers: { 'Content-Type': 'application/octet-stream' },
+        timeout: 120000
+    }),
+    attachFile: (id, path) => api.post(`/chats/${id}/attachments`, { path }, { timeout: 60000 }),
+    removeAttachment: (id, attachmentId) => api.delete(`/chats/${id}/attachments/${attachmentId}`),
+
+    stop: (id) => api.post(`/chats/${id}/stop`, {}),
+
+    async rejoin(id, { onEvent, signal }) {
+        const response = await fetch(`${API_BASE_URL}/chats/${id}/reply`, { credentials: 'include', signal });
+        if (response.status !== 200) return false;
+        await readEvents(response, onEvent);
+        return true;
+    },
+
+    async send(id, body, { onEvent, signal }) {
+        const attempt = async () => fetch(`${API_BASE_URL}/chats/${id}/messages`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': await csrfToken() },
+            body: JSON.stringify(body),
+            signal
+        });
+
+        let response = await attempt();
+        if (response.status === 401) {
+            await api.get('/chats');
+            response = await attempt();
+        }
+        if (!response.ok) {
+            const data = await response.json().catch(() => ({}));
+            throw Object.assign(new Error(data.message || 'The message could not be sent.'), { response: { data, status: response.status } });
+        }
+
+        if (response.status === 202) return response.json();
+        await readEvents(response, onEvent);
+        return null;
+    }
+};
+
+export const promptService = {
+    list: () => api.get('/prompts'),
+    create: (prompt) => api.post('/prompts', prompt),
+    update: (id, changes) => api.patch(`/prompts/${id}`, changes),
+    remove: (id) => api.delete(`/prompts/${id}`)
+};
+
+export const fileService = {
+    browse: (path = '/') => api.get('/files/browse', { params: { path } }),
+    text: (path, model) => api.get('/files/text', { params: model ? { path, model } : { path }, timeout: 60000 }),
+    save: (folder, name, content) => api.post('/files/save', { folder, name, content }),
+    remote: (url) => api.get('/files/remote', { params: { url }, responseType: 'blob', timeout: 120000 })
+};
+
+export const downloadText = (fileName, content) => {
+    const url = URL.createObjectURL(new Blob([content], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
 };

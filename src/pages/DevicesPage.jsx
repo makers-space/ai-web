@@ -7,8 +7,8 @@ const Detail = ({ label, value, note }) => (
     <Container layout="flex" justify="between" align="center" gap="md" padding="none" width="100%">
         <Typography color="muted">{label}</Typography>
         <Container layout="flex-column" gap="none" padding="none" align="end">
-            <Typography weight="semibold" style={{ textAlign: 'right' }}>{value}</Typography>
-            {note && <Typography size="sm" color="muted" style={{ textAlign: 'right' }}>{note}</Typography>}
+            <Typography weight="semibold">{value}</Typography>
+            {note && <Typography size="sm" color="muted">{note}</Typography>}
         </Container>
     </Container>
 );

@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@contexts/AuthContext';
 import { Button } from './Button';
+import { Card } from './Card';
+import { Icon } from './Icon';
 import { Typography } from './Typography';
 import { deviceService } from '../client/ai.client';
 
@@ -67,22 +69,8 @@ export const OllamaBanner = () => {
     if (!user || !problem) return null;
 
     return (
-        <div
-            role="alert"
-            style={{
-                position: 'sticky',
-                top: 0,
-                zIndex: 50,
-                display: 'flex',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.75rem',
-                padding: '0.6rem 1rem',
-                background: 'var(--surface-color)',
-                borderBottom: '4px solid var(--warning-color)'
-            }}
-        >
+        <Card role="alert" backgroundColor="surface" hover={false} layout="flex" align="center" justify="center" gap="sm" padding="sm" width="100%">
+            <Icon name="FiAlertTriangle" size="sm" color="warning" />
             <Typography weight="semibold">
                 {problem.message || 'Ollama is not running on this device.'}
             </Typography>
@@ -92,7 +80,7 @@ export const OllamaBanner = () => {
             <Button size="sm" color="secondary" onClick={check} disabled={checking}>
                 {checking ? 'Checking…' : 'Check again'}
             </Button>
-        </div>
+        </Card>
     );
 };
 

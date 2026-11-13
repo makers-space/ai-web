@@ -109,13 +109,31 @@
     padding: 3px 12px;
 }
 
+.pdf-page-nav-compact {
+    gap: 6px;
+    padding: 2px 4px;
+}
+
+.pdf-page-nav-compact:not(:hover):not(:focus-within) {
+    opacity: 0.9;
+}
+
 .pdf-page-nav-zoom {
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.pdf-page-nav-compact .button.themed-button {
+    margin: 0;
+    padding: 0;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
 }
 
 /* ── Thumbnail navigation ── */
 .pdf-thumbnail-nav {
-    position: fixed;
+    position: absolute;
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -134,8 +152,8 @@
     opacity: 1;
 }
 
-.pdf-thumbnail-nav.prev { left: 24px; }
-.pdf-thumbnail-nav.next { right: 24px; }
+.pdf-thumbnail-nav.prev { left: 16px; }
+.pdf-thumbnail-nav.next { right: 16px; }
 .pdf-thumbnail-nav.placeholder { display: none; }
 
 .pdf-thumbnail-page-wrapper {

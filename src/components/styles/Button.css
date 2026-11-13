@@ -135,10 +135,10 @@
 .button.themed-button.themed-button-variant-ghost:hover,
 .button.themed-button.themed-button-variant-ghost.selected {
     background-color: color-mix(in srgb, var(--button-variant-color, var(--primary-color)) 14%, transparent) !important;
-    border-color: var(--button-variant-color, var(--primary-color)) !important;
+    border-color: transparent !important;
     color: var(--button-variant-color, var(--primary-color)) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px var(--shadow-color-hover);
+    transform: none;
+    box-shadow: none !important;
 }
 
 /* Button variant: solid */
@@ -230,10 +230,10 @@
 .button.themed-button.themed-button-success.themed-button-variant-ghost:hover,
 .button.themed-button.themed-button-success.themed-button-variant-ghost.selected {
     background-color: color-mix(in srgb, var(--success-color) 14%, transparent) !important;
-    border-color: var(--success-color) !important;
+    border-color: transparent !important;
     color: var(--success-color) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px var(--shadow-color-hover);
+    transform: none;
+    box-shadow: none !important;
 }
 
 /* Success with solid variant */
@@ -280,10 +280,10 @@
 .button.themed-button.themed-button-warning.themed-button-variant-ghost:hover,
 .button.themed-button.themed-button-warning.themed-button-variant-ghost.selected {
     background-color: color-mix(in srgb, var(--warning-color) 14%, transparent) !important;
-    border-color: var(--warning-color) !important;
+    border-color: transparent !important;
     color: var(--warning-color) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px var(--shadow-color-hover);
+    transform: none;
+    box-shadow: none !important;
 }
 
 /* Warning with solid variant */
@@ -330,10 +330,10 @@
 .button.themed-button.themed-button-error.themed-button-variant-ghost:hover,
 .button.themed-button.themed-button-error.themed-button-variant-ghost.selected {
     background-color: color-mix(in srgb, var(--error-color) 14%, transparent) !important;
-    border-color: var(--error-color) !important;
+    border-color: transparent !important;
     color: var(--error-color) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px var(--shadow-color-hover);
+    transform: none;
+    box-shadow: none !important;
 }
 
 /* Error with solid variant */
@@ -608,4 +608,32 @@
         font-size: 1.125rem;    /* 18px */
         padding: 0 1.875rem;    /* 30px */
     }
+}
+
+/* Content alignment (align prop) */
+.button.themed-button.button-align-start,
+.button.themed-button.button-align-start .button-content {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.button.themed-button.button-align-end,
+.button.themed-button.button-align-end .button-content {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.button.themed-button.button-align-start .button-content,
+.button.themed-button.button-align-end .button-content {
+    width: 100%;
+    min-width: 0;
+}
+
+/* Flat states (flat prop): no border, shadow or lift on hover and when selected */
+.button.themed-button.button-flat,
+.button.themed-button.button-flat:hover,
+.button.themed-button.button-flat.selected {
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
 }

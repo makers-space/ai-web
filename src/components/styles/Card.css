@@ -425,6 +425,53 @@
     border: none;
 }
 
+.card.card-border-primary,
+.themed-card.card-border-primary {
+    border-color: var(--primary-color);
+}
+
+.card.card-border-secondary,
+.themed-card.card-border-secondary {
+    border-color: var(--secondary-color);
+}
+
+.card.card-border-tertiary,
+.themed-card.card-border-tertiary {
+    border-color: var(--tertiary-color);
+}
+
+.card.card-border-soft,
+.themed-card.card-border-soft {
+    border-color: color-mix(in srgb, var(--border-color) 55%, transparent);
+}
+
+.card.card-border-primary.card-border-soft,
+.themed-card.card-border-primary.card-border-soft {
+    border-color: color-mix(in srgb, var(--primary-color) 40%, transparent);
+}
+
+.card.card-border-secondary.card-border-soft,
+.themed-card.card-border-secondary.card-border-soft {
+    border-color: color-mix(in srgb, var(--secondary-color) 40%, transparent);
+}
+
+.card.card-border-tertiary.card-border-soft,
+.themed-card.card-border-tertiary.card-border-soft {
+    border-color: color-mix(in srgb, var(--tertiary-color) 40%, transparent);
+}
+
+.card.card-radius-sm, .themed-card.card-radius-sm { border-radius: 0.5rem; }
+.card.card-radius-md, .themed-card.card-radius-md { border-radius: 0.875rem; }
+.card.card-radius-lg, .themed-card.card-radius-lg { border-radius: 1.25rem; }
+.card.card-radius-xl, .themed-card.card-radius-xl { border-radius: 1.75rem; }
+
+.card.card-flat,
+.themed-card.card-flat,
+.card.card-flat:hover,
+.themed-card.card-flat:hover {
+    box-shadow: none;
+}
+
 /* ===== Card Layout Behavior ===== */
 /* Cards in grid containers should fill their grid area */
 .container.layout-grid > .card {

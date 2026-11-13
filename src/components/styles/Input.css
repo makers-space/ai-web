@@ -901,3 +901,62 @@ input[type="date"]:in-range::-webkit-datetime-edit-text {
 .input-container.justify-self-stretch {
     justify-self: stretch;
 }
+
+/* Fill override in every state: idle, hover, focused and filled (backgroundColor prop) */
+.input.themed-input.input-bg-background,
+.input.themed-input.input-bg-background:hover,
+.input.themed-input.input-bg-background:focus,
+.input.themed-input.input-bg-background.input-focused,
+.input.themed-input.input-bg-background.input-has-value,
+.input.themed-input.input-bg-background.input-focused:hover,
+.input.themed-input.input-bg-background.input-has-value:hover {
+    background-color: var(--background-color);
+}
+
+.input.themed-input.input-bg-surface,
+.input.themed-input.input-bg-surface:hover,
+.input.themed-input.input-bg-surface:focus,
+.input.themed-input.input-bg-surface.input-focused,
+.input.themed-input.input-bg-surface.input-has-value,
+.input.themed-input.input-bg-surface.input-focused:hover,
+.input.themed-input.input-bg-surface.input-has-value:hover {
+    background-color: var(--surface-color, var(--background-color));
+}
+
+.input.themed-input.input-bg-transparent,
+.input.themed-input.input-bg-transparent:hover,
+.input.themed-input.input-bg-transparent:focus,
+.input.themed-input.input-bg-transparent.input-focused,
+.input.themed-input.input-bg-transparent.input-has-value,
+.input.themed-input.input-bg-transparent.input-focused:hover,
+.input.themed-input.input-bg-transparent.input-has-value:hover {
+    background-color: transparent;
+}
+
+.input.themed-input.input-text-inherit {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.input-container.input-file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.input-field-wrapper.has-dictation {
+    position: relative;
+}
+
+.input-field-wrapper.has-dictation .input.themed-input {
+    padding-right: 2.25rem;
+}
+
+.input-dictation {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    display: flex;
+}

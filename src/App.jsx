@@ -13,6 +13,7 @@ import AdminPage from './pages/AdminPage';
 import DevicesPage from './pages/DevicesPage';
 import SettingsPage from './pages/SettingsPage';
 import ModelsPage from './pages/ModelsPage';
+import ChatPage from './pages/ChatPage';
 import { OllamaBanner } from './components/OllamaBanner';
 
 // Import Navigation and NotificationDisplay components
@@ -53,6 +54,11 @@ function AppRouter() {
           </RouteAccessControl>
         } />
 
+        <Route path="/chat/:id?" element={
+          <RouteAccessControl path="/chat">
+            <ChatPage />
+          </RouteAccessControl>
+        } />
         <Route path="/models" element={
           <RouteAccessControl path="/models">
             <ModelsPage />

@@ -531,6 +531,8 @@ const CodeEditorInner = forwardRef(({
     width      = '100%',
     height     = null,
     minHeight  = '500px',
+    showToolbar = true,
+    minimap    = true,
     // Native YJS collaboration: when ytext is provided, MonacoBinding
     // wires the editor model directly to the shared Y.Text.  In that path
     // `content`/`onChange` are ignored — the binding is the source of truth.
@@ -654,12 +656,14 @@ const CodeEditorInner = forwardRef(({
 
     return (
         <div ref={wrapperRef} className="code-editor-wrapper" style={{ width, height: height || undefined, minHeight }}>
-            <div className="code-editor-toolbar">
-                <div style={{ flex: 1 }} />
-                <Typography size="xs" color="secondary" style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    {language}
-                </Typography>
-            </div>
+            {showToolbar && (
+                <div className="code-editor-toolbar">
+                    <div style={{ flex: 1 }} />
+                    <Typography size="xs" color="secondary" style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        {language}
+                    </Typography>
+                </div>
+            )}
             <div className="code-editor-content" style={{ minHeight, flex: 1, height: height || minHeight }}>
                 <MonacoEditor
                     height="100%"
@@ -669,7 +673,7 @@ const CodeEditorInner = forwardRef(({
                     onMount={handleEditorDidMount}
                     options={{
                         readOnly,
-                        minimap: { enabled: true },
+                        minimap: { enabled: minimap },
                         fontSize: 14,
                         fontFamily: getComputedStyle(document.body).getPropertyValue('--font-family-monospace').trim() || 'monospace',
                         lineNumbers: 'on',
@@ -1595,6 +1599,7 @@ export const Editor = forwardRef(({
 
     // code props
     filePath     = '',
+    minimap      = true, // false hides the code overview strip at the right edge
 
     // Native YJS collaboration (currently wired for code mode via y-monaco).
     // When provided, the editor binds Monaco's model directly to the shared
@@ -1615,6 +1620,8 @@ export const Editor = forwardRef(({
                 width={width || '100%'}
                 height={height}
                 minHeight={minHeight || '500px'}
+                showToolbar={showToolbar}
+                minimap={minimap}
                 ytext={ytext}
                 provider={provider}
             />

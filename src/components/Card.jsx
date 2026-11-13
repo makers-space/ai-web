@@ -19,6 +19,10 @@ export const Card = forwardRef(({
     padding = 'lg', // 'none', 'xs', 'sm', 'md', 'lg', 'xl'
     hover = true, // true, false - enable/disable hover effects
     bordered = true, // false removes the outline, for a card that is only a filled surface
+    borderColor = null, // Outline color: null (theme default), 'primary', 'secondary', 'tertiary'
+    shadow = true, // false removes the drop shadow, for a flat card
+    borderStrength = 'normal', // 'normal', 'soft' - soft fades the outline so it is less prominent
+    radius = null, // Corner rounding: null (theme default), 'sm', 'md', 'lg', 'xl'
     width = null, // Custom width: string value like '100px', '50%', 'auto', etc.
     height = null, // Custom height: string value like '100px', '50%', 'auto', '90vh', etc.
     minWidth = null, // Custom minimum width
@@ -242,7 +246,13 @@ export const Card = forwardRef(({
     };
 
     const hoverClass = hover ? 'themed-card-hover' : '';
-    const borderClass = bordered ? '' : 'card-borderless';
+    const borderClass = [
+        bordered ? '' : 'card-borderless',
+        bordered && ['primary', 'secondary', 'tertiary'].includes(borderColor) ? `card-border-${borderColor}` : '',
+        shadow ? '' : 'card-flat',
+        bordered && borderStrength === 'soft' ? 'card-border-soft' : '',
+        ['sm', 'md', 'lg', 'xl'].includes(radius) ? `card-radius-${radius}` : ''
+    ].filter(Boolean).join(' ');
     // Get background color style
     const getBackgroundStyle = () => {
         if (!backgroundColor || STATUS_COLORS.includes(backgroundColor)) {

@@ -1,6 +1,8 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { useTheme } from '@contexts/ThemeContext';
 import Icon from './Icon';
+import Button from './Button';
+import Typography from './Typography';
 
 const INPUT_VALIDATION_STATES = new Set(['default', 'success', 'warning', 'error']);
 const INPUT_COLOR_OPTIONS = ['primary', 'secondary', 'tertiary'];
@@ -15,7 +17,10 @@ const sanitizeValidationState = (state) => (INPUT_VALIDATION_STATES.has(state) ?
  */
 export const Input = ({
     className = '',
-    type = 'text', // 'text', 'password', 'email', 'checkbox', 'search'.
+    dictation = false, // Show a microphone button that types what the user says, using the browser's own speech recognition
+    onDictationError = null, // Called with a message when dictation is unsupported, blocked or fails
+    inheritText = false, // Take the text size of the surrounding Typography instead of the input's own size
+    type = 'text', // 'text', 'password', 'email', 'checkbox', 'search', 'file' (a themed button with the chosen file names; add hidden for a picker opened from another control through its ref).
     variant = 'default', // 'default', 'outline', 'filled', 'underline', 'floating'
     color = 'primary', // 'primary', 'secondary', 'tertiary'
     size = 'md', // 'xxs', 'xs', 'sm', 'md', 'lg', 'xl'
@@ -38,6 +43,7 @@ export const Input = ({
     marginBottom = null, // 'none', 'xs', 'sm', 'md', 'lg', 'xl' or custom value
     multiline = false, // Enable textarea for multiline input
     rows = 3, // Number of rows for textarea (when multiline is true)
+    backgroundColor = null, // Fill in every state: null (variant default), 'background', 'surface', 'transparent'
     // Validation props
     validate = false, // Enable/disable validation - now defaults to false, auto-enabled by required
     minLength = null, // Minimum length validation
@@ -152,6 +158,50 @@ export const Input = ({
 
     // Reference for the input element
     const inputRef = useRef(null);
+    const recognitionRef = useRef(null);
+    const [listening, setListening] = useState(false);
+    useEffect(() => () => recognitionRef.current?.abort(), []);
+    const toggleDictation = () => {
+        if (listening) {
+            recognitionRef.current?.stop();
+            return;
+        }
+        const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!Recognition) {
+            if (onDictationError) onDictationError('Dictation is not available in this browser. Firefox does not support it; use Chrome or Edge to dictate.');
+            return;
+        }
+        const recognition = new Recognition();
+        const base = String(inputRef.current?.value ?? value ?? '');
+        recognition.lang = navigator.language || 'en-US';
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.onresult = (event) => {
+            const spoken = Array.from(event.results).map((result) => result[0].transcript).join('');
+            const next = `${base}${base && spoken && !/\s$/.test(base) ? ' ' : ''}${spoken}`;
+            setHasValue(Boolean(next));
+            if (onChange) onChange({ target: { value: next, name: props.name } });
+        };
+        recognition.onerror = (event) => {
+            if (!onDictationError || event.error === 'aborted' || event.error === 'no-speech') return;
+            onDictationError(event.error === 'not-allowed' || event.error === 'service-not-allowed'
+                ? 'The microphone is blocked for this site. Allow it in the browser to dictate.'
+                : 'Dictation stopped because of a problem. Try again.');
+        };
+        recognition.onend = () => {
+            recognitionRef.current = null;
+            setListening(false);
+        };
+        recognitionRef.current = recognition;
+        setListening(true);
+        try {
+            recognition.start();
+        } catch {
+            recognitionRef.current = null;
+            setListening(false);
+        }
+    };
+    const [chosenFiles, setChosenFiles] = useState([]);
 
     // Sync hasValue state with value prop
     useEffect(() => {
@@ -234,7 +284,8 @@ export const Input = ({
     };
 
     const getVariantClass = () => {
-        return `themed-input-${inputVariant}`;
+        const fill = ['background', 'surface', 'transparent'].includes(backgroundColor) ? ` input-bg-${backgroundColor}` : '';
+        return `themed-input-${inputVariant}${fill}`;
     };
 
     const getColorClass = () => colorClass;
@@ -447,7 +498,7 @@ export const Input = ({
                         ref={inputRef}
                         id={inputId}
                         name={inputName}
-                        className={`input themed-input textarea ${getVariantClass()} ${getSizeClass()} ${getStateClasses()} ${getPositionClass()} ${getColorClass()} theme-${inputTheme} ${className}`}
+                        className={`input themed-input textarea ${getVariantClass()} ${getSizeClass()} ${getStateClasses()} ${getPositionClass()} ${getColorClass()} theme-${inputTheme} ${className}${inheritText ? ' input-text-inherit' : ''}`}
                         placeholder={inputVariant === 'floating' && label ? '' : placeholder}
                         {...(value !== undefined ? {value} : {})}
                         onChange={handleChange}
@@ -466,7 +517,7 @@ export const Input = ({
                         ref={inputRef}
                         id={inputId}
                         name={inputName}
-                        className={`input themed-input ${getVariantClass()} ${getSizeClass()} ${getStateClasses()} ${getPositionClass()} ${getColorClass()} theme-${inputTheme} ${className}`}
+                        className={`input themed-input ${getVariantClass()} ${getSizeClass()} ${getStateClasses()} ${getPositionClass()} ${getColorClass()} theme-${inputTheme} ${className}${inheritText ? ' input-text-inherit' : ''}`}
                         placeholder={inputVariant === 'floating' && label ? '' : (isDateInput ? '' : placeholder)}
                         {...(value !== undefined ? {value} : {})}
                         onChange={handleChange}
@@ -536,6 +587,39 @@ export const Input = ({
             </div>
         );
     }
+    if (type === 'file') {
+        const { ref: outerRef, ...fileProps } = props;
+        const setFileRef = (element) => {
+            inputRef.current = element;
+            if (typeof outerRef === 'function') outerRef(element);
+            else if (outerRef) outerRef.current = element;
+        };
+        const pickFiles = (event) => {
+            setChosenFiles(Array.from(event.target.files || []).map((file) => file.name));
+            if (onChange) onChange(event);
+        };
+        const native = <input type="file" hidden ref={setFileRef} disabled={disabled} required={required} onChange={pickFiles} {...fileProps} />;
+        if (props.hidden) return native;
+        const folder = fileProps.webkitdirectory !== undefined;
+        const summary = chosenFiles.length === 0
+            ? (folder ? 'No folder chosen' : 'No file chosen')
+            : chosenFiles.length === 1 ? chosenFiles[0] : `${chosenFiles.length} files chosen`;
+        return (
+            <div
+                className={`input-container input-file ${getColorClass()} ${getJustifySelfClass()} theme-${inputTheme} ${className}`}
+                style={{ width, ...(minWidth ? { minWidth } : {}), ...getMarginStyle() }}
+                data-theme={inputTheme}
+                data-theme-source={theme ? 'local' : 'inherited'}
+            >
+                {native}
+                <Button size={size} color={color} disabled={disabled} onClick={() => inputRef.current?.click()}>
+                    <Icon name={folder ? 'FiFolder' : 'FiUpload'} />
+                    {placeholder || label || (folder ? 'Choose folder' : fileProps.multiple ? 'Choose files' : 'Choose a file')}
+                </Button>
+                <Typography size="xs" color="muted" truncate title={chosenFiles.join(', ')}>{summary}</Typography>
+            </div>
+        );
+    }
     // Special handling for checkbox type
     if (type === 'checkbox') {
         return (
@@ -582,7 +666,7 @@ export const Input = ({
                 </label>
             )}
             <div
-                className={`input-field-wrapper ${effectiveIcon ? `has-icon has-icon-${effectiveIconPosition}` : ''} ${getStateClasses()} ${getColorClass()}`}>
+                className={`input-field-wrapper ${effectiveIcon ? `has-icon has-icon-${effectiveIconPosition}` : ''} ${dictation ? 'has-dictation' : ''} ${getStateClasses()} ${getColorClass()}`}>
                 {effectiveIcon && effectiveIconPosition === 'left' && (
                     <span className="input-icon input-icon-left">
             <Icon name={effectiveIcon} size="sm"/>
@@ -606,6 +690,23 @@ export const Input = ({
                 >
                     <Icon name={showPassword ? 'FiEyeOff' : 'FiEye'} size="sm"/>
                 </button>)}
+                {dictation && (
+                    <span className="input-dictation">
+                        <Button
+                            size="xxs"
+                            variant="ghost"
+                            color={listening ? 'error' : color}
+                            selected={listening}
+                            disabled={disabled}
+                            title={listening ? 'Stop dictating' : 'Dictate'}
+                            aria-label={listening ? 'Stop dictating' : 'Dictate'}
+                            aria-pressed={listening}
+                            onClick={toggleDictation}
+                        >
+                            <Icon name={listening ? 'FiMicOff' : 'FiMic'} />
+                        </Button>
+                    </span>
+                )}
             </div>
             {(getEffectiveHelpText() || helpText) && (
                 <span

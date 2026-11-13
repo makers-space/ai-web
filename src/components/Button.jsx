@@ -34,6 +34,8 @@ export const Button = forwardRef(({
     className = '',
     color = 'primary', // 'primary', 'secondary', 'tertiary', 'success', 'warning', 'error'
     variant = null, // Special variant: 'border-shadow' for unique styling
+    align = 'center', // Content alignment: 'start', 'center', 'end'
+    flat = false, // true keeps hover and selected states free of border, shadow and lift
     size = 'md', // 'xxs', 'xs', 'sm', 'md', 'lg', 'xl'
     disabled = false,
     selected: externalSelected = null, // Allow external control of selected state
@@ -183,7 +185,8 @@ export const Button = forwardRef(({
     const getSizeClass = () => ['xxs', 'xs', 'sm', 'lg', 'xl'].includes(size) ? size : 'md';
 
     const getSelectedClass = () => {
-        return isSelected ? 'selected' : '';
+        const extras = [isSelected ? 'selected' : '', ['start', 'end'].includes(align) ? `button-align-${align}` : '', flat ? 'button-flat' : ''];
+        return extras.filter(Boolean).join(' ');
     };
 
     const getJustifySelfClass = () => {
