@@ -15,9 +15,12 @@ import SettingsPage from './pages/SettingsPage';
 import ModelsPage from './pages/ModelsPage';
 import ChatPage from './pages/ChatPage';
 import { OllamaBanner } from './components/OllamaBanner';
+import { GuideProvider, ActivityProvider } from './client/ai.client';
+import DashboardPage from './pages/DashboardPage';
 
 // Import Navigation and NotificationDisplay components
 import { Navigation, NotificationDisplay, RouteAccessControl } from '@components/Components';
+import AppNotifications from '@components/AppNotifications';
 
 // Main App Router
 function AppRouter() {
@@ -76,7 +79,11 @@ function AppRouter() {
         } />
 
         {/* Fallback redirects */}
-        <Route path="/dashboard" element={<Navigate to="/" replace />} />
+        <Route path="/dashboard" element={
+          <RouteAccessControl path="/dashboard">
+            <DashboardPage />
+          </RouteAccessControl>
+        } />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       
@@ -89,6 +96,7 @@ function AppRouter() {
       
       {/* Global Notification Display */}
       <NotificationDisplay position="top-right" />
+      <AppNotifications />
     </>
   );
 }
@@ -99,7 +107,7 @@ function App() {
       <ThemeProvider> {/* Global theme provider - manages app-wide theme */}
         <NotificationProvider>
           <AuthProvider>
-            <AppRouter />
+            <GuideProvider><ActivityProvider><AppRouter /></ActivityProvider></GuideProvider>
           </AuthProvider>
         </NotificationProvider>
       </ThemeProvider>

@@ -36,6 +36,7 @@ export const Button = forwardRef(({
     variant = null, // Special variant: 'border-shadow' for unique styling
     align = 'center', // Content alignment: 'start', 'center', 'end'
     flat = false, // true keeps hover and selected states free of border, shadow and lift
+    round = false, // true makes a circular button, for a single icon
     size = 'md', // 'xxs', 'xs', 'sm', 'md', 'lg', 'xl'
     disabled = false,
     selected: externalSelected = null, // Allow external control of selected state
@@ -108,7 +109,7 @@ export const Button = forwardRef(({
         if (typeof genie === 'object' && genie.content) {
             // New API: genie is an object with trigger, content
             return {
-                content: genie.content,
+                ...genie,
                 trigger: genie.trigger || genieTrigger
             };
         }
@@ -185,7 +186,7 @@ export const Button = forwardRef(({
     const getSizeClass = () => ['xxs', 'xs', 'sm', 'lg', 'xl'].includes(size) ? size : 'md';
 
     const getSelectedClass = () => {
-        const extras = [isSelected ? 'selected' : '', ['start', 'end'].includes(align) ? `button-align-${align}` : '', flat ? 'button-flat' : ''];
+        const extras = [isSelected ? 'selected' : '', ['start', 'end'].includes(align) ? `button-align-${align}` : '', flat ? 'button-flat' : '', round ? 'button-round' : ''];
         return extras.filter(Boolean).join(' ');
     };
 

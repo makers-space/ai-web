@@ -2,6 +2,7 @@
 import { useAuth } from '@contexts/AuthContext';
 import { useTheme } from '@contexts/ThemeContext';
 import { Badge, Button, ButtonGroup, CircularProgress, Container, FloatingActionButton, Icon, Page, Typography } from './Components';
+import { useGuide, useActivity } from '../client/ai.client';
 
 const LOADING_MESSAGES = [
     'Loading page',
@@ -92,6 +93,15 @@ export const Navigation = ({
             });
 
             items.push({
+                id: 'dashboard',
+                label: 'Dashboard',
+                icon: 'FiGrid',
+                path: '/dashboard',
+                roles: ['USER', 'CREATOR', 'SUPER_CREATOR', 'ADMIN', 'OWNER'],
+                requireAuth: true
+            });
+
+            items.push({
                 id: 'chat',
                 label: 'Chat',
                 icon: 'FiMessageSquare',
@@ -172,6 +182,12 @@ export const Navigation = ({
     };
 
     const navigationItems = getNavigationItems();
+    // Admin panel goes last, or Settings when there is no admin panel; an odd last button spans both columns
+    const lastMenuId = navigationItems.some((item) => item.id === 'admin') ? 'admin' : 'settings';
+    const menuItems = [...navigationItems.filter((item) => item.id !== lastMenuId), ...navigationItems.filter((item) => item.id === lastMenuId)];
+    const guide = useGuide();
+    const activity = useActivity();
+    const busyCount = activity.replies.length + activity.downloads.length;
 
     const handleNavigation = (path) => {
         setIsNavigating(true);
@@ -200,9 +216,26 @@ export const Navigation = ({
         <Container layout="flex-column" gap="sm" padding="sm">
             {/* Header */}
             <Container layout="flex" justify="between" align="center" gap="md" width="100%">
-                <Typography as="h4" size="sm" weight="semibold">
-                    Navigation
-                </Typography>
+                <Container layout="flex" align="center" gap="xs" padding="none" wrap={false}>
+                    {user && (
+                        <Button
+                            size="xs"
+                            variant="ghost"
+                            color="tertiary"
+                            round
+                            selected={guide.on}
+                            aria-pressed={guide.on}
+                            title={guide.on ? 'Helper is on. Press to turn it off.' : 'Turn the helper on. Every button explains itself once more.'}
+                            aria-label="Helper"
+                            onClick={() => guide.setOn(!guide.on)}
+                        >
+                            <Icon name="MdSupportAgent" size="xs" />
+                        </Button>
+                    )}
+                    <Typography as="h4" size="sm" weight="semibold">
+                        Navigation
+                    </Typography>
+                </Container>
                 {user && (
                     <Badge color="primary" size="sm">
                         {user.username || user.email}
@@ -246,32 +279,62 @@ export const Navigation = ({
                 <Typography as="p" size="xs" weight="medium">
                     MENU
                 </Typography>
-                {navigationItems.map(item => (
-                    <Button
-                        key={item.id}
-                        size="sm"
-                        align="left"
-                        width="100%"
-                        onClick={() => handleNavigation(item.path)}
-                        disabled={isNavigating}
-                    >
-                        <Icon name={item.icon} size="xs"/>
-                        {item.label}
-                        {item.badge && (
-                            <Badge color="tertiary" size="xs">
-                                {item.badge}
-                            </Badge>
-                        )}
-                    </Button>
-                ))}
+                <Container layout="grid" columns={2} gap="xs" padding="none" width="100%">
+                    {menuItems.map((item, index) => {
+                        const hint = guide.tip(`nav.${item.id}`, { label: `Open ${item.label}`, run: () => handleNavigation(item.path) });
+                        return (
+                            <Container key={item.id} padding="none" width="100%" span={index === menuItems.length - 1 && menuItems.length % 2 === 1 ? 'full' : null}>
+                                <Button
+                                    size="sm"
+                                    align="left"
+                                    width="100%"
+                                    onClick={hint.genie ? undefined : () => handleNavigation(item.path)}
+                                    disabled={isNavigating}
+                                    {...hint}
+                                >
+                                    <Icon name={item.icon} size="xs"/>
+                                    {item.label}
+                                    {item.badge && (
+                                        <Badge color="tertiary" size="xs">
+                                            {item.badge}
+                                        </Badge>
+                                    )}
+                                </Button>
+                            </Container>
+                        );
+                    })}
+                </Container>
             </Container>
+            {busyCount > 0 && (
+                <Container layout="flex-column" gap="xs" width="100%">
+                    <Typography as="p" size="xs" weight="medium">RUNNING NOW</Typography>
+                    {activity.replies.map((reply) => (
+                        <Container key={reply.chatId} layout="flex" align="center" justify="between" gap="sm" padding="none" width="100%" wrap={false}>
+                            <Container layout="flex-column" gap="none" padding="none" minWidth="0">
+                                <Typography size="xs" weight="medium" truncate>{reply.title}</Typography>
+                                <Typography size="xxs" color="muted" truncate>{reply.model} is replying{reply.waiting ? `, ${reply.waiting} more waiting` : ''}</Typography>
+                            </Container>
+                            <Button size="xs" color="error" onClick={() => activity.stopReply(reply.chatId)}>Stop</Button>
+                        </Container>
+                    ))}
+                    {activity.downloads.map((job) => (
+                        <Container key={job.id} layout="flex" align="center" justify="between" gap="sm" padding="none" width="100%" wrap={false}>
+                            <Container layout="flex-column" gap="none" padding="none" minWidth="0">
+                                <Typography size="xs" weight="medium" truncate>{job.model}</Typography>
+                                <Typography size="xxs" color="muted">{job.status === 'queued' ? 'Waiting to download' : `Downloading, ${job.percent}%`}</Typography>
+                            </Container>
+                            {activity.canManage && <Button size="xs" color="secondary" onClick={() => activity.cancelDownload(job.id)}>Cancel</Button>}
+                        </Container>
+                    ))}
+                </Container>
+            )}
 
             {/* Theme Switcher */}
-            <Container layout="flex-column" gap="xs">
+            <Container layout="flex-column" gap="xs" width="100%">
                 <Typography as="p" size="xs" weight="medium">
                     THEME
                 </Typography>
-                <Container layout="flex" gap="xs" wrap justify="center" maxWidth="480px" width="100%">
+                <Container layout="flex" gap="xs" wrap justify="center" width="100%">
                     {availableThemes.map(themeName => (
                         <Button
                             key={themeName}
@@ -340,6 +403,8 @@ export const Navigation = ({
             position={position}
             draggable={draggable}
             icon={isNavigating ? 'FiLoader' : 'FiMap'}
+            badge={busyCount > 0 ? String(busyCount) : null}
+            badgeColor="secondary"
             theme={theme}
             disabled={isNavigating}
             genie={{

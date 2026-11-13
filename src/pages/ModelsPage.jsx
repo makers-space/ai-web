@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Page, Container, Card, Typography, Button, ButtonGroup, Badge, Icon, Input, Select, ProgressBar } from '@components/Components';
 import { useNotification } from '@contexts/NotificationContext';
-import { deviceService, modelService, describeError } from '../client/ai.client';
+import { deviceService, modelService, describeError, useGuide } from '../client/ai.client';
 
 const TABS = [
     { id: 'discover', label: 'Discover' },
@@ -78,8 +78,42 @@ const timeLeft = (seconds) => {
 const slug = (text) => text.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
 
 const Row = ({ children }) => (
-    <Container layout="flex" justify="between" align="center" gap="md" padding="none" width="100%">{children}</Container>
+    <Container layout="flex" justify="between" align="center" gap="sm" padding="none" width="100%" wrap={false}>{children}</Container>
 );
+
+const Stat = ({ icon, label, value, note }) => (
+    <Card layout="flex" align="center" gap="sm" padding="sm" hover={false} shadow={false} wrap={false} width="100%">
+        <Icon name={icon} size="sm" color="primary" />
+        <Container layout="flex-column" gap="none" padding="none" minWidth="0">
+            <Typography size="xxs" color="muted">{label}</Typography>
+            <Typography size="sm" weight="semibold" truncate>{value}</Typography>
+            {note && <Typography size="xxs" color="muted" truncate>{note}</Typography>}
+        </Container>
+    </Card>
+);
+
+const SectionTitle = ({ icon, title, count, children }) => (
+    <Row>
+        <Container layout="flex" align="center" gap="xs" padding="none" wrap={false}>
+            <Icon name={icon} size="xs" color="primary" />
+            <Typography as="h2" size="sm" weight="semibold">{title}</Typography>
+            {count !== undefined && <Badge size="xs" color="secondary">{count}</Badge>}
+        </Container>
+        {children}
+    </Row>
+);
+
+const Empty = ({ icon, title, text }) => (
+    <Card layout="flex" align="center" gap="sm" padding="md" width="100%" hover={false} shadow={false} wrap={false}>
+        <Icon name={icon} size="sm" color="secondary" />
+        <Container layout="flex-column" gap="none" padding="none">
+            <Typography size="sm" weight="semibold">{title}</Typography>
+            <Typography size="xs" color="muted">{text}</Typography>
+        </Container>
+    </Card>
+);
+
+const abilities = (model) => model.capabilities.map((ability) => ABILITY_LABELS[ability]).filter(Boolean);
 
 const DownloadsPanel = ({ jobs, canManage, onResume, onPause, onCancel }) => {
     const order = { downloading: 0, queued: 1, paused: 2, failed: 3 };
@@ -89,95 +123,100 @@ const DownloadsPanel = ({ jobs, canManage, onResume, onPause, onCancel }) => {
     if (open.length === 0) return null;
 
     return (
-        <Card layout="flex-column" gap="md" padding="lg" width="100%" hover={false}>
-            <Typography as="h2" size="lg" weight="bold">Downloads</Typography>
-            <Typography size="sm" color="muted">Downloads carry on if you close this page.</Typography>
-            {open.map((job) => (
-                <Container key={job.id} layout="flex-column" gap="xs" padding="none" width="100%">
-                    <Row>
-                        <Typography weight="semibold">{job.model}</Typography>
-                        <Typography size="sm" color="muted">
-                            {job.status === 'queued' && 'Waiting for its turn'}
-                            {job.status === 'paused' && `Paused at ${job.percent}%`}
-                            {job.status === 'failed' && 'Stopped'}
-                            {job.status === 'downloading' && job.stalled && `Waiting at ${job.percent}%`}
-                            {job.status === 'downloading' && !job.stalled && [
-                                `${job.percent}%`,
-                                job.totalBytes ? `${gbFromBytes(job.completedBytes)} of ${gbFromBytes(job.totalBytes)}` : null,
-                                job.speedBps ? `${(job.speedBps / 1048576).toFixed(1)} MB a second` : null,
-                                timeLeft(job.etaSeconds)
-                            ].filter(Boolean).join(' · ')}
-                        </Typography>
-                    </Row>
-                    <ProgressBar
-                        value={job.percent}
-                        color={job.status === 'failed' ? 'error' : job.status === 'paused' || job.stalled ? 'warning' : 'primary'}
-                        animated={job.status === 'downloading' && !job.stalled}
-                        width="100%"
-                    />
-                    {job.stalled && (
-                        <Typography size="sm" color="warning">
-                            No data is arriving. Check the internet connection. The download carries on by itself when
-                            the connection is back, or you can pause it.
-                        </Typography>
-                    )}
-                    {job.error && (
-                        <Typography size="sm" color="error">{job.error.message} {job.error.action}</Typography>
-                    )}
-                    {canManage && (
-                        <Container layout="flex" gap="sm" padding="none">
-                            {job.status === 'downloading' && (
-                                <Button size="sm" color="secondary" onClick={() => onPause(job)}>Pause</Button>
-                            )}
-                            {(job.status === 'paused' || (job.status === 'failed' && RESUMABLE.includes(job.error?.code))) && (
-                                <Button size="sm" onClick={() => onResume(job)}>Resume</Button>
-                            )}
-                            <Button size="sm" color="secondary" onClick={() => onCancel(job)}>
-                                {job.status === 'failed' ? 'Remove from list' : 'Cancel'}
-                            </Button>
-                        </Container>
-                    )}
-                </Container>
-            ))}
+        <Card layout="flex-column" gap="sm" padding="md" width="100%" hover={false}>
+            <SectionTitle icon="FiDownload" title="Downloads" count={open.length}>
+                <Typography size="xxs" color="muted">They carry on if you close this page.</Typography>
+            </SectionTitle>
+            <Container layout="grid" columns="auto-lg" gap="sm" padding="none" width="100%">
+                {open.map((job) => (
+                    <Container key={job.id} layout="flex-column" gap="xs" padding="none" width="100%" minWidth="0">
+                        <Row>
+                            <Typography size="xs" weight="semibold" truncate>{job.model}</Typography>
+                            <Typography size="xxs" color="muted">
+                                {job.status === 'queued' && 'Waiting for its turn'}
+                                {job.status === 'paused' && `Paused at ${job.percent}%`}
+                                {job.status === 'failed' && 'Stopped'}
+                                {job.status === 'downloading' && job.stalled && `Waiting at ${job.percent}%`}
+                                {job.status === 'downloading' && !job.stalled && [
+                                    `${job.percent}%`,
+                                    job.totalBytes ? `${gbFromBytes(job.completedBytes)} of ${gbFromBytes(job.totalBytes)}` : null,
+                                    job.speedBps ? `${(job.speedBps / 1048576).toFixed(1)} MB a second` : null,
+                                    timeLeft(job.etaSeconds)
+                                ].filter(Boolean).join(' · ')}
+                            </Typography>
+                        </Row>
+                        <ProgressBar
+                            value={job.percent}
+                            size="sm"
+                            color={job.status === 'failed' ? 'error' : job.status === 'paused' || job.stalled ? 'warning' : 'primary'}
+                            animated={job.status === 'downloading' && !job.stalled}
+                            width="100%"
+                        />
+                        {job.stalled && (
+                            <Typography size="xxs" color="warning">
+                                No data is arriving. Check the internet connection. The download carries on by itself when
+                                the connection is back, or you can pause it.
+                            </Typography>
+                        )}
+                        {job.error && <Typography size="xxs" color="error">{job.error.message} {job.error.action}</Typography>}
+                        {canManage && (
+                            <Container layout="flex" gap="xs" padding="none">
+                                {job.status === 'downloading' && (
+                                    <Button size="xs" color="secondary" onClick={() => onPause(job)}>Pause</Button>
+                                )}
+                                {(job.status === 'paused' || (job.status === 'failed' && RESUMABLE.includes(job.error?.code))) && (
+                                    <Button size="xs" onClick={() => onResume(job)}>Resume</Button>
+                                )}
+                                <Button size="xs" color="secondary" onClick={() => onCancel(job)}>
+                                    {job.status === 'failed' ? 'Remove from list' : 'Cancel'}
+                                </Button>
+                            </Container>
+                        )}
+                    </Container>
+                ))}
+            </Container>
         </Card>
     );
 };
 
 const CatalogueCard = ({ model, job, canManage, ollamaUp, onDownload }) => {
+    const guide = useGuide();
     const busy = job && ['queued', 'downloading'].includes(job.status);
     let action = null;
 
-    if (model.installed) action = <Badge color="success">Installed</Badge>;
-    else if (busy) action = <Badge color="primary">{job.status === 'queued' ? 'Waiting' : `Downloading ${job.percent}%`}</Badge>;
-    else if (!model.fit.fits) action = <Badge color="error">Too large for this device</Badge>;
-    else if (!model.fitsDisk) action = <Badge color="error">Not enough disk space</Badge>;
+    if (model.installed) action = <Badge size="xs" color="success">Installed</Badge>;
+    else if (busy) action = <Badge size="xs" color="primary">{job.status === 'queued' ? 'Waiting' : `Downloading ${job.percent}%`}</Badge>;
+    else if (!model.fit.fits) action = <Badge size="xs" color="error">Too large</Badge>;
+    else if (!model.fitsDisk) action = <Badge size="xs" color="error">Not enough disk</Badge>;
     else if (canManage) {
         action = (
-            <Button onClick={() => onDownload(model.tag)} disabled={!ollamaUp}>
-                {job?.status === 'paused' || job?.status === 'failed' ? 'Resume download' : 'Download'}
+            <Button size="xs" onClick={() => onDownload(model.tag)} disabled={!ollamaUp} {...guide.tip('models.download')}>
+                <Icon name="FiDownload" size="xs" />
+                {job?.status === 'paused' || job?.status === 'failed' ? 'Resume' : 'Download'}
             </Button>
         );
     }
 
     return (
-        <Card layout="flex-column" gap="sm" padding="lg" width="100%" hover={false}>
+        <Card layout="flex-column" gap="xs" padding="md" width="100%" height="100%" minWidth="0" wrap={false}>
             <Row>
-                <Container layout="flex" gap="sm" padding="none" align="center">
-                    <Typography as="h3" size="lg" weight="bold">{model.name}</Typography>
-                    {model.pick && <Badge color="primary">{PICK_LABELS[model.pick]}</Badge>}
+                <Typography as="h3" size="sm" weight="semibold" truncate title={model.name}>{model.name}</Typography>
+                {model.pick && <Badge size="xs" color="primary">{PICK_LABELS[model.pick]}</Badge>}
+            </Row>
+            <Typography size="xs" color="muted">{model.description}</Typography>
+            <Container layout="flex" gap="xs" padding="none" align="center">
+                <Badge size="xs" color={FIT_COLORS[model.fit.verdict]}>{model.fit.label}</Badge>
+                {abilities(model).map((ability) => <Badge key={ability} size="xs" color="secondary">{ability}</Badge>)}
+            </Container>
+            <Container padding="none" flexFill />
+            <Row>
+                <Container padding="none" flexFill minWidth="0">
+                    <Typography size="xxs" color="muted" truncate>
+                        {[`${gb(model.sizeMb)}`, model.fit.tokensPerSecond ? speedWords(model.fit.tokensPerSecond) : null].filter(Boolean).join(' · ')}
+                    </Typography>
                 </Container>
                 {action}
             </Row>
-            <Typography>{model.description}</Typography>
-            <Container layout="flex" gap="xs" padding="none" align="center">
-                <Badge color={FIT_COLORS[model.fit.verdict]}>{model.fit.label}</Badge>
-                <Typography size="sm" color="muted">
-                    {[`${gb(model.sizeMb)} download`, ...model.capabilities.map((ability) => ABILITY_LABELS[ability]).filter(Boolean)].join(' · ')}
-                </Typography>
-            </Container>
-            {model.fit.tokensPerSecond && (
-                <Typography size="sm" color="muted">Speed on this device: {speedWords(model.fit.tokensPerSecond)}</Typography>
-            )}
         </Card>
     );
 };
@@ -186,7 +225,7 @@ const DiscoverTab = ({ catalogue, jobs, canManage, ollamaUp, onDownload }) => {
     const [purpose, setPurpose] = useState('all');
     const [customName, setCustomName] = useState('');
 
-    if (!catalogue) return <Typography color="muted">Working out which models fit this device…</Typography>;
+    if (!catalogue) return <Typography size="xs" color="muted">Working out which models fit this device…</Typography>;
 
     const jobFor = (tag) => jobs.find((job) => job.model === tag && job.status !== 'completed' && job.status !== 'cancelled');
     const shown = catalogue.models.filter((model) => purpose === 'all' || model.goodFor.includes(purpose));
@@ -205,59 +244,65 @@ const DiscoverTab = ({ catalogue, jobs, canManage, ollamaUp, onDownload }) => {
 
     return (
         <Container layout="flex-column" gap="md" padding="none" width="100%">
-            <Container layout="flex" gap="xs" padding="none" align="center">
-                {PURPOSES.map((option) => (
-                    <Button
-                        key={option.id}
-                        size="sm"
-                        color={purpose === option.id ? 'primary' : 'secondary'}
-                        selected={purpose === option.id}
-                        onClick={() => setPurpose(option.id)}
-                    >
-                        {option.label}
-                    </Button>
-                ))}
-            </Container>
-
-            {!canManage && (
-                <Typography size="sm" color="muted">Only an admin or owner can download models.</Typography>
-            )}
+            <Row>
+                <ButtonGroup size="xs" justify="start" wrap={false} selectable={false}>
+                    {PURPOSES.map((option) => (
+                        <Button
+                            key={option.id}
+                            size="xs"
+                            color={purpose === option.id ? 'primary' : 'secondary'}
+                            selected={purpose === option.id}
+                            onClick={() => setPurpose(option.id)}
+                        >
+                            {option.label}
+                        </Button>
+                    ))}
+                </ButtonGroup>
+                {!canManage && <Typography size="xxs" color="muted">Only an admin or owner can download models.</Typography>}
+            </Row>
 
             {recommended.length > 0 && (
                 <>
-                    <Typography as="h2" size="xl" weight="bold">Recommended for this device</Typography>
-                    {recommended.map(card)}
+                    <SectionTitle icon="FiStar" title="Recommended for this device" count={recommended.length} />
+                    <Container layout="grid" columns="auto-lg" gap="sm" padding="none" width="100%" align="stretch">{recommended.map(card)}</Container>
                 </>
             )}
 
             {catalogue.models.every((model) => !model.pick) && (
-                <Typography color="muted">
+                <Typography size="xs" color="muted">
                     None of the listed models is a comfortable fit for this device. Smaller ones may still run slowly.
                 </Typography>
             )}
 
-            {others.length > 0 && <Typography as="h2" size="xl" weight="bold">All models</Typography>}
-            {others.map(card)}
+            {others.length > 0 && (
+                <>
+                    <SectionTitle icon="FiGrid" title="All models" count={others.length} />
+                    <Container layout="grid" columns="auto-lg" gap="sm" padding="none" width="100%" align="stretch">{others.map(card)}</Container>
+                </>
+            )}
 
             {canManage && (
-                <Card layout="flex-column" gap="sm" padding="lg" width="100%" hover={false}>
-                    <Typography as="h3" size="lg" weight="bold">Add a model by name</Typography>
-                    <Typography size="sm" color="muted">
-                        For a model that is not listed here. Type its name exactly as Ollama lists it, for example
-                        llama3.2:1b. AI Base cannot tell in advance whether it will fit.
+                <Card layout="flex-column" gap="xs" padding="md" width="100%" hover={false} shadow={false}>
+                    <SectionTitle icon="FiPlus" title="Add a model by name" />
+                    <Typography size="xxs" color="muted">
+                        For a model that is not listed. Type its name exactly as Ollama lists it, for example llama3.2:1b.
+                        AI Base cannot tell in advance whether it will fit.
                     </Typography>
-                    <Input
-                        label="Model name"
-                        value={customName}
-                        onChange={(event) => setCustomName(event.target.value)}
-                        width="100%"
-                    />
-                    <Container layout="flex" gap="sm" padding="none">
+                    <Container layout="flex" gap="xs" padding="none" align="center" width="100%" wrap={false}>
+                        <Input
+                            size="sm"
+                            placeholder="Model name"
+                            value={customName}
+                            onChange={(event) => setCustomName(event.target.value)}
+                            width="100%"
+                            flexFill
+                        />
                         <Button
+                            size="sm"
                             disabled={!customName.trim() || !ollamaUp}
                             onClick={() => { onDownload(customName.trim()); setCustomName(''); }}
                         >
-                            Download
+                            <Icon name="FiDownload" size="xs" />Download
                         </Button>
                     </Container>
                 </Card>
@@ -267,45 +312,38 @@ const DiscoverTab = ({ catalogue, jobs, canManage, ollamaUp, onDownload }) => {
 };
 
 const InstalledTab = ({ installed, canManage, onDelete }) => {
-    if (!installed) return <Typography color="muted">Looking for installed models…</Typography>;
+    if (!installed) return <Typography size="xs" color="muted">Looking for installed models…</Typography>;
     if (!installed.ollamaAvailable) {
-        return <Typography color="muted">Installed models cannot be listed while Ollama is not running.</Typography>;
+        return <Empty icon="FiAlertCircle" title="Ollama is not running" text="Installed models cannot be listed until it is started." />;
+    }
+    if (installed.models.length === 0) {
+        return <Empty icon="FiBox" title="No models are installed yet" text="Open Discover to download one that fits this device." />;
     }
 
     return (
-        <Container layout="flex-column" gap="md" padding="none" width="100%">
-            <Typography color="muted">
-                Models use {gb(installed.disk.usedByModelsMb)} of disk. {gb(installed.disk.freeMb)} is free.
-            </Typography>
-
-            {installed.models.length === 0 && (
-                <Card layout="flex-column" gap="sm" padding="lg" width="100%" hover={false}>
-                    <Typography weight="semibold">No models are installed yet.</Typography>
-                    <Typography color="muted">Open Discover to download one that fits this device.</Typography>
-                </Card>
-            )}
-
+        <Container layout="grid" columns="auto-lg" gap="sm" padding="none" width="100%">
             {installed.models.map((model) => (
-                <Card key={model.name} layout="flex-column" gap="sm" padding="lg" width="100%" hover={false}>
+                <Card key={model.name} layout="flex-column" gap="xs" padding="md" width="100%" height="100%" minWidth="0" wrap={false}>
                     <Row>
-                        <Container layout="flex-column" gap="none" padding="none">
-                            <Typography as="h3" size="lg" weight="bold">{model.displayName}</Typography>
-                            {model.displayName !== model.name && <Typography size="sm" color="muted">{model.name}</Typography>}
-                        </Container>
-                        {canManage && <Button color="secondary" onClick={() => onDelete(model)}>Delete</Button>}
+                        <Typography as="h3" size="sm" weight="semibold" truncate title={model.displayName}>{model.displayName}</Typography>
+                        {canManage && (
+                            <Button size="xxs" variant="ghost" color="error" title="Delete" aria-label={`Delete ${model.displayName}`} onClick={() => onDelete(model)}>
+                                <Icon name="FiTrash2" />
+                            </Button>
+                        )}
                     </Row>
-                    {model.description && <Typography>{model.description}</Typography>}
+                    {model.displayName !== model.name && <Typography size="xxs" color="muted" truncate>{model.name}</Typography>}
+                    {model.description && <Typography size="xs" color="muted">{model.description}</Typography>}
                     <Container layout="flex" gap="xs" padding="none" align="center">
-                        {model.personal && <Badge color="primary">Your model, based on {model.basedOn}</Badge>}
-                        <Typography size="sm" color="muted">
-                            {[`${gbFromBytes(model.sizeBytes)} on disk`, ...model.capabilities.map((ability) => ABILITY_LABELS[ability]).filter(Boolean)].join(' · ')}
-                        </Typography>
+                        {model.personal && <Badge size="xs" color="primary">Yours, on {model.basedOn}</Badge>}
+                        {abilities(model).map((ability) => <Badge key={ability} size="xs" color="secondary">{ability}</Badge>)}
                     </Container>
-                    <Typography size="sm" color="muted">
+                    <Typography size="xxs" color="muted">
                         {[
-                            model.parameterSize ? `Size: ${model.parameterSize}` : null,
-                            model.quantization ? `Compression: ${model.quantization}` : null,
-                            model.contextLength ? `Reads up to ${model.contextLength.toLocaleString()} tokens at once` : null
+                            `${gbFromBytes(model.sizeBytes)} on disk`,
+                            model.parameterSize,
+                            model.quantization,
+                            model.contextLength ? `reads ${model.contextLength.toLocaleString()} tokens` : null
                         ].filter(Boolean).join(' · ')}
                     </Typography>
                 </Card>
@@ -315,34 +353,29 @@ const InstalledTab = ({ installed, canManage, onDelete }) => {
 };
 
 const RunningTab = ({ running, canManage, onUnload }) => {
-    if (!running) return <Typography color="muted">Checking what is loaded…</Typography>;
+    if (!running) return <Typography size="xs" color="muted">Checking what is loaded…</Typography>;
     if (running.unavailable) {
-        return <Typography color="muted">Loaded models cannot be listed while Ollama is not running.</Typography>;
+        return <Empty icon="FiAlertCircle" title="Ollama is not running" text="Loaded models cannot be listed until it is started." />;
     }
     if (running.models.length === 0) {
-        return (
-            <Card layout="flex-column" gap="sm" padding="lg" width="100%" hover={false}>
-                <Typography weight="semibold">No model is loaded in memory.</Typography>
-                <Typography color="muted">A model loads when it is used and is unloaded again after a few minutes.</Typography>
-            </Card>
-        );
+        return <Empty icon="FiMoon" title="No model is loaded in memory" text="A model loads when it is used and is unloaded again after a few minutes." />;
     }
 
     return (
-        <Container layout="flex-column" gap="md" padding="none" width="100%">
+        <Container layout="grid" columns="auto-lg" gap="sm" padding="none" width="100%">
             {running.models.map((model) => (
-                <Card key={model.name} layout="flex-column" gap="sm" padding="lg" width="100%" hover={false}>
+                <Card key={model.name} layout="flex-column" gap="xs" padding="md" width="100%" minWidth="0" wrap={false}>
                     <Row>
-                        <Typography as="h3" size="lg" weight="bold">{model.displayName}</Typography>
-                        {canManage && <Button color="secondary" onClick={() => onUnload(model)}>Unload</Button>}
+                        <Typography as="h3" size="sm" weight="semibold" truncate>{model.displayName}</Typography>
+                        {canManage && <Button size="xs" color="secondary" onClick={() => onUnload(model)}>Unload</Button>}
                     </Row>
                     <Container layout="flex" gap="xs" padding="none" align="center">
-                        {model.healthy && <Badge color="success">Fully on GPU</Badge>}
+                        {model.healthy && <Badge size="xs" color="success">Fully on GPU</Badge>}
                         {!model.healthy && model.gpuPercent > 0 && (
-                            <Badge color="warning">Partly on CPU, so slower ({model.gpuPercent}% on GPU)</Badge>
+                            <Badge size="xs" color="warning">Partly on CPU, so slower ({model.gpuPercent}% on GPU)</Badge>
                         )}
-                        {model.gpuPercent === 0 && <Badge color="warning">On the processor, so slower</Badge>}
-                        <Typography size="sm" color="muted">{gbFromBytes(model.sizeBytes)} in memory</Typography>
+                        {model.gpuPercent === 0 && <Badge size="xs" color="warning">On the processor, so slower</Badge>}
+                        <Typography size="xxs" color="muted">{gbFromBytes(model.sizeBytes)} in memory</Typography>
                     </Container>
                 </Card>
             ))}
@@ -491,28 +524,24 @@ const MineTab = ({ installed, canManage, onCreated, onDelete }) => {
 
     return (
         <Container layout="flex-column" gap="md" padding="none" width="100%">
-            <Typography color="muted">
+            <Typography size="xs" color="muted">
                 A personal model is an installed model with your own instructions built in, saved under its own name.
                 It takes almost no extra disk space.
+                {!canManage && ' Only an admin or owner can create personal models.'}
             </Typography>
 
-            {!canManage && <Typography size="sm" color="muted">Only an admin or owner can create personal models.</Typography>}
-
             {canManage && bases.length === 0 && (
-                <Card layout="flex-column" gap="sm" padding="lg" width="100%" hover={false}>
-                    <Typography weight="semibold">Install a model first.</Typography>
-                    <Typography color="muted">A personal model is built on one you have downloaded. Open Discover to get one.</Typography>
-                </Card>
+                <Empty icon="FiBox" title="Install a model first" text="A personal model is built on one you have downloaded. Open Discover to get one." />
             )}
 
             {canManage && bases.length > 0 && (
-                <Card layout="flex-column" gap="md" padding="lg" width="100%" hover={false}>
-                    <Typography as="h3" size="lg" weight="bold">Start from</Typography>
-                    <Container layout="flex" gap="xs" padding="none" align="center">
+                <Card layout="flex-column" gap="sm" padding="md" width="100%" maxWidth="720px" hover={false}>
+                    <SectionTitle icon="FiPlus" title="New model, starting from" />
+                    <ButtonGroup size="xs" width="100%" justify="start" selectable={false}>
                         {TEMPLATES.map((option) => (
                             <Button
                                 key={option.id}
-                                size="sm"
+                                size="xs"
                                 color={template === option.id ? 'primary' : 'secondary'}
                                 selected={template === option.id}
                                 onClick={() => choose(option)}
@@ -520,65 +549,78 @@ const MineTab = ({ installed, canManage, onCreated, onDelete }) => {
                                 {option.label}
                             </Button>
                         ))}
-                    </Container>
+                    </ButtonGroup>
 
                     {template && (
                         <>
                             <ModelFields key={template} form={form} setForm={setForm} bases={bases} />
-                            <Container layout="flex" gap="sm" padding="none">
-                                <Button onClick={create} disabled={busy || !form.displayName.trim() || !form.from}>
+                            <Container layout="flex" gap="xs" padding="none">
+                                <Button size="sm" onClick={create} disabled={busy || !form.displayName.trim() || !form.from}>
                                     {busy ? 'Creating…' : 'Create model'}
                                 </Button>
-                                <Button color="secondary" onClick={() => setTemplate(null)} disabled={busy}>Cancel</Button>
+                                <Button size="sm" color="secondary" onClick={() => setTemplate(null)} disabled={busy}>Cancel</Button>
                             </Container>
                         </>
                     )}
                 </Card>
             )}
 
-            {mine.length > 0 && <Typography as="h2" size="xl" weight="bold">Your models</Typography>}
-            {mine.map((model) => (
-                <Card key={model.name} layout="flex-column" gap="sm" padding="lg" width="100%" hover={false}>
-                    <Row>
-                        <Container layout="flex-column" gap="none" padding="none">
-                            <Typography as="h3" size="lg" weight="bold">{model.displayName}</Typography>
-                            <Typography size="sm" color="muted">Built on {model.basedOn}</Typography>
-                        </Container>
-                        {canManage && editing !== model.name && (
-                            <Container layout="flex" gap="xs" padding="none">
-                                <Button color="secondary" onClick={() => startEdit(model)}>Edit</Button>
-                                <Button color="secondary" onClick={() => onDelete(model)}>Delete</Button>
+            {mine.length > 0 && <SectionTitle icon="FiUser" title="Your models" count={mine.length} />}
+            <Container layout="grid" columns="auto-lg" gap="sm" padding="none" width="100%">
+                {mine.map((model) => (
+                    <Card
+                        key={model.name}
+                        layout="flex-column"
+                        gap="xs"
+                        padding="md"
+                        width="100%"
+                        minWidth="0"
+                        wrap={false}
+                        hover={editing !== model.name}
+                        span={editing === model.name ? 'full' : null}
+                    >
+                        <Row>
+                            <Container layout="flex-column" gap="none" padding="none" minWidth="0">
+                                <Typography as="h3" size="sm" weight="semibold" truncate>{model.displayName}</Typography>
+                                <Typography size="xxs" color="muted" truncate>Built on {model.basedOn}</Typography>
                             </Container>
+                            {canManage && editing !== model.name && (
+                                <Container layout="flex" gap="none" padding="none" wrap={false}>
+                                    <Button size="xxs" variant="ghost" title="Edit" aria-label={`Edit ${model.displayName}`} onClick={() => startEdit(model)}>
+                                        <Icon name="FiEdit2" />
+                                    </Button>
+                                    <Button size="xxs" variant="ghost" color="error" title="Delete" aria-label={`Delete ${model.displayName}`} onClick={() => onDelete(model)}>
+                                        <Icon name="FiTrash2" />
+                                    </Button>
+                                </Container>
+                            )}
+                        </Row>
+                        {editing === model.name ? (
+                            <Container layout="flex-column" gap="sm" padding="none" width="100%" maxWidth="720px">
+                                <ModelFields key={model.name} form={form} setForm={setForm} bases={bases} />
+                                <Container layout="flex" gap="xs" padding="none">
+                                    <Button size="sm" onClick={() => save(model)} disabled={busy || !form.displayName.trim() || !form.from}>
+                                        {busy ? 'Saving…' : 'Save changes'}
+                                    </Button>
+                                    <Button size="sm" color="secondary" onClick={() => setEditing(null)} disabled={busy}>Cancel</Button>
+                                </Container>
+                            </Container>
+                        ) : (
+                            <>
+                                <Container layout="flex-column" gap="none" padding="none" width="100%" maxHeight="120px" overflow="auto">
+                                    {model.system
+                                        ? model.system.split('\n').map((line, index) => <Typography key={index} as="p" size="xs" color="muted">{line || ' '}</Typography>)
+                                        : <Typography size="xs" color="muted">No instructions were given to this model.</Typography>}
+                                </Container>
+                                <Container layout="flex" gap="xs" padding="none" align="center">
+                                    <Badge size="xs" color="secondary">{creativityOf(model.parameters?.temperature ?? 0.7)}</Badge>
+                                    {model.parameters?.num_ctx && <Badge size="xs" color="secondary">Reads {model.parameters.num_ctx.toLocaleString()} tokens</Badge>}
+                                </Container>
+                            </>
                         )}
-                    </Row>
-                    {editing === model.name ? (
-                        <>
-                            <ModelFields key={model.name} form={form} setForm={setForm} bases={bases} />
-                            <Container layout="flex" gap="sm" padding="none">
-                                <Button onClick={() => save(model)} disabled={busy || !form.displayName.trim() || !form.from}>
-                                    {busy ? 'Saving…' : 'Save changes'}
-                                </Button>
-                                <Button color="secondary" onClick={() => setEditing(null)} disabled={busy}>Cancel</Button>
-                            </Container>
-                        </>
-                    ) : (
-                        <>
-                            <Typography size="sm" weight="semibold">Instructions</Typography>
-                            {model.system
-                                ? (
-                                    <Container layout="flex-column" gap="none" padding="none" width="100%">
-                                        {model.system.split('\n').map((line, index) => <Typography key={index} as="p" size="sm">{line || ' '}</Typography>)}
-                                    </Container>
-                                )
-                                : <Typography size="sm" color="muted">No instructions were given to this model.</Typography>}
-                            <Typography size="sm" color="muted">
-                                Creativity: {creativityOf(model.parameters?.temperature ?? 0.7)}
-                                {model.parameters?.num_ctx ? ` · Reading size: ${model.parameters.num_ctx} tokens` : ''}
-                            </Typography>
-                        </>
-                    )}
-                </Card>
-            ))}
+                    </Card>
+                ))}
+            </Container>
         </Container>
     );
 };
@@ -586,6 +628,7 @@ const MineTab = ({ installed, canManage, onCreated, onDelete }) => {
 const ModelsPage = () => {
     const { success, error: notifyError, confirm } = useNotification();
     const [tab, setTab] = useState('discover');
+    const guide = useGuide();
     const [device, setDevice] = useState(null);
     const [catalogue, setCatalogue] = useState(null);
     const [installed, setInstalled] = useState(null);
@@ -670,11 +713,8 @@ const ModelsPage = () => {
     const noteJob = useCallback((job) => {
         const before = statuses.current.get(job.id);
         statuses.current.set(job.id, job.status);
-        if (before && before !== 'completed' && job.status === 'completed') {
-            success(`${job.model} has finished downloading.`);
-            refreshRef.current();
-        }
-    }, [success]);
+        if (before && before !== 'completed' && job.status === 'completed') refreshRef.current();
+    }, []);
 
     useEffect(() => {
         let poll = null;
@@ -768,13 +808,31 @@ const ModelsPage = () => {
     const counts = useMemo(() => ({ installed: installed?.models.length ?? null }), [installed]);
 
     return (
-        <Page layout="flex-column" align="center" gap="lg" padding="lg">
-            <Container layout="flex-column" gap="lg" padding="none" width="100%" maxWidth="760px">
-                <Container layout="flex-column" gap="xs" padding="none">
-                    <Typography as="h1" size="3xl" weight="bold" font="secondary" color="primary">Models</Typography>
-                    <Typography color="muted">
-                        {device ? `Find, download and manage AI models on ${device.name}.` : 'Find, download and manage AI models.'}
-                    </Typography>
+        <Page layout="flex-column" padding="none" gap="none" background="dots" backgroundFade="bottom">
+            <Container layout="flex-column" align="center" gap="none" padding="none" width="100%" height="100vh" wrap={false} overflow="hidden">
+            <Container layout="flex-column" gap="md" padding="lg" width="100%" maxWidth="1360px" wrap={false}>
+                <Row>
+                    <Container layout="flex-column" gap="none" padding="none">
+                        <Typography as="h1" size="2xl" weight="bold" animation="blur" animationDuration={600}>Models</Typography>
+                        <Typography size="xs" color="muted">
+                            {device ? `Find, download and manage AI models on ${device.name}.` : 'Find, download and manage AI models.'}
+                        </Typography>
+                    </Container>
+                    <Button size="sm" color="secondary" disabled={refreshing} title="Refresh models and disk space" onClick={refresh} {...guide.tip('models.refresh')}>
+                        <Icon name="FiRefreshCw" size="xs" />Refresh
+                    </Button>
+                </Row>
+
+                <Container layout="grid" columns="auto-sm" gap="sm" padding="none" width="100%">
+                    <Stat icon="FiBox" label="Installed" value={installed ? `${installed.models.length} models` : '…'} />
+                    <Stat icon="FiHardDrive" label="Used by models" value={installed?.disk ? gb(installed.disk.usedByModelsMb) : '…'} />
+                    <Stat icon="FiDatabase" label="Free disk" value={installed?.disk ? gb(installed.disk.freeMb) : '…'} />
+                    <Stat
+                        icon="FiCpu"
+                        label="This device"
+                        value={catalogue?.hardware?.gpuName || device?.hardware?.gpuName || device?.name || '…'}
+                        note={device?.hardware?.gpuMemoryMb ? `${gb(device.hardware.gpuMemoryMb)} graphics memory` : null}
+                    />
                 </Container>
 
                 <DownloadsPanel jobs={jobs} canManage={canManage} onResume={(job) => download(job.model)} onPause={pause} onCancel={cancel} />
@@ -783,18 +841,20 @@ const ModelsPage = () => {
                     {TABS.map((option) => (
                         <Button
                             key={option.id}
+                            size="sm"
                             color={tab === option.id ? 'primary' : 'secondary'}
                             selected={tab === option.id}
                             onClick={() => setTab(option.id)}
+                            {...guide.tip(`models.${option.id}`)}
                         >
                             {option.label}{option.id === 'installed' && counts.installed !== null ? ` (${counts.installed})` : ''}
                         </Button>
                     ))}
-                    <Button variant="ghost" size="sm" disabled={refreshing} title="Refresh models and disk space" aria-label="Refresh models and disk space" onClick={refresh}>
-                        <Icon name="FiRefreshCw" size="xs" />
-                    </Button>
                 </Container>
 
+            </Container>
+            <Container layout="flex" justify="center" padding="none" width="100%" flexFill minHeight="0" overflow="auto">
+            <Container layout="flex-column" gap="md" padding="lg" width="100%" maxWidth="1360px" wrap={false}>
                 {tab === 'discover' && (
                     <DiscoverTab catalogue={catalogue} jobs={jobs} canManage={canManage} ollamaUp={ollamaUp} onDownload={download} />
                 )}
@@ -803,6 +863,8 @@ const ModelsPage = () => {
                 {tab === 'mine' && (
                     <MineTab installed={installed} canManage={canManage} onCreated={refresh} onDelete={deleteModel} />
                 )}
+            </Container>
+            </Container>
             </Container>
         </Page>
     );

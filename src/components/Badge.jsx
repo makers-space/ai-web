@@ -10,7 +10,7 @@ export const Badge = ({
     children,
     className = '',
     color = 'default', // 'default', 'primary', 'secondary', 'tertiary', 'success', 'warning', 'error'
-    size = 'md', // 'xs', 'sm', 'md', 'lg', 'xl'
+    size = 'md', // 'xxs', 'xs', 'sm', 'md', 'lg', 'xl'
     theme = null, // Optional theme override for this badge
     width = null, // Width value (e.g., '100%', '200px', 'auto')
     height = null, // Height value (e.g., '2rem', '32px', 'auto')
@@ -72,6 +72,8 @@ export const Badge = ({
 
     const getSizeClass = () => {
         switch (size) {
+            case 'xxs':
+                return 'badge-xxs';
             case 'xs':
                 return 'badge-xs';
             case 'sm':

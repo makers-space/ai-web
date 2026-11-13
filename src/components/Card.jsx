@@ -22,6 +22,7 @@ export const Card = forwardRef(({
     borderColor = null, // Outline color: null (theme default), 'primary', 'secondary', 'tertiary'
     shadow = true, // false removes the drop shadow, for a flat card
     borderStrength = 'normal', // 'normal', 'soft' - soft fades the outline so it is less prominent
+    borderStyle = 'solid', // Outline style: 'solid', 'dashed', 'dotted'
     radius = null, // Corner rounding: null (theme default), 'sm', 'md', 'lg', 'xl'
     width = null, // Custom width: string value like '100px', '50%', 'auto', etc.
     height = null, // Custom height: string value like '100px', '50%', 'auto', '90vh', etc.
@@ -136,6 +137,7 @@ export const Card = forwardRef(({
         if (typeof genie === 'object' && genie.content) {
             // New API: genie is an object with trigger, content, position
             return {
+                ...genie,
                 content: genie.content,
                 trigger: genie.trigger || genieTrigger,
                 position: genie.position || 'auto',
@@ -251,6 +253,7 @@ export const Card = forwardRef(({
         bordered && ['primary', 'secondary', 'tertiary'].includes(borderColor) ? `card-border-${borderColor}` : '',
         shadow ? '' : 'card-flat',
         bordered && borderStrength === 'soft' ? 'card-border-soft' : '',
+        bordered && ['dashed', 'dotted'].includes(borderStyle) ? `card-border-${borderStyle}` : '',
         ['sm', 'md', 'lg', 'xl'].includes(radius) ? `card-radius-${radius}` : ''
     ].filter(Boolean).join(' ');
     // Get background color style

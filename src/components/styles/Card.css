@@ -545,3 +545,14 @@
     align-self: flex-start;
     z-index: calc(var(--z-fixed, 1030) + 10);
 }
+
+.card.card-border-dashed,
+.themed-card.card-border-dashed {
+    border-style: dashed;
+}
+
+.card.card-border-dotted,
+.themed-card.card-border-dotted {
+    border-style: dotted;
+    border-width: 2px;
+}

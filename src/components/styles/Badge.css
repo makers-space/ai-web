@@ -1,6 +1,9 @@
 .badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-medium);
@@ -307,4 +310,10 @@
 
 .badge.themed-badge.justify-self-stretch {
     justify-self: stretch;
+}
+
+.badge.badge-xxs {
+    padding: calc(var(--spacing-xs) * 0.35) calc(var(--spacing-xs) * 0.8);
+    margin: calc(var(--spacing-xs) * 0.5);
+    font-size: 0.625rem;
 }

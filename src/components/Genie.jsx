@@ -107,6 +107,9 @@ export const Genie = forwardRef(({
     padding = 'medium', // Internal padding: 'none', 'xs', 'sm', 'md', 'lg', 'xl'
     margin = 'none', // External margin: 'none', 'xs', 'sm', 'md', 'lg', 'xl' or custom CSS value
     backgroundColor = null, // Background color: null (theme default), 'transparent', 'background', 'surface', etc.
+    borderColor = null, // Outline color: null (theme default), 'primary', 'secondary', 'tertiary'
+    borderStyle = 'solid', // Outline style: 'solid', 'dashed', 'dotted'
+    shadow = true, // false removes every shadow, leaving only the outline
     width = null, // Custom width: string value like '100px', '50%', 'auto', '90vw', etc.
     height = null, // Custom height: string value like '100px', '50%', 'auto', '90vh', etc.
     minWidth = null, // Minimum width
@@ -596,6 +599,7 @@ export const Genie = forwardRef(({
     positionClass,
     `animation-${animation}`,
     `variant-${variant}`,
+    shadow ? '' : 'genie-flat',
     shouldShow ? 'visible' : '',
     getJustifySelfClass(),
     className
@@ -643,6 +647,9 @@ export const Genie = forwardRef(({
           align={align}
           justify={justify}
           backgroundColor={backgroundColor}
+          borderColor={borderColor}
+          borderStyle={borderStyle}
+          shadow={shadow}
           width={width || "fit-content"}
           height={height}
           minWidth={minWidth}
@@ -1045,6 +1052,9 @@ export const useGeniePortal = (genieConfig, triggerRef, onShow = null, onHide = 
         theme={genieConfig.theme}
         margin={genieConfig.margin}
         backgroundColor={genieConfig.backgroundColor}
+        borderColor={genieConfig.borderColor}
+        borderStyle={genieConfig.borderStyle}
+        shadow={genieConfig.shadow}
         columns={genieConfig.columns}
         gap={genieConfig.gap}
         justify={genieConfig.justify}

@@ -163,7 +163,193 @@ export const refreshCsrfToken = fetchCsrfToken;
 // Export the shared API instance for use by other services
 export { api as sharedAPI };
 
+// =============================================================================
+// NOTIFICATION WEBSOCKET CLIENT (Internal)
+// =============================================================================
+
+const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL || API_BASE_URL.replace(/^http/, 'ws').replace(/\/api\/v1\/?$/, '');
+
+/**
+ * Internal WebSocket client for notifications the server sends.
+ * Listen for one event type, or '*' for all of them.
+ */
+class NotificationClient {
+    constructor() {
+        this.ws = null;
+        this.eventListeners = new Map();
+        this.reconnectTimer = null;
+        this.reconnectAttempts = 0;
+        this.maxReconnectAttempts = 10;
+        this.reconnectInterval = 3000;
+        this.isConnecting = false;
+        this.shouldReconnect = true;
+    }
+
+    async connect() {
+        if (this.isConnecting || (this.ws && this.ws.readyState === WebSocket.OPEN)) {
+            return;
+        }
+
+        this.isConnecting = true;
+        this.shouldReconnect = true;
+
+        try {
+            const token = await appService.getAuthToken();
+            if (!token) {
+                this.isConnecting = false;
+                return;
+            }
+
+            this.ws = new WebSocket(`${WS_BASE_URL}/notifications?token=${encodeURIComponent(token)}`);
+
+            this.ws.onopen = () => {
+                this.reconnectAttempts = 0;
+                this.isConnecting = false;
+            };
+
+            this.ws.onmessage = (event) => {
+                try {
+                    this.handleNotification(JSON.parse(event.data));
+                } catch (error) {
+                    console.error('Error parsing notification:', error);
+                }
+            };
+
+            this.ws.onclose = () => {
+                this.isConnecting = false;
+                this.ws = null;
+                if (this.shouldReconnect && this.reconnectAttempts < this.maxReconnectAttempts) {
+                    this.scheduleReconnect();
+                }
+            };
+
+            this.ws.onerror = () => {
+                this.isConnecting = false;
+            };
+        } catch (error) {
+            this.isConnecting = false;
+            if (this.shouldReconnect && this.reconnectAttempts < this.maxReconnectAttempts) {
+                this.scheduleReconnect();
+            }
+        }
+    }
+
+    scheduleReconnect() {
+        if (this.reconnectTimer) {
+            clearTimeout(this.reconnectTimer);
+        }
+
+        this.reconnectAttempts++;
+        const delay = Math.min(this.reconnectInterval * Math.pow(2, this.reconnectAttempts - 1), 30000);
+        this.reconnectTimer = setTimeout(() => {
+            this.connect();
+        }, delay);
+    }
+
+    handleNotification(notification) {
+        this.emit(notification.type, notification.data);
+        this.emit('*', notification.data, notification.type);
+    }
+
+    on(eventType, callback) {
+        if (!this.eventListeners.has(eventType)) {
+            this.eventListeners.set(eventType, new Set());
+        }
+        this.eventListeners.get(eventType).add(callback);
+        if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+            this.connect();
+        }
+    }
+
+    off(eventType, callback) {
+        const listeners = this.eventListeners.get(eventType);
+        if (listeners) {
+            listeners.delete(callback);
+            if (listeners.size === 0) {
+                this.eventListeners.delete(eventType);
+            }
+        }
+    }
+
+    emit(eventType, data, type = eventType) {
+        const listeners = this.eventListeners.get(eventType);
+        if (listeners) {
+            listeners.forEach((callback) => {
+                try {
+                    callback(data, type);
+                } catch (error) {
+                    console.error('Error in notification listener:', error);
+                }
+            });
+        }
+    }
+
+    disconnect() {
+        this.shouldReconnect = false;
+        if (this.reconnectTimer) {
+            clearTimeout(this.reconnectTimer);
+            this.reconnectTimer = null;
+        }
+        if (this.ws) {
+            this.ws.close(1000, 'Client disconnect');
+            this.ws = null;
+        }
+        this.reconnectAttempts = 0;
+    }
+}
+
+const notificationClient = new NotificationClient();
+
 export const appService = {
+    /**
+     * Token for the notification WebSocket: the sign-in cookie when the page can read it,
+     * otherwise a short-lived one from the server.
+     */
+    async getAuthToken() {
+        try {
+            const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                const [key, value] = cookie.trim().split('=');
+                acc[key] = value;
+                return acc;
+            }, {});
+            if (cookies.accessToken) {
+                return cookies.accessToken;
+            }
+            const response = await api.get('/auth/ws-token');
+            return response.token;
+        } catch (error) {
+            return null;
+        }
+    },
+
+    /**
+     * Listen for notifications from the server. eventType is one event name or '*' for all.
+     * The callback gets (data, eventType). Returns a cleanup function.
+     */
+    onNotification(eventType, callback) {
+        notificationClient.on(eventType, callback);
+        return () => notificationClient.off(eventType, callback);
+    },
+
+    disconnectNotifications() {
+        notificationClient.disconnect();
+    },
+
+    /**
+     * Notices the server kept for this person, newest first, with the number not yet read.
+     */
+    async getNotifications() {
+        return await api.get('/notifications');
+    },
+
+    async markNotificationsRead(id = null) {
+        return await api.post('/notifications/read', id ? { id } : {});
+    },
+
+    async clearNotifications(id = null) {
+        return await api.delete('/notifications', id ? { params: { id } } : {});
+    },
+
     async submitContactForm(data) {
         return api.post('/contact', data);
     },

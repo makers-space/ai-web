@@ -157,3 +157,7 @@
 .genie-container.justify-self-stretch {
     justify-self: stretch;
 }
+
+.genie-container.genie-flat {
+    filter: none;
+}

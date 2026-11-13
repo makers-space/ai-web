@@ -16,6 +16,10 @@ export const userService = {
         return await api.put(`/users/${user._id || user.id}`, profileData);
     },
 
+    async changePassword(userId, currentPassword, newPassword) {
+        return await api.put(`/users/${userId}/password`, { currentPassword, newPassword });
+    },
+
     async getUsers(params = {}) {
         return await api.get('/users', { params });
     },

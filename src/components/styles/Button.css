@@ -637,3 +637,9 @@
     box-shadow: none !important;
     transform: none !important;
 }
+
+.button.themed-button.button-round {
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+}

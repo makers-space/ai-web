@@ -10,9 +10,9 @@ import {
     ProgressBar, CircularProgress, Data, Flow, TreeView, Image, Video, Audio, PdfViewer, Model3D, Editor
 } from '@components/Components';
 import { useNotification } from '@contexts/NotificationContext';
-import { chatService, fileService, modelService, promptService, describeError, downloadText } from '../client/ai.client';
+import { chatService, fileService, modelService, promptService, describeError, downloadText, useGuide } from '../client/ai.client';
 
-const FIT_COLORS = { gpu: 'success', mixed: 'warning', cpu: 'warning', too_large: 'error' };
+const FIT_COLORS = { gpu: 'secondary', mixed: 'warning', cpu: 'warning', too_large: 'error' };
 const FIRST_MESSAGE = 'Explain what you can help me with in three sentences.';
 const MAX_ARTICLES = 10;
 const READABLE = /\.(txt|md|markdown|csv|tsv|json|jsonl|log|pdf|docx|xml|ya?ml|html?|js|jsx|ts|tsx|py|sql|css)$/i;
@@ -37,7 +37,7 @@ const Row = ({ icon, iconColor = 'primary', label, title, size = 'xs', color = '
         layout="flex"
         wrap={false}
         align="center"
-        gap="sm"
+        gap="xs"
         padding="xs"
         width="100%"
         hoverable={!disabled}
@@ -48,7 +48,7 @@ const Row = ({ icon, iconColor = 'primary', label, title, size = 'xs', color = '
         onClick={disabled ? undefined : onClick}
         onKeyDown={(event) => event.key === 'Enter' && !disabled && onClick?.()}
     >
-        {icon && <Icon name={icon} size="sm" color={disabled ? 'text' : iconColor} />}
+        {icon && <Icon name={icon} size="xs" color={disabled ? 'text' : iconColor} />}
         <Container padding="none" flexFill minWidth="0">
             <Typography size={size} truncate color={disabled ? 'muted' : selected && color === 'default' ? 'primary' : color} weight={selected ? 'semibold' : 'normal'}>
                 {label}
@@ -83,9 +83,9 @@ const Pop = ({ label, icon, open, onOpen, onClose, width = '320px', fab = false,
                 </Button>
             )}
             {createPortal(
-                <Genie key={width} visible={open} onClose={close} triggerRef={trigger} variant="popover" width={width} maxWidth="94vw" maxHeight="72vh" padding="sm">
+                <Genie key={width} visible={open} onClose={close} triggerRef={trigger} variant="popover" width={width} maxWidth="94vw" maxHeight="72vh" padding="xs">
                     {open && (
-                        <Container layout="flex-column" wrap={false} gap="sm" padding="xs" width="100%" maxHeight="66vh" overflow="auto">
+                        <Container layout="flex-column" wrap={false} gap="xs" padding="xs" width="100%" maxHeight="66vh" overflow="auto">
                             {children}
                         </Container>
                     )}
@@ -1212,7 +1212,20 @@ const ChatPage = () => {
     const [models, setModels] = useState([]);
     const [modelsLoaded, setModelsLoaded] = useState(false);
     const [webSearch, setWebSearch] = useState(false);
-    const [text, setText] = useState('');
+    const [text, setText] = useState(() => {
+        try {
+            return sessionStorage.getItem('ai-base-first-prompt') || '';
+        } catch {
+            return '';
+        }
+    });
+    useEffect(() => {
+        try {
+            sessionStorage.removeItem('ai-base-first-prompt');
+        } catch {
+            return;
+        }
+    }, []);
     const [live, setLive] = useState(null);
     const [pop, setPop] = useState(null);
     const [view, setView] = useState('main');
@@ -1236,6 +1249,7 @@ const ChatPage = () => {
         setPop(name);
     };
     const closePop = useCallback(() => setPop(null), []);
+    const guide = useGuide();
 
     useEffect(() => {
         const onResize = () => setWide(window.innerWidth > 900);
@@ -1683,7 +1697,7 @@ const ChatPage = () => {
                         backgroundIntensity="subtle"
                     >
                         <Container layout="flex" padding="none">
-                            <Button size="sm" variant="ghost" onClick={newChat}><Icon name="FiPlus" size="xs" />New chat</Button>
+                            <Button size="sm" variant="ghost" onClick={newChat} {...guide.tip('chat.new')}><Icon name="FiPlus" size="xs" />New chat</Button>
                         </Container>
                         <Container layout="flex-column" wrap={false} gap="sm" padding="none" width="100%" flexFill minHeight="0" overflow="auto">
                             {chatList}
@@ -1918,17 +1932,17 @@ const ChatPage = () => {
                                     </Typography>
                                 )}
                             </Container>
-                            <Pop label={modelLabel} icon="FiCpu" iconEnd size="xs" open={pop === 'model'} onOpen={() => openPop('model')} onClose={closePop} width="300px">
-                                {models.length === 0 && <Typography size="sm" color="muted">No model is installed yet.</Typography>}
+                            <Pop label={modelLabel} icon="FiCpu" iconEnd size="xs" open={pop === 'model'} onOpen={() => openPop('model')} onClose={closePop} width="330px">
+                                {models.length === 0 && <Typography size="xs" color="muted">No model is installed yet.</Typography>}
                                 {models.map((model) => (
-                                    <Row key={model.name} label={model.displayName} selected={model.name === currentModel} onClick={() => changeModel(model.name)}>
-                                        <Badge size="xs" color={FIT_COLORS[model.fit?.verdict] || 'tertiary'}>{model.fit?.label || 'Fit unknown'}</Badge>
-                                        {model.ready && <Badge size="xs" color="success">Ready now</Badge>}
+                                    <Row key={model.name} label={model.displayName} size="xs" selected={model.name === currentModel} onClick={() => changeModel(model.name)}>
+                                        <Badge size="xxs" color={FIT_COLORS[model.fit?.verdict] || 'tertiary'}>{model.fit?.label || 'Fit unknown'}</Badge>
+                                        {model.ready && <Badge size="xxs" color="success">Ready now</Badge>}
                                     </Row>
                                 ))}
                             </Pop>
                             {busy && <Button size="xs" color="error" title="Stop" aria-label="Stop" onClick={() => turnRef.current && chatService.stop(turnRef.current).catch(() => {})}><Icon name="FiSquare" size="xs" /></Button>}
-                            <Button size="xs" color="primary" title={busy ? 'Send when this reply is finished' : 'Send'} aria-label="Send" disabled={!text.trim() || noModels} onClick={() => sendText(text)}><Icon name="FiArrowUp" size="xs" /></Button>
+                            <Button size="xs" color="primary" title={busy ? 'Send when this reply is finished' : 'Send'} aria-label="Send" disabled={!text.trim() || noModels} onClick={() => sendText(text)} {...guide.tip('chat.send')}><Icon name="FiArrowUp" size="xs" /></Button>
                         </Container>
                     </Card>
                     <Container layout="flex" justify="center" padding="none" width="100%">
@@ -1950,23 +1964,23 @@ const ChatPage = () => {
                 open={pop === 'setup'}
                 onOpen={() => openPop('setup')}
                 onClose={closePop}
-                width="480px"
+                width="360px"
             >
                 {view === 'files' && <FileBrowser mode="read" onPick={articleFromFile} onBack={() => setView('main')} />}
                 {view === 'saved' && <SavedInstructions onAdd={addArticle} onBack={() => setView('main')} full={articlesFull} />}
                 {view === 'main' && (
                     <>
-                        <Typography size="sm" color="muted">
+                        <Typography size="xs" color="muted">
                             What the model should know or follow in this chat. Add as many pieces as you need: typed text, files, or ones you saved earlier.
                         </Typography>
-                        {working && <Typography size="sm" color="muted">{working}</Typography>}
+                        {working && <Typography size="xs" color="muted">{working}</Typography>}
                         {articles.map((article, index) => (
                             <Container key={index} layout="flex-column" gap="xs" padding="none" width="100%">
                                 <Container layout="flex" wrap={false} align="center" gap="xs" padding="none" width="100%">
-                                    <Icon name={article.source === 'fs-one' ? 'FiHardDrive' : 'FiType'} size="sm" />
+                                    <Icon name={article.source === 'fs-one' ? 'FiHardDrive' : 'FiType'} size="xs" />
                                     <Container padding="none" flexFill minWidth="0">
                                         <Input
-                                            size="sm"
+                                            size="xs"
                                             width="100%"
                                             placeholder={`Instruction ${index + 1}`}
                                             maxLength={120}
@@ -1974,34 +1988,35 @@ const ChatPage = () => {
                                             onChange={(event) => changeArticle(index, { name: event.target.value })}
                                         />
                                     </Container>
-                                    <Button size="xs" variant="ghost" title="Save for other chats" disabled={!article.text.trim()} onClick={() => keepArticle(article, index)}>
-                                        <Icon name="FiBookmark" size="xs" />Save
+                                    <Button size="xxs" variant="ghost" title="Save for other chats" aria-label="Save for other chats" disabled={!article.text.trim()} onClick={() => keepArticle(article, index)}>
+                                        <Icon name="FiBookmark" />
                                     </Button>
-                                    <Button size="xs" variant="ghost" title="Remove from this chat" onClick={() => removeArticle(index)}>
-                                        <Icon name="FiX" size="xs" />
+                                    <Button size="xxs" variant="ghost" title="Remove from this chat" aria-label="Remove from this chat" onClick={() => removeArticle(index)}>
+                                        <Icon name="FiX" />
                                     </Button>
                                 </Container>
                                 <Input
                                     multiline
                                     rows={3}
+                                    size="xs"
                                     width="100%"
                                     placeholder="For example: Reply only in formal British English."
                                     value={article.text}
                                     onChange={(event) => changeArticle(index, { text: event.target.value, source: 'ai-base', path: null })}
                                 />
                                 {article.source === 'fs-one' && (
-                                    <Typography size="xs" color="muted">Copied from {article.path}. Later changes to that file do not change this chat.</Typography>
+                                    <Typography size="xxs" color="muted">Copied from {article.path}. Later changes to that file do not change this chat.</Typography>
                                 )}
                             </Container>
                         ))}
                         <Container layout="flex" align="center" gap="xs" padding="none" width="100%">
-                            <Button size="sm" variant="ghost" disabled={articlesFull} onClick={() => addArticle({ name: '', text: '', source: 'ai-base', path: null })}>
+                            <Button size="xs" variant="ghost" disabled={articlesFull} onClick={() => addArticle({ name: '', text: '', source: 'ai-base', path: null })}>
                                 <Icon name="FiPlus" size="xs" />Add text
                             </Button>
-                            <Button size="sm" variant="ghost" disabled={articlesFull} onClick={() => setView('files')}>
+                            <Button size="xs" variant="ghost" disabled={articlesFull} onClick={() => setView('files')}>
                                 <Icon name="FiHardDrive" size="xs" />From my files
                             </Button>
-                            <Button size="sm" variant="ghost" onClick={() => setView('saved')}>
+                            <Button size="xs" variant="ghost" onClick={() => setView('saved')}>
                                 <Icon name="FiBookmark" size="xs" />Saved
                             </Button>
                         </Container>
@@ -2011,7 +2026,7 @@ const ChatPage = () => {
                                     label="Creativity (temperature, 0 to 2)"
                                     helpText="Lower is more exact, higher is more varied. Empty uses the model's own setting."
                                     type="number"
-                                    size="sm"
+                                    size="xs"
                                     width="100%"
                                     value={draftSetup.temperature}
                                     onChange={(event) => setDraftSetup((now) => ({ ...now, temperature: event.target.value }))}
@@ -2020,7 +2035,7 @@ const ChatPage = () => {
                                     label="Context size (tokens)"
                                     helpText="How much the model reads at once. Empty lets AI Base choose. Larger sizes use more memory."
                                     type="number"
-                                    size="sm"
+                                    size="xs"
                                     width="100%"
                                     value={draftSetup.num_ctx}
                                     onChange={(event) => setDraftSetup((now) => ({ ...now, num_ctx: event.target.value }))}
@@ -2028,8 +2043,8 @@ const ChatPage = () => {
                             </>
                         )}
                         <Container layout="flex" align="center" justify="between" gap="xs" padding="none" width="100%">
-                            <Button size="sm" variant="ghost" onClick={() => setAdvancedOpen((open) => !open)}>{advancedOpen ? 'Hide advanced' : 'Advanced'}</Button>
-                            <Button size="sm" color="primary" onClick={saveSetup}>{chat ? 'Save' : 'Use for this chat'}</Button>
+                            <Button size="xs" variant="ghost" onClick={() => setAdvancedOpen((open) => !open)}>{advancedOpen ? 'Hide advanced' : 'Advanced'}</Button>
+                            <Button size="xs" color="primary" onClick={saveSetup}>{chat ? 'Save' : 'Use for this chat'}</Button>
                         </Container>
                     </>
                 )}
