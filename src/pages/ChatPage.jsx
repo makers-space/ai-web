@@ -96,7 +96,7 @@ const Pop = ({ label, icon, open, onOpen, onClose, width = '320px', fab = false,
     );
 };
 
-const CopyButton = ({ text, label = 'Copy' }) => {
+export const CopyButton = ({ text, label = 'Copy' }) => {
     const [copied, setCopied] = useState(false);
     const copy = async () => {
         try {

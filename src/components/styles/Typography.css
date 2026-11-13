@@ -586,14 +586,27 @@ label.typography {
     display: inline-block;
 }
 
+.typography-typewriter-link {
+    text-decoration: none;
+}
+
+.typography-typewriter-link:hover,
+.typography-typewriter-link:focus-visible {
+    text-decoration: underline;
+}
+
 .typography-animation-gradient {
     position: relative;
+    display: inline;
+    font-weight: inherit;
+}
+
+.typography-animation-gradient--border {
     display: inline-flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     border-radius: 1.25rem;
-    font-weight: 500;
     backdrop-filter: blur(10px);
     transition: box-shadow 0.5s ease-out;
     overflow: hidden;
@@ -630,8 +643,15 @@ label.typography {
     z-index: 1;
 }
 
-.typography-animation-gradient-text {
+.typography-animation-gradient--border .typography-animation-gradient-text {
     display: inline-block;
+    white-space: pre;
+}
+
+.typography-animation-gradient-text {
+    display: inline;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
     position: relative;
     z-index: 2;
     background-image: var(--typography-gradient-definition, linear-gradient(90deg, var(--primary-color), var(--secondary-accent-color)));
@@ -639,7 +659,6 @@ label.typography {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    white-space: pre;
     animation: typography-gradient var(--typography-animation-duration, 2000ms) linear infinite;
     animation-delay: var(--typography-animation-delay, 0ms);
 }

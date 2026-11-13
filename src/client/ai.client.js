@@ -166,6 +166,7 @@ export const modelService = {
     updateModel: (request) => api.post('/models/update', request),
 
     getDeviceCatalogue: (deviceId) => api.get(`/devices/${deviceId}/catalogue`),
+    getPublicCatalogue: (memoryMb, gpuMemoryMb) => api.get('/catalogue', { params: { memoryMb, gpuMemoryMb } }),
 
     startDownload: (name) => api.post('/models/pull', { name }),
     listDownloads: () => api.get('/models/downloads'),

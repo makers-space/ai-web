@@ -18,6 +18,8 @@ const useAnimationConfig = (config, duration, stagger, length) => {
             deletingSpeed: 30,
             loop: true,
             showCursor: true,
+            reserveSpace: true,
+            link: null, // typewriter: { text, href, color } turns that part of the typed text into a link
             cursorCharacter: '|',
             pauseDuration: 2000,
             spinDuration: duration || 5000,
@@ -564,7 +566,7 @@ const TypewriterAnimation = React.memo(({
     const timeoutRef = useRef(null);
     const cursorRef = useRef(null);
 
-    const { typingSpeed, deletingSpeed, pauseDuration, loop: shouldLoop, showCursor, cursorCharacter } = animConfig;
+    const { typingSpeed, deletingSpeed, pauseDuration, loop: shouldLoop, showCursor, cursorCharacter, reserveSpace, link } = animConfig;
 
     const cursorSpring = useSpring({
         from: { opacity: 1 },
@@ -656,9 +658,24 @@ const TypewriterAnimation = React.memo(({
         };
     }, [isAnimating, stringContent, typingSpeed, deletingSpeed, pauseDuration, shouldLoop, animationDelay, notifyAnimationComplete]);
 
+    const linkStart = link?.text && link?.href ? stringContent.indexOf(link.text) : -1;
+    const linkEnd = linkStart === -1 ? -1 : linkStart + link.text.length;
+
     return (
         <span className="typography-animation-typewriter">
-            <span>{stringContent.slice(0, visibleCount)}</span>
+            {linkStart === -1 ? (
+                <span>{stringContent.slice(0, visibleCount)}</span>
+            ) : (
+                <span>
+                    {stringContent.slice(0, Math.min(visibleCount, linkStart))}
+                    {visibleCount > linkStart && (
+                        <a className="typography-typewriter-link" href={link.href} target="_blank" rel="noreferrer noopener" style={getColorStyle(link.color || 'tertiary')}>
+                            {stringContent.slice(linkStart, Math.min(visibleCount, linkEnd))}
+                        </a>
+                    )}
+                    {visibleCount > linkEnd && stringContent.slice(linkEnd, visibleCount)}
+                </span>
+            )}
             {showCursor && (
                 <animated.span
                     ref={cursorRef}
@@ -668,7 +685,7 @@ const TypewriterAnimation = React.memo(({
                     {cursorCharacter}
                 </animated.span>
             )}
-            <span style={{ opacity: 0 }}>{stringContent.slice(visibleCount)}</span>
+            {reserveSpace && <span style={{ opacity: 0 }}>{stringContent.slice(visibleCount)}</span>}
         </span>
     );
 });
