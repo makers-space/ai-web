@@ -8,42 +8,42 @@
   /* Enhanced Color System - Pink Theme */
 
   /* Basic Color System */
-  --primary-color: #CC0C49 ;
-  --primary-accent-color: #FF6B81;
+  --primary-color: #CC0C49;
+  --primary-accent-color: #A0003A;
 
-  --secondary-color: #4F9C46;
-  --secondary-accent-color: #67B55E;
+  --secondary-color: #2E7D32;
+  --secondary-accent-color: #1B5E20;
 
   --tertiary-color: #7663F2;
-  --tertiary-accent-color: #A49BDE;
+  --tertiary-accent-color: #5B4DC8;
 
   --neutral-color: #5C313E;
-  --neutral-accent-color: #945A6A;
+  --neutral-accent-color: #3E1828;
 
   /* Semantic Colors */
-  --success-color: #10b981;
-  --success-accent-color: #059669;
-    
-  --warning-color: #fbbf24;
-  --warning-accent-color: #f59e0b;
-    
-  --error-color: #ef4444;
-  --error-accent-color: #dc2626;
-  
+  --success-color: #2E7D32;
+  --success-accent-color: #1B5E20;
+
+  --warning-color: #E65100;
+  --warning-accent-color: #BF360C;
+
+  --error-color: #C62828;
+  --error-accent-color: #8B0000;
+
   /* Surface and Colors */
-  --background-color: #BD4F6C;
-  --surface-color: #EE9480;
-  --surface-accent-color: #E07BA2 ;
+  --background-color: #FDE8F0;
+  --surface-color: #F9C8DA;
+  --surface-accent-color: #F2A0BF;
 
   /* Border Colors */
   --border-color: #155946;
-  --border-light: #f3f4f6;
-  --text-color: #853251;
-  --text-contrast-color: #ecf3fe;
+  --border-light: #F9C8DA;
+  --text-color: #6B0A2F;
+  --text-contrast-color: #FDE8F0;
 
   /* Shadow System - Pink theme uses subtle pink-tinted shadows */
-  --shadow-color: rgba(252, 15, 90, 0.315);
-  --shadow-color-hover: rgba(252, 15, 90  , 0.4);
+  --shadow-color: rgba(204, 12, 73, 0.2);
+  --shadow-color-hover: rgba(204, 12, 73, 0.35);
   --shadow-sm: 0 1px 2px var(--shadow-color);
   --shadow-md: 0 4px 6px var(--shadow-color);
   --shadow-lg: 0 10px 15px -3px var(--shadow-color);
@@ -51,7 +51,7 @@
   --shadow-2xl: 0 25px 50px -12px var(--shadow-color);
 
   /* Overlay and Backdrop Colors */
-  --backdrop-color: rgba(31, 41, 55, 0.5);
+  --backdrop-color: rgba(107, 10, 47, 0.5);
 
     /* Font System - 7 Font Weights */
   --font-family: 'Josefin Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -107,21 +107,21 @@
   --notification-radius: 0.5rem;  /* 8px */
 
   /* Code Editor Colors - derived from pink palette */
-  --code-background:      #bd4f6c;
-  --code-foreground:      #fce4ec;
-  --code-gutter:          #a84461;
-  --code-line-highlight:  #a84461;
-  --code-selection:       #7a1a35;
-  --code-cursor:          #ff6b81;
-  --code-line-number:     #e899a8;
-  --code-keyword:         #ff6b81;
-  --code-string:          #a49bde;
-  --code-number:          #67b55e;
-  --code-comment:         #d48a9a;
-  --code-type:            #7663f2;
-  --code-function:        #ff6b81;
-  --code-variable:        #fce4ec;
-  --code-operator:        #cc0c49;
+  --code-background:      #fff0f5;
+  --code-foreground:      #6b0a2f;
+  --code-gutter:          #fde8f0;
+  --code-line-highlight:  #f9c8da;
+  --code-selection:       #cc0c4940;
+  --code-cursor:          #cc0c49;
+  --code-line-number:     #945a6a;
+  --code-keyword:         #cc0c49;
+  --code-string:          #7663f2;
+  --code-number:          #2e7d32;
+  --code-comment:         #945a6a;
+  --code-type:            #5b4dc8;
+  --code-function:        #cc0c49;
+  --code-variable:        #6b0a2f;
+  --code-operator:        #c62828;
 
 }
 

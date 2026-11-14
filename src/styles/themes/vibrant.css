@@ -8,42 +8,42 @@
   /* Enhanced Color System - Vibrant Theme */
 
   /* Basic Color System */
-  --primary-color: #2176AE;
-  --primary-accent-color: #175178;
+  --primary-color: #556303;
+  --primary-accent-color: #334200;
 
-  --secondary-color: #f97316;
-  --secondary-accent-color: #c2410c;
+  --secondary-color: #BF3100;
+  --secondary-accent-color: #8E2400;
 
-  --tertiary-color: #D12B1F;
-  --tertiary-accent-color: #E83151;
+  --tertiary-color: #FF4E00;
+  --tertiary-accent-color: #CC3C00;
 
-  --neutral-color: #6b7280;
-  --neutral-accent-color: #374151;
-  
+  --neutral-color: #8EA604;
+  --neutral-accent-color: #6A7C02;
+
   /* Semantic Colors */
-  --success-color: #16a34a;
-  --success-accent-color: #15803d;
-  
-  --warning-color: #f59e0b;
-  --warning-accent-color: #d97706;
-  
-  --error-color: #dc2626;
-  --error-accent-color: #991b1b;
-  
+  --success-color: #8EA604;
+  --success-accent-color: #6A7C02;
+
+  --warning-color: #EC9F05;
+  --warning-accent-color: #C07C00;
+
+  --error-color: #BF3100;
+  --error-accent-color: #8E2400;
+
   /* Surface and Border Colors */
-  --background-color: #F2822C;
-  --surface-color: #FBB13C;
-  --surface-accent-color: #a8121e82;
+  --background-color: #F5BB00;
+  --surface-color: #FFF5CC;
+  --surface-accent-color: #FEE870;
 
   /* Border styles */
-  --border-color: #2176AE;
-  --border-light: #fed7aa;
-  
-  --text-color: #0A6270;
-  --text-contrast-color: #FFB885; /* Contrast text color matches surface color */
-  
+  --border-color: #8EA604;
+  --border-light: #F0D840;
+
+  --text-color: #BF3100;
+  --text-contrast-color: #FFF5CC;
+
   /* Overlay and Backdrop Colors */
-  --backdrop-color: rgba(239, 68, 68, 0.4); /* Semi-transparent vibrant red */
+  --backdrop-color: rgba(191, 49, 0, 0.55);
     
   /* Font System - 7 Font Weights */
   --font-family: 'Gloria Hallelujah', 'Comic Sans MS', cursive, sans-serif;
@@ -79,22 +79,22 @@
   --font-weight-extra-bold: 800;
   --font-weight-black: 900;    
   
-  /* Code Editor Colors - derived from vibrant palette */
-  --code-background:      #f5973a;
-  --code-foreground:      #0a2e3a;
-  --code-gutter:          #f2822c;
-  --code-line-highlight:  #e07820;
-  --code-selection:       #a0522d;
-  --code-cursor:          #175178;
-  --code-line-number:     #7a5020;
-  --code-keyword:         #1a4a70;
-  --code-string:          #6b0010;
-  --code-number:          #b02020;
-  --code-comment:         #7a6040;
-  --code-type:            #175178;
-  --code-function:        #2176ae;
-  --code-variable:        #0a2e3a;
-  --code-operator:        #d12b1f;
+  /* Code Editor Colors - derived from amber fire palette */
+  --code-background:      #fff8e0;
+  --code-foreground:      #bf3100;
+  --code-gutter:          #fff5cc;
+  --code-line-highlight:  #fee870;
+  --code-selection:       #bf310040;
+  --code-cursor:          #bf3100;
+  --code-line-number:     #8e6a20;
+  --code-keyword:         #556303;
+  --code-string:          #bf3100;
+  --code-number:          #c07c00;
+  --code-comment:         #8a7030;
+  --code-type:            #334200;
+  --code-function:        #8ea604;
+  --code-variable:        #bf3100;
+  --code-operator:        #ff4e00;
 
   /* Border Radius System - Vibrant theme uses playful rounded corners */
   --border-radius: 1rem;           /* 16px */
@@ -106,9 +106,9 @@
   --progress-radius: 9999px;       /* Pill shape */
   --notification-radius: 1rem;     /* 16px */
 
-  /* Shadow System - Vibrant theme uses colorful red-tinted shadows */
-  --shadow-color: rgba(239, 68, 68, 0.2);
-  --shadow-color-hover: rgba(239, 68, 68, 0.3);
+  /* Shadow System - Vibrant theme uses burnt orange shadows */
+  --shadow-color: rgba(191, 49, 0, 0.22);
+  --shadow-color-hover: rgba(191, 49, 0, 0.38);
   --shadow-sm: 0 1px 3px var(--shadow-color);
   --shadow-md: 0 4px 8px var(--shadow-color);
   --shadow-lg: 0 8px 20px var(--shadow-color);  

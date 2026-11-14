@@ -8,41 +8,41 @@
   /* Enhanced Color System - Modern Theme */
 
   /* Basic Color System */
-  --primary-color: #3F84E5;
-  --primary-accent-color: #98B3E6;
+  --primary-color: #12355B;
+  --primary-accent-color: #1A4A7A;
 
-  --secondary-color: #F45D01;
-  --secondary-accent-color: #FEB485;
+  --secondary-color: #FF570A;
+  --secondary-accent-color: #CC4000;
 
-  --tertiary-color: #8b5cf6; 
-  --tertiary-accent-color: #7c3aed;
+  --tertiary-color: #A5D8FF;
+  --tertiary-accent-color: #70BFFF;
 
-  --neutral-color: #6b7280;
-  --neutral-accent-color: #374151; 
-  
+  --neutral-color: #5A7A95;
+  --neutral-accent-color: #3A5A75;
+
   /* Semantic Colors */
-  --success-color: #10b981;
-  --success-accent-color: #059669;
-    
-  --warning-color: #fbbf24;
-  --warning-accent-color: #f59e0b;
-    
-  --error-color: #ef4444;
-  --error-accent-color: #dc2626;
-  
+  --success-color: #1E7A3A;
+  --success-accent-color: #155C2A;
+
+  --warning-color: #E88500;
+  --warning-accent-color: #C06800;
+
+  --error-color: #CC2200;
+  --error-accent-color: #991800;
+
   /* Surface and Border Colors */
-  --background-color: #C6D8FF;
-  --surface-color: #E2E7F3;
-  --surface-accent-color: #f3f4f6;
-  --border-color: #e5e7eb;
-  --border-light: #f3f4f6;
+  --background-color: #FFFFFF;
+  --surface-color: #EAF5FF;
+  --surface-accent-color: #C8EAFF;
+  --border-color: #A5D8FF;
+  --border-light: #D4EEFF;
 
-  --text-color: #0C2F5A;
-  --text-contrast-color: #C9DDF8;
+  --text-color: #12355B;
+  --text-contrast-color: #FFFFFF;
 
-  /* Shadow System - Modern theme uses subtle blue-tinted shadows */
-  --shadow-color: rgba(59, 131, 246, 0.315);
-  --shadow-color-hover: rgba(59, 131, 246, 0.4);
+  /* Shadow System - Modern theme uses navy-tinted shadows */
+  --shadow-color: rgba(18, 53, 91, 0.15);
+  --shadow-color-hover: rgba(18, 53, 91, 0.28);
   --shadow-sm: 0 1px 2px var(--shadow-color);
   --shadow-md: 0 4px 6px var(--shadow-color);
   --shadow-lg: 0 10px 15px -3px var(--shadow-color);
@@ -50,7 +50,7 @@
   --shadow-2xl: 0 25px 50px -12px var(--shadow-color);
 
   /* Overlay and Backdrop Colors */
-  --backdrop-color: rgba(31, 41, 55, 0.5);
+  --backdrop-color: rgba(18, 53, 91, 0.5);
 
     /* Font System - 7 Font Weights */
   --font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -86,22 +86,22 @@
   --font-weight-extra-bold: 800;
   --font-weight-black: 900;
   
-  /* Code Editor Colors - derived from modern palette */
-  --code-background:      #eef2fb;
-  --code-foreground:      #0c2f5a;
-  --code-gutter:          #e2e7f3;
-  --code-line-highlight:  #dde6f7;
-  --code-selection:       #bfdbfe;
-  --code-cursor:          #3f84e5;
-  --code-line-number:     #9ca3af;
-  --code-keyword:         #3f84e5;
-  --code-string:          #7c3aed;
-  --code-number:          #f45d01;
-  --code-comment:         #6b7280;
-  --code-type:            #7c3aed;
-  --code-function:        #1d4ed8;
-  --code-variable:        #374151;
-  --code-operator:        #3f84e5;
+  /* Code Editor Colors - derived from navy / orange / sky-blue palette */
+  --code-background:      #f0f8ff;
+  --code-foreground:      #12355b;
+  --code-gutter:          #e0f0ff;
+  --code-line-highlight:  #d0e8ff;
+  --code-selection:       #a5d8ff55;
+  --code-cursor:          #ff570a;
+  --code-line-number:     #5a7a95;
+  --code-keyword:         #12355b;
+  --code-string:          #cc4000;
+  --code-number:          #e88500;
+  --code-comment:         #5a7a95;
+  --code-type:            #1a4a7a;
+  --code-function:        #ff570a;
+  --code-variable:        #12355b;
+  --code-operator:        #ff570a;
 
   /* Border Radius System - Modern theme uses subtle rounded corners */
   --border-radius: 0.375rem;      /* 6px */

@@ -77,13 +77,11 @@ export const SignupPage = () => {
             const result = await signup(signupData);
             
             if (result.success) {
-                showSuccess('Account created successfully! Welcome aboard.');
                 navigate('/'); // Navigate to dashboard after successful signup
             } else {
                 showError(result.error || 'Signup failed. Please try again.');
             }
-        } catch (error) {
-            showError(error.message || 'Signup failed. Please try again.');
+        } catch {
         } finally {
             setIsLoading(false);
         }

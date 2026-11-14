@@ -8,42 +8,42 @@
     /* Enhanced Color System - Dark Theme */
 
     /* Basic Color System */
-    --primary-color: #4D9BF9;
-    --primary-accent-color: #2563eb;
+    --primary-color: #A5D8FF;
+    --primary-accent-color: #70BFFF;
 
-    --secondary-color: #FF570A ;
-    --secondary-accent-color: #8F2D00  ;
+    --secondary-color: #FF570A;
+    --secondary-accent-color: #CC4000;
 
-    --tertiary-color: #E2ADF2 ;
-    --tertiary-accent-color: #8E1CB0 ;
+    --tertiary-color: #FFFFFF;
+    --tertiary-accent-color: #C8EAFF;
 
-    --neutral-color: #D6C092 ;
-    --neutral-accent-color: #7D5D19;
-    
+    --neutral-color: #4A7A9A;
+    --neutral-accent-color: #2A5A7A;
+
     /* Semantic Colors */
-    --success-color: #70B97C;
-    --success-accent-color: #3F784C;
+    --success-color: #3ABC60;
+    --success-accent-color: #2A8A45;
 
-    --warning-color: #FFD400;
-    --warning-accent-color: #EDA60C;
+    --warning-color: #FFB020;
+    --warning-accent-color: #CC8000;
 
-    --error-color: #E03616;
-    --error-accent-color: #D95C43;
-    
+    --error-color: #FF4444;
+    --error-accent-color: #CC2222;
+
     /* Surface Colors */
-    --background-color: #1f2937;
-    --surface-color: #374151;
-    --surface-accent-color: #4b5563;
+    --background-color: #0C2240;
+    --surface-color: #12355B;
+    --surface-accent-color: #1A4A7A;
 
     /* Border Colors */
-    --border-color: #60a5fa;
-    --border-light: #C9DDF8;
+    --border-color: #1A4A7A;
+    --border-light: #2A5A8A;
 
-    --text-color: #C9DDF8;
-    --text-contrast-color: #0C2F5A; /* Contrast text color matches surface color */
+    --text-color: #EAF5FF;
+    --text-contrast-color: #0C2240;
 
     /* Overlay and Backdrop Colors */
-    --backdrop-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black for dark theme */
+    --backdrop-color: rgba(6, 18, 36, 0.8);
     
     /* Font System - 7 Font Weights */
     --font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -91,22 +91,22 @@
     --font-weight-extra-bold: 800;
     --font-weight-black: 900;
 
-    /* Code Editor Colors - derived from dark palette */
-    --code-background:      #1f2937;
-    --code-foreground:      #c9ddf8;
-    --code-gutter:          #2d3748;
-    --code-line-highlight:  #2d3748;
-    --code-selection:       #264f78;
-    --code-cursor:          #4d9bf9;
-    --code-line-number:     #4a5568;
-    --code-keyword:         #4d9bf9;
-    --code-string:          #e2adf2;
-    --code-number:          #ffd400;
-    --code-comment:         #6b7f9e;
-    --code-type:            #ff8c5a;
-    --code-function:        #79c0ff;
-    --code-variable:        #c9ddf8;
-    --code-operator:        #60a5fa;
+    /* Code Editor Colors - derived from navy / sky-blue / orange palette */
+    --code-background:      #0c2240;
+    --code-foreground:      #eaf5ff;
+    --code-gutter:          #12355b;
+    --code-line-highlight:  #1a4a7a;
+    --code-selection:       #a5d8ff30;
+    --code-cursor:          #ff570a;
+    --code-line-number:     #4a7a9a;
+    --code-keyword:         #a5d8ff;
+    --code-string:          #ff570a;
+    --code-number:          #ffb020;
+    --code-comment:         #5a8aaa;
+    --code-type:            #70bfff;
+    --code-function:        #eaf5ff;
+    --code-variable:        #c8e8ff;
+    --code-operator:        #ff570a;
 
     /* Border Radius System - Dark theme uses rounded corners */
     --border-radius: 0.5rem; /* 8px */

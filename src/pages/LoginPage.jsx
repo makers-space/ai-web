@@ -60,8 +60,7 @@ export const LoginPage = () => {
       } else {
         showError(result.error || 'Login failed. Please check your credentials.');
       }
-    } catch (error) {
-      showError(error.message || 'Login failed. Please check your credentials.');
+    } catch {
     } finally {
       setIsLoading(false);
     }
