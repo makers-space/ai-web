@@ -96,7 +96,7 @@ const DeviceCard = ({ device, canManage, onChanged }) => {
                 </Container>
             </Heading>
             <Typography size="xxs" color="muted">
-                {device.kind === 'local' ? 'The computer AI Base is running on.' : 'Registered device.'}
+                {device.kind === 'local' ? 'The computer Mollama is running on.' : 'Registered device.'}
                 {!ollama.available && ' Start Ollama on this computer, then read it again.'}
             </Typography>
 
@@ -135,7 +135,7 @@ const DeviceCard = ({ device, canManage, onChanged }) => {
             {editing && (
                 <Container layout="flex-column" gap="sm" padding="none" width="100%">
                     <Typography size="xs" color="muted">
-                        Change these only if what AI Base reads is wrong. Leave a box empty to use what it reads.
+                        Change these only if what Mollama reads is wrong. Leave a box empty to use what it reads.
                     </Typography>
                     <Container layout="grid" columns="auto-sm" gap="sm" padding="none" width="100%">
                         <Input size="sm" label="Device name" value={form.name} onChange={change('name')} width="100%" />
@@ -147,7 +147,7 @@ const DeviceCard = ({ device, canManage, onChanged }) => {
                         <Button size="sm" onClick={save} disabled={busy}>Save</Button>
                         <Button size="sm" color="secondary" onClick={() => setEditing(false)} disabled={busy}>Cancel</Button>
                         {device.edited && (
-                            <Button size="sm" color="secondary" onClick={useDetected} disabled={busy}>Use what AI Base reads</Button>
+                            <Button size="sm" color="secondary" onClick={useDetected} disabled={busy}>Use what Mollama reads</Button>
                         )}
                     </Container>
                 </Container>
@@ -204,7 +204,7 @@ const DevicesPage = () => {
                 <Container layout="flex-column" gap="none" padding="none">
                     <Typography as="h1" size="2xl" weight="bold" animation="blur" animationDuration={600}>Devices</Typography>
                     <Typography size="xs" color="muted">
-                        The computers that run your AI models. AI Base reads each one so it can tell you which models fit.
+                        The computers that run your AI models. Mollama reads each one so it can tell you which models fit.
                         {devices && !canManage && " Only an admin or owner can correct a device's details."}
                     </Typography>
                 </Container>

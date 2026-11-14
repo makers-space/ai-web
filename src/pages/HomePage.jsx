@@ -6,7 +6,7 @@ import { Page, Container, Card, Button, Typography, Icon, Badge, Input, Select, 
 import { deviceService, modelService, describeError, useActivity } from '../client/ai.client';
 import { CopyButton } from './ChatPage';
 
-const FIRST_PROMPT_KEY = 'ai-base-first-prompt';
+const FIRST_PROMPT_KEY = 'mollama-first-prompt';
 
 const node = (id, label, column, row, color, shape = 'rectangle') => ({
     id, type: 'editable', position: { x: column * 220, y: row * 100 }, data: { label, color, shape }
@@ -127,12 +127,12 @@ const BENTO = [
     { icon: 'FiMessageSquare', title: 'Chat that keeps going', text: 'Close the tab and the reply carries on. Queue the next question while one is being written. Dictate instead of typing.', span: 2 },
     { icon: 'FiSliders', title: 'Shows which models fit', text: 'Every model is checked against your graphics card and memory before you download it.' },
     { icon: 'FiFileText', title: 'Answers from your documents', text: 'Attach a PDF, Word document or spreadsheet, or pick one from FilesystemOne. A model only sees the files you attach.' },
-    { icon: 'FiSearch', title: 'Web search with checked links', text: 'AI Base opens each page a search finds and test-loads each file, and a model may only show the ones that worked.' },
+    { icon: 'FiSearch', title: 'Web search with checked links', text: 'Mollama opens each page a search finds and test-loads each file, and a model may only show the ones that worked.' },
     { icon: 'FiUser', title: 'Your own versions of a model', text: 'Save an installed model under a new name with your instructions and a creativity level, and edit them whenever you like.' }
 ];
 
 const STEPS = [
-    ['Install Ollama', 'One installer. AI Base finds it by itself.'],
+    ['Install Ollama', 'One installer. Mollama finds it by itself.'],
     ['Pick a model', 'Choose from the ones that fit and press Download.'],
     ['Ask', 'Open Chat and type. Nothing to configure first.']
 ];
@@ -403,7 +403,7 @@ const Calculator = ({ user }) => {
                     )}
                     {!user && (
                         <Container layout="flex" align="center" justify="between" gap="sm" padding="none" width="100%">
-                            <Typography size="xs" color="muted">Sign in on the machine itself and AI Base reads these numbers for you and downloads with one button.</Typography>
+                            <Typography size="xs" color="muted">Sign in on the machine itself and Mollama reads these numbers for you and downloads with one button.</Typography>
                         </Container>
                     )}
                 </>
@@ -466,7 +466,7 @@ const HomePage = () => {
                 <Container layout="flex" align="center" justify="between" gap="sm" padding="none" width="100%" wrap={false}>
                     <Container layout="flex" align="center" gap="xs" padding="none" wrap={false}>
                         <Icon name="FiCpu" size="md" color="primary" />
-                        <Typography size="md" weight="bold" font="secondary">AI Base</Typography>
+                        <Typography size="md" weight="bold" font="secondary">Mollama</Typography>
                     </Container>
                     <Container layout="flex" align="center" gap="xs" padding="none" wrap={false}>
                         {!user && <Button size="sm" variant="ghost" onClick={() => navigate('/login')}>Sign in</Button>}
@@ -587,7 +587,7 @@ const HomePage = () => {
                 </Container>
                 <Divider margin="sm" />
                 <Container layout="flex" align="center" justify="between" gap="md" padding="none" width="100%">
-                    <Typography size="xs" color="muted">AI Base. Local AI that stays on the machine it runs on.</Typography>
+                    <Typography size="xs" color="muted">Mollama. Local AI that stays on the machine it runs on.</Typography>
                     <Button size="sm" color="primary" onClick={() => navigate(start)}>
                         {user ? 'Open chat' : 'Get started'}<Icon name="FiArrowRight" size="xs" />
                     </Button>

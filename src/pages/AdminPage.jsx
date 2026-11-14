@@ -347,7 +347,7 @@ const AdminPage = () => {
                 to: emailTest.recipient,
                 template: emailTest.template,
                 subject: emailTest.subject,
-                templateData: { firstName: 'Test', lastName: 'User', appName: 'AI Base' }
+                templateData: { firstName: 'Test', lastName: 'User', appName: 'Mollama' }
             });
             showSuccess(`Test email sent to ${emailTest.recipient}`);
             setEmailTest(prev => ({ ...prev, recipient: '' }));

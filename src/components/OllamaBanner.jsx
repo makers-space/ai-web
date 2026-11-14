@@ -28,7 +28,7 @@ export const OllamaBanner = () => {
                 found = { message: data.message, action: data.action };
             } else if (!error?.response) {
                 found = {
-                    message: 'AI Base is not answering.',
+                    message: 'Mollama is not answering.',
                     action: 'Check that its server is running and that this device is online.'
                 };
             }

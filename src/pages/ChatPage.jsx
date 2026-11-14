@@ -1214,14 +1214,14 @@ const ChatPage = () => {
     const [webSearch, setWebSearch] = useState(false);
     const [text, setText] = useState(() => {
         try {
-            return sessionStorage.getItem('ai-base-first-prompt') || '';
+            return sessionStorage.getItem('mollama-first-prompt') || '';
         } catch {
             return '';
         }
     });
     useEffect(() => {
         try {
-            sessionStorage.removeItem('ai-base-first-prompt');
+            sessionStorage.removeItem('mollama-first-prompt');
         } catch {
             return;
         }
@@ -2033,7 +2033,7 @@ const ChatPage = () => {
                                 />
                                 <Input
                                     label="Context size (tokens)"
-                                    helpText="How much the model reads at once. Empty lets AI Base choose. Larger sizes use more memory."
+                                    helpText="How much the model reads at once. Empty lets Mollama choose. Larger sizes use more memory."
                                     type="number"
                                     size="xs"
                                     width="100%"

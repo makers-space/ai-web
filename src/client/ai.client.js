@@ -12,8 +12,8 @@ export const guideService = {
 export const GUIDE_TEXT = {
     'nav.chat': ['Chat', 'Talk to a model that runs on this computer. Your chats are saved, and only you can open them.'],
     'nav.models': ['Models', 'Find models that fit this device, download them, and make your own versions.'],
-    'nav.devices': ['Devices', 'What AI Base reads from this computer: graphics card, memory and free disk.'],
-    'nav.settings': ['Settings', 'Your account, sign-in security, themes, and how AI Base reaches Ollama.'],
+    'nav.devices': ['Devices', 'What Mollama reads from this computer: graphics card, memory and free disk.'],
+    'nav.settings': ['Settings', 'Your account, sign-in security, themes, and how Mollama reaches Ollama.'],
     'chat.send': ['Sending a message', 'The reply is written on this computer and keeps going if you leave the page. You can send another message while it is being written; it waits its turn.'],
     'chat.new': ['New chat', 'Starts an empty conversation. The earlier ones stay in the list on the left.'],
     'models.installed': ['Installed', 'The models already on this device, with their size on disk.'],
@@ -22,7 +22,7 @@ export const GUIDE_TEXT = {
     'models.refresh': ['Refresh', 'Reads the model lists and the free disk space again, for example after a download finished elsewhere.'],
     'models.download': ['Download', 'The download runs on the server, so it carries on if you close this page. Its progress shows at the top.'],
     'devices.read': ['Read this computer again', 'Reads the hardware again, for example after a graphics card was changed.'],
-    'devices.correct': ['Correct these details', 'Use this only when what AI Base reads is wrong. It changes which models are said to fit.']
+    'devices.correct': ['Correct these details', 'Use this only when what Mollama reads is wrong. It changes which models are said to fit.']
 };
 
 const NO_ACTIVITY = { replies: [], downloads: [], canManage: false };

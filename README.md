@@ -1,4 +1,4 @@
-# AI Base Web - React Frontend
+# Mollama Web - React Frontend
 
 > **React Application with Advanced Theming and Complete UI Component Library**
 

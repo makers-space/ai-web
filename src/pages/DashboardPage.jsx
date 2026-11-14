@@ -179,7 +179,7 @@ const DashboardPage = () => {
                                 {installed?.models.length === 0 && <Line icon="FiDownload" title="Download your first model" note="Pick one that fits this device." onClick={() => navigate('/models')} />}
                                 <Line icon="FiPaperclip" title="Ask about a document" note="Attach a PDF, Word file or spreadsheet in Chat." onClick={() => navigate('/chat')} />
                                 <Line icon="FiUser" title="Make a model your own" note="Give an installed model its own name and instructions." onClick={() => navigate('/models')} />
-                                <Line icon="FiMonitor" title="Check this device" note="See what AI Base reads from this computer." onClick={() => navigate('/devices')} />
+                                <Line icon="FiMonitor" title="Check this device" note="See what Mollama reads from this computer." onClick={() => navigate('/devices')} />
                                 <Line icon="FiSliders" title="Settings" note="Account, security, themes and Ollama." onClick={() => navigate('/settings')} />
                             </Card>
                         </Container>

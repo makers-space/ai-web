@@ -286,7 +286,7 @@ const DiscoverTab = ({ catalogue, jobs, canManage, ollamaUp, onDownload }) => {
                     <SectionTitle icon="FiPlus" title="Add a model by name" />
                     <Typography size="xxs" color="muted">
                         For a model that is not listed. Type its name exactly as Ollama lists it, for example llama3.2:1b.
-                        AI Base cannot tell in advance whether it will fit.
+                        Mollama cannot tell in advance whether it will fit.
                     </Typography>
                     <Container layout="flex" gap="xs" padding="none" align="center" width="100%" wrap={false}>
                         <Input
